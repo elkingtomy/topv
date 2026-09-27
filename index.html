@@ -68,53 +68,105 @@
   .car-brands { display: flex; gap: 26px; align-items: center; justify-content: center; padding-top: 18px; border-top: 1px solid rgba(201,168,92,.25); }
   .brand-icon { width: 30px; height: 30px; fill: #cbd5e1; opacity: .85; }
 
-  header { background: var(--header-bg); color: var(--header-text); min-height: 52px; padding: 6px 14px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,.15); flex-shrink: 0; border-bottom: 1px solid var(--border); z-index: 40; position: relative; }
-  .header-left { display: flex; align-items: center; gap: 8px; z-index: 2; }
-  .header-right { display: flex; align-items: center; gap: 6px; z-index: 2; }
+  /* ---------- Clean, Non-Overlapping Header ---------- */
+  header {
+    background: var(--header-bg);
+    color: var(--header-text);
+    min-height: 52px;
+    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0,0,0,.15);
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+    z-index: 40;
+    gap: 8px;
+  }
+  .header-left { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .header-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
   
-  .header-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 2; }
-  .crest { width: 34px; height: 34px; flex-shrink: 0; transition: transform .2s ease; }
+  .header-center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .crest { width: 32px; height: 32px; flex-shrink: 0; }
 
-  .header-room-badge { display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: auto; }
-  .header-room-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
-  .header-room-subtitle { font-family: 'JetBrains Mono', monospace; font-size: 10px; opacity: 0.8; letter-spacing: 1px; color: #fff; }
+  .header-room-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    max-width: 100%;
+  }
+  .header-room-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+  }
+  .header-room-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    opacity: 0.75;
+    letter-spacing: 0.8px;
+    color: #fff;
+    white-space: nowrap;
+  }
 
-  .btn { cursor: pointer; border: 1px solid transparent; border-radius: 6px; padding: 6px 12px; font-family: inherit; font-size: 13.5px; transition: .15s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; }
+  .btn { cursor: pointer; border: 1px solid transparent; border-radius: 6px; padding: 6px 10px; font-family: inherit; font-size: 13px; transition: .15s; display: inline-flex; align-items: center; justify-content: center; gap: 5px; white-space: nowrap; }
   .btn-outline { background: transparent; border-color: rgba(255,255,255,.3); color: #fff; }
   .btn-outline:hover { background: rgba(255,255,255,.15); border-color: #fff; }
   .btn-primary { background: var(--crimson); color: #fff; }
   .btn-primary:hover { background: var(--crimson-dark); }
   
-  .btn-icon-labeled { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-size: 13px; padding: 5px 10px; }
+  .btn-icon-labeled { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-size: 12.5px; padding: 5px 8px; }
   .btn-icon-labeled:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.6); }
   .btn-icon-labeled.danger { border-color: rgba(255, 77, 109, 0.4); color: #ffb4c0; }
   .btn-icon-labeled.danger:hover { background: var(--crimson-dark); color: #fff; border-color: var(--danger); }
 
-  .svg-icon { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .theme-toggle-btn { background: transparent; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; }
+  .svg-icon { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .theme-toggle-btn { background: transparent; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; flex-shrink: 0; }
   .theme-toggle-btn:hover { background: rgba(255,255,255,.15); border-color: var(--gold); }
 
   @media (max-width: 600px) {
     .btn-text { display: none !important; }
-    header { padding: 4px 10px; }
-    .header-left, .header-right { gap: 5px; }
-    .btn-icon-labeled, #teamToggle { padding: 6px 8px !important; }
+    header { padding: 4px 8px; }
+    .header-left, .header-right { gap: 4px; }
+    .btn-icon-labeled, #teamToggle, #lobbyReturnBtn { padding: 5px 7px !important; }
     .splash-title { font-size: 22px !important; }
-    .header-room-title { font-size: 13px; }
+    .header-room-title { font-size: 13px; max-width: 130px; }
   }
 
   main { flex: 1; display: flex; overflow: hidden; min-height: 0; position: relative; }
   #auth { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 10px 35px rgba(0,0,0,.1); max-width: 380px; width: 100%; padding: 28px 24px; text-align: center; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 10px 35px rgba(0,0,0,.1); max-width: 395px; width: 100%; padding: 26px 22px; text-align: center; }
   .card h2 { font-family: 'Playfair Display', serif; font-size: 24px; margin: 4px 0; }
-  .card p.sub { color: var(--sub); font-size: 14px; margin-bottom: 18px; }
-  .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 18px; }
-  .tab { flex: 1; padding: 8px; cursor: pointer; color: var(--sub); border-bottom: 2px solid transparent; font-size: 15px; }
+  .card p.sub { color: var(--sub); font-size: 14px; margin-bottom: 16px; }
+  
+  /* Tabs: Sign In / Register / Owner Portal */
+  .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 16px; gap: 2px; }
+  .tab { flex: 1; padding: 8px 4px; cursor: pointer; color: var(--sub); border-bottom: 2px solid transparent; font-size: 13.5px; white-space: nowrap; }
   .tab.active { color: var(--crimson); border-color: var(--crimson); font-weight: 600; }
-  .field { margin-bottom: 12px; text-align: left; }
-  .field label { display: block; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--sub); margin-bottom: 4px; }
-  .field input { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--ink); font-family: inherit; font-size: 15px; }
+  .tab.owner-tab.active { color: var(--gold); border-color: var(--gold); }
+
+  .field { margin-bottom: 11px; text-align: left; }
+  .field label { display: block; font-size: 11.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--sub); margin-bottom: 4px; }
+  .field input { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--ink); font-family: inherit; font-size: 14.5px; }
   .field input:focus { border-color: var(--crimson); }
+  .field.owner-field input:focus { border-color: var(--gold); }
   .full { width: 100%; margin-top: 6px; justify-content: center; }
   .msg-err { color: var(--danger); font-size: 13px; margin-top: 8px; min-height: 16px; }
   .forgot-link { display: inline-block; margin-top: 12px; font-size: 13px; color: var(--crimson); text-decoration: none; cursor: pointer; }
@@ -188,11 +240,23 @@
   .task-item { font-size: 12.5px; background: var(--card); padding: 6px 8px; border-radius: 4px; border-left: 3px solid var(--gold); display: flex; align-items: center; justify-content: space-between; }
 
   .chatarea { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; position: relative; background-size: cover; background-position: center; background-repeat: no-repeat; }
-  .channel-header { background: var(--card); border-bottom: 1px solid var(--border); padding: 8px 18px; font-size: 15px; font-weight: 600; color: var(--gold); display: flex; align-items: center; justify-content: space-between; letter-spacing: .5px; }
   
-  .btn-channel-toggle { background: var(--bg); border: 1px solid var(--border); color: var(--ink); padding: 5px 10px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: .15s ease; }
+  .channel-subheader {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    letter-spacing: .5px;
+  }
+  
+  .btn-channel-toggle { background: var(--bg); border: 1px solid var(--border); color: var(--ink); padding: 4px 8px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: .15s ease; }
   .btn-channel-toggle:hover { background: var(--card); border-color: var(--gold); color: var(--crimson); }
-  .btn-channel-toggle .svg-icon { width: 16px; height: 16px; stroke: currentColor; }
+  .btn-channel-toggle .svg-icon { width: 14px; height: 14px; stroke: currentColor; }
 
   #messages { flex: 1; overflow-y: auto; padding: 16px 18px; min-height: 0; display: flex; flex-direction: column; gap: 10px; }
   
@@ -317,21 +381,20 @@
       <svg class="svg-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       <span class="btn-text">Workspace</span>
     </button>
-    <button class="btn btn-outline" id="openCmdPaletteBtn" style="display:none;font-size:11px;padding:5px 8px;" title="Command Deck (Ctrl+K)">
-      ⌘ K
-    </button>
   </div>
 
-  <!-- Dynamic Header Center: Logo changes to Sector Title inside room -->
   <div class="header-center" id="headerCenterZone">
     <svg id="headerVLogo" class="crest" viewBox="0 0 48 48"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#7a1524" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Playfair Display', serif" font-size="20" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
     <div id="headerRoomBadge" class="header-room-badge" style="display:none;">
       <span class="header-room-title" id="headerRoomTitle">#GENERAL</span>
-      <span class="header-room-subtitle" id="headerRoomSubtitle">ENCRYPTED SECTOR</span>
+      <span class="header-room-subtitle">ENCRYPTED SECTOR</span>
     </div>
   </div>
 
   <div class="header-right">
+    <button class="btn btn-outline" id="openCmdPaletteBtn" style="display:none;font-size:11px;padding:4px 6px;" title="Command Deck (Ctrl+K)">
+      ⌘ K
+    </button>
     <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme">
       <svg id="themeIconSun" class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
       <svg id="themeIconMoon" class="svg-icon" viewBox="0 0 24 24" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
@@ -353,16 +416,23 @@
       <svg class="crest" viewBox="0 0 48 48" style="width:46px;height:46px;margin:0 auto 8px;display:block;"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#A51C30" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Playfair Display', serif" font-size="18" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
       <h2>TOP V</h2>
       <p class="sub">Executive Enclave &amp; Workspace</p>
+
+      <!-- Three-Way Auth Tabs -->
       <div class="tabs" id="authTabs">
         <div class="tab active" data-tab="login">Sign In</div>
         <div class="tab" data-tab="register">Register</div>
+        <div class="tab owner-tab" data-tab="owner">👑 Owner</div>
       </div>
+
+      <!-- Regular Login Pane -->
       <div id="loginPane">
         <div class="field"><label>Username / Email / Phone</label><input id="loginIdentifier" autocomplete="username"></div>
         <div class="field"><label>Password</label><input id="loginPass" type="password" autocomplete="current-password"></div>
         <button class="btn btn-primary full" id="loginBtn">Sign In</button>
         <a class="forgot-link" id="forgotPwdLink">Forgot password?</a>
       </div>
+
+      <!-- Member Registration Pane -->
       <div id="registerPane" style="display:none;">
         <div class="field"><label>Choose a username</label><input id="regUser" autocomplete="username"></div>
         <div class="field"><label>Email Address</label><input id="regEmail" type="email"></div>
@@ -373,8 +443,21 @@
           <input id="regInviteCode" placeholder="Leave blank if guest">
         </div>
         <button class="btn btn-primary full" id="regBtn">Create Account</button>
-        <p style="font-size:12px;margin-top:10px;color:var(--sub);">Without a valid access token, you will join as a guest with public channel access only.</p>
+        <p style="font-size:11.5px;margin-top:10px;color:var(--sub);">Members register as Guests unless authenticated via Core Token.</p>
       </div>
+
+      <!-- EXCLUSIVE SOVEREIGN OWNER LOGIN PANE -->
+      <div id="ownerPane" style="display:none;">
+        <div style="background:rgba(201,168,92,0.1);border:1px dashed var(--gold);padding:6px;border-radius:6px;margin-bottom:10px;font-size:11px;color:var(--gold);">
+          🔒 Restricted to Creator Identity (vex) & Master Key
+        </div>
+        <div class="field owner-field"><label>Owner Identifier</label><input id="ownerIdentifier" value="vex" autocomplete="username"></div>
+        <div class="field owner-field"><label>Owner Password</label><input id="ownerPass" type="password" autocomplete="current-password"></div>
+        <div class="field owner-field"><label>Master Root Security Key</label><input id="ownerMasterKey" type="password" placeholder="Enter Sovereign Root Key"></div>
+        <button class="btn btn-primary full" id="ownerLoginBtn" style="background:var(--crimson-dark);border-color:var(--gold);color:var(--gold);">Access Executive Command</button>
+      </div>
+
+      <!-- Reset Password Pane -->
       <div id="resetPane" style="display:none;">
         <div class="field"><label>Username</label><input id="resetUser"></div>
         <div class="field"><label>Verification Email or Phone</label><input id="resetContact"></div>
@@ -382,6 +465,7 @@
         <button class="btn btn-primary full" id="resetSubmitBtn">Update Password</button>
         <a class="forgot-link" id="backToLoginLink">Back to Sign In</a>
       </div>
+
       <div class="msg-err" id="authErr"></div>
     </div>
   </div>
@@ -510,14 +594,13 @@
         <span id="warRoomTimer">00:00</span>
       </div>
 
-      <div class="channel-header">
-        <span style="display:flex;align-items:center;gap:10px;">
+      <div class="channel-subheader">
+        <div style="display:flex;align-items:center;gap:8px;">
           <button type="button" id="channelBarToggle" class="btn-channel-toggle" title="Browse Channels">
             <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
           </button>
-          <span id="channelNameDisplay">#GENERAL</span>
-          <span id="channelOccupancyDisplay" style="font-size:11.5px;color:var(--sub);"></span>
-        </span>
+          <span id="channelOccupancyDisplay" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sub);">[Cap: 50 Seats]</span>
+        </div>
         <button id="toggleWarRoomBtn" class="btn btn-outline" style="font-size:11px;padding:3px 8px;border-color:var(--gold);color:var(--gold);display:none;">
           War-Room State
         </button>
@@ -559,8 +642,7 @@
 
 <script>
 /* ---------- RIGID SOVEREIGN SECURITY CONSTANTS ---------- */
-// Strict Creator Identification: only user 'vex' OR holder of the Root Key can ever have Owner rank.
-const SOVEREIGN_CREATOR_USERNAME = 'vex';
+const SOVEREIGN_OWNER = 'vex';
 const SOVEREIGN_MASTER_ROOT_KEY = 'TOPV-ROOT-OVERRIDE-2026';
 
 /* ---------- Accordion ---------- */
@@ -681,12 +763,26 @@ async function hashPassword(pw){
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 
-function roleLabelFor(u){
-  if(!u) return 'guest';
-  if(u.isOwner || u.username === SOVEREIGN_CREATOR_USERNAME) return 'owner';
-  if(u.isAdmin) return 'admin';
-  if(u.isCore) return 'core';
+function roleLabelFor(u, uname){
+  const targetName = uname || (u ? u.username : '');
+  if (targetName === SOVEREIGN_OWNER) return 'owner';
+  if (!u) return 'guest';
+  if (u.isAdmin) return 'admin';
+  if (u.isCore) return 'core';
   return 'guest';
+}
+
+/* ---------- Auto-Purge Unauthorized Owners ---------- */
+async function enforceSingleOwnerIntegrity() {
+  try {
+    const snap = await db.collection('users').get();
+    snap.forEach(async doc => {
+      const u = doc.data();
+      if (doc.id !== SOVEREIGN_OWNER && u.isOwner === true) {
+        await db.collection('users').doc(doc.id).update({ isOwner: false, isAdmin: true });
+      }
+    });
+  } catch(e) {}
 }
 
 /* ---------- Live Presence ---------- */
@@ -703,17 +799,22 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('beforeunload', () => { if (currentUser) setLivePresence(false, null); });
 
-/* ---------- Tabs Switching ---------- */
+/* ---------- Tabs Switching (Sign In / Register / Owner Portal) ---------- */
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
   t.classList.add('active'); setErr('');
-  document.getElementById('loginPane').style.display = t.dataset.tab === 'login' ? '' : 'none';
-  document.getElementById('registerPane').style.display = t.dataset.tab === 'register' ? '' : 'none';
+  
+  const tabType = t.dataset.tab;
+  document.getElementById('loginPane').style.display = tabType === 'login' ? '' : 'none';
+  document.getElementById('registerPane').style.display = tabType === 'register' ? '' : 'none';
+  document.getElementById('ownerPane').style.display = tabType === 'owner' ? '' : 'none';
   document.getElementById('resetPane').style.display = 'none';
 }));
+
 document.getElementById('forgotPwdLink').addEventListener('click', () => {
   document.getElementById('loginPane').style.display = 'none';
   document.getElementById('registerPane').style.display = 'none';
+  document.getElementById('ownerPane').style.display = 'none';
   document.getElementById('resetPane').style.display = '';
 });
 document.getElementById('backToLoginLink').addEventListener('click', () => {
@@ -723,17 +824,19 @@ document.getElementById('backToLoginLink').addEventListener('click', () => {
 
 /* ---------- Session Auto-Load ---------- */
 (async function init(){
+  enforceSingleOwnerIntegrity();
   const saved = localStorage.getItem('topv_user');
   if(saved){
     try{
       const snap = await db.collection('users').doc(saved).get();
       if(snap.exists){ 
         currentUser = { username: saved, ...snap.data() }; 
-        // Strict Integrity check for Vex Creator
-        if(currentUser.username === SOVEREIGN_CREATOR_USERNAME) {
+        if(currentUser.username === SOVEREIGN_OWNER) {
           currentUser.isOwner = true;
           currentUser.isAdmin = true;
           currentUser.isCore = true;
+        } else {
+          currentUser.isOwner = false;
         }
         openLobby(); 
         return; 
@@ -743,7 +846,7 @@ document.getElementById('backToLoginLink').addEventListener('click', () => {
   }
 })();
 
-/* ---------- Registration: Hardened Security Model ---------- */
+/* ---------- Member Registration ---------- */
 document.getElementById('regBtn').addEventListener('click', async () => {
   setErr('');
   const username = sanitize(document.getElementById('regUser').value);
@@ -753,6 +856,7 @@ document.getElementById('regBtn').addEventListener('click', async () => {
   const inviteCodeEntered = document.getElementById('regInviteCode').value.trim();
 
   if(!username || username.length < 3) return setErr('Choose a username of at least 3 characters.');
+  if(username === SOVEREIGN_OWNER) return setErr('Sovereign username is reserved.');
   if(!password || password.length < 4) return setErr('Choose a password of at least 4 characters.');
 
   try{
@@ -765,17 +869,9 @@ document.getElementById('regBtn').addEventListener('click', async () => {
       if(userSnap.exists) return 'TAKEN';
 
       const metaData = metaSnap.exists ? metaSnap.data() : {};
-      
-      // HARDENED SECURITY: Only explicit creator name 'vex' or holder of Root Key gains Owner permissions
-      let isOwner = false;
-      let isAdmin = false;
       let isCore = false;
 
-      if (username === SOVEREIGN_CREATOR_USERNAME || inviteCodeEntered === SOVEREIGN_MASTER_ROOT_KEY) {
-        isOwner = true;
-        isAdmin = true;
-        isCore = true;
-      } else if (inviteCodeEntered) {
+      if (inviteCodeEntered) {
         const tokenRef = db.collection('tokens').doc(inviteCodeEntered);
         const tSnap = await tx.get(tokenRef);
         if (tSnap.exists && (tSnap.data().usesRemaining > 0)) {
@@ -786,14 +882,15 @@ document.getElementById('regBtn').addEventListener('click', async () => {
         }
       }
 
+      // No owner permissions can ever be granted through general register
       tx.set(userRef, {
         passwordHash, email: email || '', phone: phone || '',
-        isAdmin, isOwner, isCore,
+        isAdmin: false, isOwner: false, isCore: isCore,
         displayName: username, avatarUrl: DEFAULT_AVATAR, isOnline: true,
         lastSeen: Date.now(), createdAt: Date.now(), activeChannel: null
       });
 
-      return { username, isAdmin, isOwner, isCore };
+      return { username, isAdmin: false, isOwner: false, isCore };
     });
 
     if(result === 'TAKEN') return setErr('That username is already taken.');
@@ -805,7 +902,7 @@ document.getElementById('regBtn').addEventListener('click', async () => {
   }catch(e){ setErr('Database unreachable. Check connection.'); }
 });
 
-/* ---------- Sign In ---------- */
+/* ---------- Standard Member Sign In ---------- */
 document.getElementById('loginBtn').addEventListener('click', async () => {
   setErr('');
   const identifier = document.getElementById('loginIdentifier').value.trim();
@@ -832,18 +929,66 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
       foundDoc.passwordHash = passwordHash;
     }
     
-    // Absolute Sovereign Owner Enforcement
-    if (foundDoc.username === SOVEREIGN_CREATOR_USERNAME) {
-      foundDoc.isOwner = true;
-      foundDoc.isAdmin = true;
-      foundDoc.isCore = true;
-      await db.collection('users').doc(foundDoc.username).update({ isOwner: true, isAdmin: true, isCore: true });
-    }
-
+    // Non-owner standard login
+    foundDoc.isOwner = (foundDoc.username === SOVEREIGN_OWNER);
     currentUser = foundDoc;
     localStorage.setItem('topv_user', currentUser.username);
     openLobby();
   }catch(e){ setErr('Authentication failure.'); }
+});
+
+/* ---------- EXCLUSIVE SOVEREIGN OWNER LOGIN ---------- */
+document.getElementById('ownerLoginBtn').addEventListener('click', async () => {
+  setErr('');
+  const identifier = sanitize(document.getElementById('ownerIdentifier').value);
+  const password = document.getElementById('ownerPass').value;
+  const masterKey = document.getElementById('ownerMasterKey').value.trim();
+
+  if (identifier !== SOVEREIGN_OWNER) {
+    return setErr('Clearance Denied: Unrecognized Owner identity.');
+  }
+  if (masterKey !== SOVEREIGN_MASTER_ROOT_KEY) {
+    return setErr('Invalid Sovereign Master Root Key.');
+  }
+  if (!password) {
+    return setErr('Password required.');
+  }
+
+  try {
+    const passwordHash = await hashPassword(password);
+    const docRef = db.collection('users').doc(SOVEREIGN_OWNER);
+    const docSnap = await docRef.get();
+
+    if (!docSnap.exists) {
+      // First time initialization of sovereign account
+      await docRef.set({
+        passwordHash,
+        isAdmin: true,
+        isOwner: true,
+        isCore: true,
+        displayName: 'Vex (Owner)',
+        avatarUrl: DEFAULT_AVATAR,
+        isOnline: true,
+        lastSeen: Date.now(),
+        createdAt: Date.now(),
+        activeChannel: null
+      });
+      currentUser = { username: SOVEREIGN_OWNER, isOwner: true, isAdmin: true, isCore: true };
+    } else {
+      const data = docSnap.data();
+      if (data.passwordHash && data.passwordHash !== passwordHash) {
+        return setErr('Incorrect Sovereign credentials.');
+      }
+      await docRef.update({ isOwner: true, isAdmin: true, isCore: true, passwordHash });
+      currentUser = { username: SOVEREIGN_OWNER, ...data, isOwner: true, isAdmin: true, isCore: true };
+    }
+
+    localStorage.setItem('topv_user', currentUser.username);
+    showToast('👑 Sovereign Clearance Verified. Welcome, Vex.');
+    openLobby();
+  } catch(e) {
+    setErr('Sovereign terminal authentication failure.');
+  }
 });
 
 /* ---------- Reset Password ---------- */
@@ -872,42 +1017,16 @@ document.getElementById('resetSubmitBtn').addEventListener('click', async () => 
   } catch(e) { setErr('Update rejected.'); }
 });
 
-/* ---------- Infrastructure & Default Sectors ---------- */
-async function initializeInfrastructure() {
-  try {
-    const gen = await db.collection('channels').doc('general').get();
-    if (!gen.exists) {
-      await db.collection('channels').doc('general').set({
-        name: 'General Assembly',
-        isPrivate: false,
-        maxCapacity: 50,
-        createdAt: 1000
-      });
-    }
-    const core = await db.collection('channels').doc('team-core').get();
-    if (!core.exists) {
-      await db.collection('channels').doc('team-core').set({
-        name: 'Command Core',
-        isPrivate: true,
-        maxCapacity: 10,
-        createdAt: 2000
-      });
-    }
-  } catch(e){}
-}
-
-/* ---------- Header Transformation Helper ---------- */
+/* ---------- Header Display Switcher ---------- */
 function setHeaderDisplayMode(mode, roomName = '') {
   const logo = document.getElementById('headerVLogo');
   const badge = document.getElementById('headerRoomBadge');
   const title = document.getElementById('headerRoomTitle');
-  const subtitle = document.getElementById('headerRoomSubtitle');
 
   if (mode === 'chat') {
     logo.style.display = 'none';
     badge.style.display = 'flex';
     title.textContent = '#' + (roomName || 'SECTOR').toUpperCase();
-    subtitle.textContent = 'ACTIVE COMMUNICATIONS';
   } else {
     badge.style.display = 'none';
     logo.style.display = 'block';
@@ -920,7 +1039,6 @@ function openLobby() {
   if (unsubMsg) { unsubMsg(); unsubMsg = null; }
   setLivePresence(true, null);
 
-  // Restore V logo in Header
   setHeaderDisplayMode('lobby');
 
   document.getElementById('auth').style.display = 'none';
@@ -1008,7 +1126,6 @@ async function enterRoom(channelId) {
     return showToast('🔒 Clearance Denied: Core Team Access Token Required.');
   }
 
-  // Enforce Max Capacity
   if (room.maxCapacity && !currentUser.isOwner) {
     try {
       const activeOccupantsSnap = await db.collection('users').where('activeChannel', '==', channelId).get();
@@ -1021,11 +1138,9 @@ async function enterRoom(channelId) {
   currentChannelId = channelId;
   await setLivePresence(true, channelId);
 
-  // Dynamic Switch: Logo -> Room Name in Header
   const activeRoomName = room.name || channelId;
   setHeaderDisplayMode('chat', activeRoomName);
 
-  document.getElementById('channelNameDisplay').textContent = '#' + activeRoomName.toUpperCase();
   document.getElementById('channelOccupancyDisplay').textContent = `[Cap: ${room.maxCapacity || '∞'} Seats]`;
 
   document.getElementById('lobbyView').classList.remove('show');
@@ -1295,7 +1410,7 @@ document.getElementById('burnerToggleBtn').addEventListener('click', () => {
   btn.innerHTML = `<span>🔥 Burner Message: ${isBurnerEnabled ? 'ON' : 'OFF'}</span>`;
 });
 
-/* ---------- Advanced Voice Engine with Live Seconds Counters ---------- */
+/* ---------- Voice Engine with Real-Time Counters ---------- */
 let mediaRecorder = null;
 let audioChunks = [];
 let voiceRecordTimerInterval = null;
@@ -1303,7 +1418,6 @@ let recordingSeconds = 0;
 const recordVoiceBtn = document.getElementById('recordVoiceBtn');
 const recordLiveTimer = document.getElementById('recordLiveTimer');
 
-// Global audio playback state manager
 let activeAudioElement = null;
 let activePlayingMessageId = null;
 let playbackInterval = null;
@@ -1391,7 +1505,6 @@ function toggleVoicePlayback(id) {
   const btn = document.getElementById(`voicePlayBtn-${id}`);
   const timer = document.getElementById(`voiceTimer-${id}`);
 
-  // If already playing this voice, stop it
   if (activePlayingMessageId === id && activeAudioElement) {
     activeAudioElement.pause();
     activeAudioElement = null;
@@ -1401,7 +1514,6 @@ function toggleVoicePlayback(id) {
     return;
   }
 
-  // If another audio was playing, shut it down
   if (activeAudioElement) {
     activeAudioElement.pause();
     clearInterval(playbackInterval);
@@ -1436,7 +1548,7 @@ function toggleVoicePlayback(id) {
   };
 
   audio.play().catch(() => {
-    showToast('Failed to play audio playback.');
+    showToast('Failed to play audio.');
     if (btn) btn.textContent = '▶';
   });
 }
@@ -1567,11 +1679,10 @@ function listenUsers(){
       const uname = d.id;
       allUsersMap[uname] = u;
 
-      // Creator account is impervious to any demotion or deletion
-      const isTargetOwner = !!u.isOwner || (uname === SOVEREIGN_CREATOR_USERNAME);
+      const isTargetOwner = (uname === SOVEREIGN_OWNER);
       const row = document.createElement('div');
       row.className = 'member';
-      const roleBadgeClass = isTargetOwner ? 'owner' : roleLabelFor(u);
+      const roleBadgeClass = isTargetOwner ? 'owner' : roleLabelFor(u, uname);
       const isOnline = u.isOnline && (Date.now() - (u.lastSeen || 0) < 180000);
 
       let modTools = '';
@@ -1605,14 +1716,14 @@ function listenUsers(){
 
 window.toggleAdmin = async function(uname, isCurrentlyAdmin) {
   if (!currentUser.isOwner) return showToast('Permission denied.');
-  if (uname === SOVEREIGN_CREATOR_USERNAME) return showToast('Sovereign account rank is untouchable.');
+  if (uname === SOVEREIGN_OWNER) return showToast('Sovereign account rank is untouchable.');
   await db.collection('users').doc(uname).update({ isAdmin: !isCurrentlyAdmin });
   showToast(`Rank of @${uname} updated.`);
 };
 
 window.kickUser = async function(uname) {
   if (!currentUser.isOwner) return showToast('Permission denied.');
-  if (uname === SOVEREIGN_CREATOR_USERNAME) return showToast('Cannot eradicate Sovereign Creator.');
+  if (uname === SOVEREIGN_OWNER) return showToast('Cannot eradicate Sovereign Creator.');
   if(confirm(`Eradicate member @${uname} from enclave?`)) {
     await db.collection('users').doc(uname).delete();
     showToast(`Member @${uname} purged.`);
@@ -1881,9 +1992,6 @@ function renderCmdResults(q) {
     cmdPaletteResults.appendChild(el);
   });
 }
-
-// Initialize System Infrastructure
-initializeInfrastructure();
 </script>
 </body>
 </html>
