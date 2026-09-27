@@ -13,24 +13,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
 
-<link rel="manifest" id="manifestLink">
-<script>
-  const manifestData = {
-    name: "TOP V Workspace",
-    short_name: "TOP V",
-    start_url: "./",
-    display: "standalone",
-    background_color: "#0d0f12",
-    theme_color: "#A51C30",
-    icons: [{
-      src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%237a1524'/><text y='70' x='50' font-size='60' text-anchor='middle' fill='%23C9A85C' font-family='serif'>V</text></svg>",
-      sizes: "192x192 512x512",
-      type: "image/svg+xml"
-    }]
-  };
-  document.getElementById('manifestLink').setAttribute('href', URL.createObjectURL(new Blob([JSON.stringify(manifestData)], {type: 'application/json'})));
-</script>
-
 <style>
   :root {
     --crimson: #A51C30;
@@ -68,32 +50,25 @@
   .car-brands { display: flex; gap: 26px; align-items: center; justify-content: center; padding-top: 18px; border-top: 1px solid rgba(201,168,92,.25); }
   .brand-icon { width: 30px; height: 30px; fill: #cbd5e1; opacity: .85; }
 
-  /* ---------- Clean, Non-Overlapping Header ---------- */
+  /* ---------- Unified Header Layout Grid ---------- */
   header {
     background: var(--header-bg);
     color: var(--header-text);
-    min-height: 52px;
-    padding: 6px 14px;
-    display: flex;
+    height: 54px;
+    padding: 0 14px;
+    display: grid;
+    grid-template-columns: 80px 1fr 80px;
     align-items: center;
-    justify-content: space-between;
     box-shadow: 0 2px 10px rgba(0,0,0,.15);
     flex-shrink: 0;
     border-bottom: 1px solid var(--border);
     z-index: 40;
-    gap: 8px;
   }
-  .header-left { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-  .header-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-  
-  .header-center {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 0;
-  }
-  .crest { width: 34px; height: 34px; flex-shrink: 0; cursor: pointer; transition: transform .2s ease; }
+  .header-left { display: flex; align-items: center; justify-content: flex-start; }
+  .header-center { display: flex; align-items: center; justify-content: center; min-width: 0; }
+  .header-right { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+
+  .crest { width: 34px; height: 34px; cursor: pointer; transition: transform .2s ease; }
   .crest:hover { transform: scale(1.05); }
 
   .header-room-badge {
@@ -109,9 +84,7 @@
     transition: background 0.15s ease;
     max-width: 100%;
   }
-  .header-room-badge:hover {
-    background: rgba(255, 255, 255, 0.08);
-  }
+  .header-room-badge:hover { background: rgba(255, 255, 255, 0.08); }
   .header-room-title {
     font-family: 'Playfair Display', serif;
     font-size: 15px;
@@ -122,7 +95,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 180px;
+    max-width: 160px;
   }
   .header-room-subtitle {
     font-family: 'JetBrains Mono', monospace;
@@ -150,11 +123,10 @@
 
   @media (max-width: 600px) {
     .btn-text { display: none !important; }
-    header { padding: 4px 8px; }
-    .header-left, .header-right { gap: 4px; }
+    header { padding: 0 8px; grid-template-columns: 45px 1fr 75px; }
     .btn-icon-labeled, #teamToggle { padding: 5px 7px !important; }
     .splash-title { font-size: 22px !important; }
-    .header-room-title { font-size: 13px; max-width: 140px; }
+    .header-room-title { font-size: 13px; max-width: 130px; }
   }
 
   main { flex: 1; display: flex; overflow: hidden; min-height: 0; position: relative; }
@@ -204,7 +176,7 @@
   .btn-add-ch { width: 50px; height: 32px; border-radius: 6px; background: transparent; border: 1px dashed rgba(255,255,255,.3); color: var(--gold); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-top: 4px; }
   .btn-add-ch:hover { background: rgba(255,255,255,.1); border-color: var(--gold); }
 
-  /* ---------- Organized Aside Workspace ---------- */
+  /* ---------- Sidebar Workspace ---------- */
   aside {
     position: fixed;
     top: 0;
@@ -258,22 +230,17 @@
     display: none;
     flex-direction: column;
     gap: 10px;
-    animation: panelSlide .2s ease forwards;
   }
-  @keyframes panelSlide {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .panel-body.open { display: flex; }
-  .panel-body input[type="text"], .panel-body input[type="number"], .panel-body textarea { width: 100%; padding: 7px 11px; font-size: 13.5px; border-radius: 5px; border: 1px solid var(--border); background: var(--card); color: var(--ink); font-family: inherit; }
-  .profile-avatar-wrap { display: flex; align-items: center; gap: 12px; }
+  .panel-body.open { display: flex !important; }
+  .panel-body input[type="text"], .panel-body input[type="number"], .panel-body textarea { width: 100%; padding: 8px 11px; font-size: 13.5px; border-radius: 5px; border: 1px solid var(--border); background: var(--card); color: var(--ink); font-family: inherit; }
+  .profile-avatar-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
   .profile-avatar-wrap img { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--gold); object-fit: cover; }
 
   .status-pulse { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; box-shadow: 0 0 6px currentColor; }
   .status-online { color: #10b981; background: #10b981; }
   .status-offline { color: #64748b; background: #64748b; }
 
-  .action-file-label { font-size: 12px; cursor: pointer; background: var(--card); border: 1px solid var(--border); padding: 5px 9px; border-radius: 4px; color: var(--ink); display: inline-block; text-align: center; }
+  .action-file-label { font-size: 12px; cursor: pointer; background: var(--card); border: 1px solid var(--border); padding: 6px 12px; border-radius: 4px; color: var(--ink); display: inline-block; text-align: center; }
   .action-file-label:hover { border-color: var(--crimson); }
 
   .member { display: flex; align-items: center; gap: 8px; padding: 8px 0; font-size: 13.5px; border-bottom: 1px solid var(--border); }
@@ -291,18 +258,8 @@
   .task-item { font-size: 12.5px; background: var(--card); padding: 6px 8px; border-radius: 4px; border-left: 3px solid var(--gold); display: flex; align-items: center; justify-content: space-between; }
 
   .chatarea { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; position: relative; background-size: cover; background-position: center; background-repeat: no-repeat; }
-  
-  /* Semi-transparent dark overlay over chat background to improve contrast */
-  .chat-scaffold-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(13, 15, 18, 0.45);
-    backdrop-filter: blur(2px);
-    z-index: 1;
-    pointer-events: none;
-  }
+  .chat-scaffold-overlay { position: absolute; inset: 0; background: rgba(13, 15, 18, 0.45); backdrop-filter: blur(2px); z-index: 1; pointer-events: none; }
 
-  /* Pinned Messages Banner */
   #pinnedMessageBanner {
     display: none;
     align-items: center;
@@ -334,18 +291,16 @@
   .btn-channel-toggle:hover { background: var(--card); border-color: var(--gold); color: var(--crimson); }
   .btn-channel-toggle .svg-icon { width: 14px; height: 14px; stroke: currentColor; }
 
-  #messages { flex: 1; overflow-y: auto; padding: 16px 18px; min-height: 0; display: flex; flex-direction: column; gap: 10px; overflow-x: hidden; z-index: 2; position: relative; }
+  #messages { flex: 1; overflow-y: auto; padding: 16px 18px; min-height: 0; display: flex; flex-direction: column; gap: 12px; overflow-x: hidden; z-index: 2; position: relative; }
   
   @keyframes msgPopIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .msg-new-entry { animation: msgPopIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-  /* Message Row & Swipe-to-Reply */
   .msg-row-wrapper {
     position: relative;
     width: 100%;
     display: flex;
     align-items: center;
-    overflow: hidden;
   }
   
   .swipe-reply-icon {
@@ -372,7 +327,7 @@
   .msg-row {
     display: flex;
     gap: 8px;
-    max-width: 82%;
+    max-width: 85%;
     align-items: flex-end;
     position: relative;
     touch-action: pan-y;
@@ -382,6 +337,7 @@
   .msg-row.me { align-self: flex-end; flex-direction: row-reverse; margin-left: auto; }
   .msg-avatar { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--gold); object-fit: cover; flex-shrink: 0; }
   
+  /* Robust Bubble Design */
   .bubble {
     background: var(--bubble-other);
     border: 1px solid var(--border);
@@ -390,39 +346,42 @@
     position: relative;
     color: var(--ink);
     box-shadow: 0 1px 4px rgba(0,0,0,.06);
-    min-width: 140px;
+    min-width: 160px;
     max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
   }
   .msg-row.me .bubble { background: var(--bubble-me); color: #fff; border-color: var(--bubble-me); }
-  .bubble-header { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
-  .bubble .name { font-size: 12px; font-weight: 600; }
+  .bubble-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .bubble .name { font-size: 12px; font-weight: 700; color: var(--crimson); }
   .msg-row.me .bubble .name { color: #fecdd3; }
-  .bubble-tools { margin-left: auto; display: flex; align-items: center; gap: 3px; }
-  .bubble-btn-icon { cursor: pointer; font-size: 11px; opacity: .65; color: inherit; border: none; background: transparent; padding: 0 3px; }
+  .bubble-tools { display: flex; align-items: center; gap: 4px; }
+  .bubble-btn-icon { cursor: pointer; font-size: 13px; opacity: .7; color: inherit; border: none; background: transparent; padding: 0 2px; }
   .bubble-btn-icon:hover { opacity: 1; color: var(--gold); }
-  .bubble .txt { font-size: 15px; line-height: 1.45; word-wrap: break-word; }
-  .bubble .time { font-size: 10px; opacity: .65; margin-top: 3px; text-align: right; }
+  
+  .bubble .txt {
+    font-size: 14.5px;
+    line-height: 1.45;
+    word-break: break-word;
+    white-space: pre-wrap;
+    min-height: 18px;
+    color: inherit;
+  }
+  .bubble .time { font-size: 10px; opacity: .7; text-align: right; margin-top: 2px; }
   pre.code-block { background: #181b22; color: #e2e8f0; padding: 8px 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px; overflow-x: auto; border: 1px solid rgba(255,255,255,.08); margin: 4px 0; }
-  .burner-badge { display: inline-flex; align-items: center; font-size: 10px; background: rgba(220,38,38,.2); color: #f87171; border: 1px solid #f87171; border-radius: 3px; padding: 0 4px; }
+  .burner-badge { font-size: 9.5px; background: rgba(220,38,38,.2); color: #f87171; border: 1px solid #f87171; border-radius: 3px; padding: 1px 4px; font-weight: bold; }
   .msg-row.me .burner-badge { color: #fff; border-color: #fff; }
 
-  /* Message Image Preview */
-  .msg-attached-image {
-    max-width: 100%;
-    max-height: 240px;
-    border-radius: 8px;
-    margin-top: 4px;
-    display: block;
-    cursor: pointer;
-  }
+  .msg-attached-image { max-width: 100%; max-height: 240px; border-radius: 8px; margin-top: 4px; display: block; cursor: pointer; }
 
-  /* Interactive Voice Message Player with Slider */
+  /* Audio player fixing */
   .voice-msg-player {
     display: flex;
     align-items: center;
-    gap: 9px;
-    padding: 5px 2px;
-    min-width: 195px;
+    gap: 10px;
+    padding: 6px 0;
+    min-width: 210px;
     width: 100%;
   }
   .voice-play-btn {
@@ -430,68 +389,22 @@
     color: #111;
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
     flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.18);
-    transition: transform .1s ease;
   }
-  .voice-play-btn:active { transform: scale(0.92); }
-  .voice-meta-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex: 1;
-    min-width: 0;
-  }
-  
-  .voice-seek-slider {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 4px;
-    border-radius: 2px;
-    background: rgba(0,0,0,0.15);
-    outline: none;
-    cursor: pointer;
-  }
-  .msg-row.me .voice-seek-slider { background: rgba(255,255,255,0.3); }
-  .voice-seek-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: var(--gold);
-    box-shadow: 0 0 5px rgba(0,0,0,0.3);
-    cursor: pointer;
-  }
-  .voice-seek-slider::-moz-range-thumb {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: var(--gold);
-    border: none;
-    box-shadow: 0 0 5px rgba(0,0,0,0.3);
-    cursor: pointer;
-  }
-
-  .voice-timer-display {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    opacity: .85;
-    display: flex;
-    justify-content: space-between;
-  }
+  .voice-meta-wrap { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+  .voice-seek-slider { width: 100%; height: 4px; border-radius: 2px; outline: none; cursor: pointer; accent-color: var(--gold); }
+  .voice-timer-display { font-family: 'JetBrains Mono', monospace; font-size: 10px; opacity: .85; display: flex; justify-content: space-between; }
 
   .msg-actions { display: flex; align-items: center; gap: 2px; }
-  .react-btn-trigger { opacity: 0; transition: opacity .15s ease; background: transparent; border: none; cursor: pointer; font-size: 13px; padding: 2px 4px; margin: 0 2px; color: var(--sub); }
+  .react-btn-trigger { opacity: 0; transition: opacity .15s ease; background: transparent; border: none; cursor: pointer; font-size: 14px; padding: 2px 4px; color: var(--sub); }
   .msg-row:hover .react-btn-trigger { opacity: 0.85; }
   @media (hover: none) { .react-btn-trigger { opacity: 0.7 !important; } }
   
@@ -500,12 +413,12 @@
   .react-picker span { cursor: pointer; font-size: 16px; transition: transform .1s; padding: 1px 3px; }
   .react-picker span:hover { transform: scale(1.25); }
 
-  .reactions-container { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
-  .reaction-pill { background: rgba(0,0,0,0.06); border: 1px solid var(--border); border-radius: 10px; padding: 1px 6px; font-size: 11px; display: inline-flex; align-items: center; gap: 3px; cursor: pointer; user-select: none; transition: .1s; }
+  .reactions-container { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .reaction-pill { background: rgba(0,0,0,0.06); border: 1px solid var(--border); border-radius: 10px; padding: 1px 6px; font-size: 11px; display: inline-flex; align-items: center; gap: 3px; cursor: pointer; user-select: none; }
   .msg-row.me .reaction-pill { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #fff; }
   .reaction-pill.user-reacted { border-color: var(--gold); font-weight: bold; }
 
-  .quote-preview { border-left: 2px solid var(--gold); padding: 2px 6px; margin-bottom: 4px; font-size: 11px; background: rgba(0,0,0,0.05); border-radius: 2px; opacity: 0.85; }
+  .quote-preview { border-left: 2px solid var(--gold); padding: 3px 6px; margin-bottom: 4px; font-size: 11px; background: rgba(0,0,0,0.05); border-radius: 2px; }
   .msg-row.me .quote-preview { background: rgba(255,255,255,0.15); border-left-color: #fff; }
 
   .input-bar-container { padding: 8px 16px; background: var(--card); border-top: 1px solid var(--border); flex-shrink: 0; z-index: 5; }
@@ -513,11 +426,11 @@
   .toggle-btn-small { background: var(--bg); border: 1px solid var(--border); color: var(--ink); border-radius: 12px; padding: 3px 10px; font-size: 11.5px; cursor: pointer; font-family: inherit; }
   .toggle-btn-small.active { background: var(--danger); color: #fff; border-color: var(--danger); }
   
-  #replyBanner { display: none; align-items: center; justify-content: space-between; background: var(--panel-bg); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; margin-bottom: 6px; font-size: 12px; animation: panelSlide 0.2s ease; }
+  #replyBanner { display: none; align-items: center; justify-content: space-between; background: var(--panel-bg); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; margin-bottom: 6px; font-size: 12px; }
   #replyBanner span { color: var(--sub); text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 85%; }
   #replyCancelBtn { background: transparent; border: none; cursor: pointer; color: var(--danger); font-weight: bold; font-size: 14px; }
 
-  form#sendForm { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 24px; padding: 3px 8px; position: relative; }
+  form#sendForm { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 24px; padding: 3px 8px; }
   form#sendForm input#msgInput { flex: 1; min-width: 0; border: none; background: transparent; color: var(--ink); font-family: inherit; font-size: 15px; padding: 8px 4px; }
   .circle-btn { border-radius: 50%; width: 34px; height: 34px; padding: 0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; border: none; }
   
@@ -570,7 +483,6 @@
     </button>
   </div>
 
-  <!-- Perfectly Centered: Logo in Lobby / Clickable Room Name inside chat to return to Lobby -->
   <div class="header-center" id="headerCenterZone">
     <svg id="headerVLogo" class="crest" viewBox="0 0 48 48" onclick="openLobby()"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#7a1524" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Playfair Display', serif" font-size="20" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
     <div id="headerRoomBadge" class="header-room-badge" style="display:none;" onclick="openLobby()" title="Click to Return to Sectors Hub">
@@ -709,8 +621,11 @@
             <img id="myAvatarImg" src="" alt="Avatar">
             <label class="action-file-label">Change Photo<input type="file" id="avatarFileInput" accept="image/*" style="display:none;"></label>
           </div>
-          <input type="text" id="displayNameInput" placeholder="Display Name">
-          <button class="btn btn-primary" id="saveProfileBtn" style="font-size:12px;padding:6px;justify-content:center;">Save Profile</button>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <label style="font-size:11px;color:var(--sub);text-transform:uppercase;">Display Name</label>
+            <input type="text" id="displayNameInput" placeholder="Your display name">
+          </div>
+          <button class="btn btn-primary" id="saveProfileBtn" style="font-size:12px;padding:7px;justify-content:center;margin-top:4px;">Save Profile</button>
         </div>
       </div>
 
@@ -855,11 +770,9 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
-/* ---------- RIGID SOVEREIGN SECURITY CONSTANTS ---------- */
 const SOVEREIGN_OWNER = 'vex';
 const SOVEREIGN_MASTER_ROOT_KEY = 'TOPV-ROOT-OVERRIDE-2026';
 
-/* ---------- Single Exclusive Accordion ---------- */
 function toggleAccordion(panelId, headElem) {
   const targetPanel = document.getElementById(panelId);
   const isTargetOpen = targetPanel.classList.contains('open');
@@ -878,7 +791,6 @@ function toggleAccordion(panelId, headElem) {
   }
 }
 
-/* ---------- Audio Engine ---------- */
 let audioCtx = null;
 function getAudioContext() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -906,7 +818,6 @@ function playTactileSound(type) {
   } catch(e) {}
 }
 
-/* ---------- Splash Screen Auto-Dismiss ---------- */
 function dismissSplash() {
   const splash = document.getElementById('splashScreen');
   if (splash) { 
@@ -918,7 +829,6 @@ function dismissSplash() {
 setTimeout(dismissSplash, 900);
 document.getElementById('splashScreen')?.addEventListener('click', dismissSplash);
 
-/* ---------- Notification Toast ---------- */
 function showToast(msg) {
   const box = document.getElementById('toastBox');
   const toast = document.createElement('div');
@@ -932,7 +842,6 @@ function showToast(msg) {
   }, 3200);
 }
 
-/* ---------- Theme Switcher ---------- */
 const themeToggleBtn = document.getElementById('themeToggle');
 const sunIcon = document.getElementById('themeIconSun');
 const moonIcon = document.getElementById('themeIconMoon');
@@ -945,7 +854,6 @@ function applyTheme(theme) {
 applyTheme(localStorage.getItem('topv_theme') || 'light');
 themeToggleBtn.addEventListener('click', () => applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
 
-/* ---------- Firebase Initialisation ---------- */
 const firebaseConfig = {
   apiKey: "AIzaSyDqpxJdkGO75kefy1rN8zE34Fsm98iEMcQ",
   authDomain: "top-v-9abfb.firebaseapp.com",
@@ -987,7 +895,6 @@ async function hashPassword(pw){
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 
-/* ---------- Auto-Purge Unauthorized Owners ---------- */
 async function enforceSingleOwnerIntegrity() {
   try {
     const snap = await db.collection('users').get();
@@ -1000,7 +907,6 @@ async function enforceSingleOwnerIntegrity() {
   } catch(e) {}
 }
 
-/* ---------- Live Presence & Activity Broadcasting ---------- */
 async function setLivePresence(isOnline, activeChannel = null, activity = '') {
   if (!currentUser) return;
   try { 
@@ -1016,7 +922,6 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('beforeunload', () => { if (currentUser) setLivePresence(false, null, ''); });
 
-/* ---------- Tabs Switching ---------- */
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
   t.classList.add('active'); setErr('');
@@ -1039,7 +944,6 @@ document.getElementById('backToLoginLink').addEventListener('click', () => {
   document.getElementById('loginPane').style.display = '';
 });
 
-/* ---------- Session Auto-Load ---------- */
 (async function init(){
   enforceSingleOwnerIntegrity();
   const saved = localStorage.getItem('topv_user');
@@ -1063,7 +967,6 @@ document.getElementById('backToLoginLink').addEventListener('click', () => {
   }
 })();
 
-/* ---------- Member Registration ---------- */
 document.getElementById('regBtn').addEventListener('click', async () => {
   setErr('');
   const username = sanitize(document.getElementById('regUser').value);
@@ -1118,7 +1021,6 @@ document.getElementById('regBtn').addEventListener('click', async () => {
   }catch(e){ setErr('Database unreachable. Check connection.'); }
 });
 
-/* ---------- Standard Member Sign In ---------- */
 document.getElementById('loginBtn').addEventListener('click', async () => {
   setErr('');
   const identifier = document.getElementById('loginIdentifier').value.trim();
@@ -1152,25 +1054,16 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
   }catch(e){ setErr('Authentication failure.'); }
 });
 
-/* ---------- PRIVATE ROOT TERMINAL AUTHENTICATION ---------- */
 document.getElementById('ownerLoginBtn').addEventListener('click', async () => {
   setErr('');
   const identifier = sanitize(document.getElementById('ownerIdentifier').value);
   const password = document.getElementById('ownerPass').value;
   const masterKey = document.getElementById('ownerMasterKey').value.trim();
 
-  if (!identifier) {
-    return setErr('Security handle is required.');
-  }
-  if (identifier !== SOVEREIGN_OWNER) {
-    return setErr('Clearance Denied: Handle unrecognized.');
-  }
-  if (masterKey !== SOVEREIGN_MASTER_ROOT_KEY) {
-    return setErr('Invalid Root Clearance Key.');
-  }
-  if (!password) {
-    return setErr('Password required.');
-  }
+  if (!identifier) return setErr('Security handle is required.');
+  if (identifier !== SOVEREIGN_OWNER) return setErr('Clearance Denied: Handle unrecognized.');
+  if (masterKey !== SOVEREIGN_MASTER_ROOT_KEY) return setErr('Invalid Root Clearance Key.');
+  if (!password) return setErr('Password required.');
 
   try {
     const passwordHash = await hashPassword(password);
@@ -1179,24 +1072,14 @@ document.getElementById('ownerLoginBtn').addEventListener('click', async () => {
 
     if (!docSnap.exists) {
       await docRef.set({
-        passwordHash,
-        isAdmin: true,
-        isOwner: true,
-        isCore: true,
-        displayName: 'Root Administrator',
-        avatarUrl: DEFAULT_AVATAR,
-        isOnline: true,
-        lastSeen: Date.now(),
-        createdAt: Date.now(),
-        activeChannel: null,
-        currentActivity: ''
+        passwordHash, isAdmin: true, isOwner: true, isCore: true,
+        displayName: 'Root Administrator', avatarUrl: DEFAULT_AVATAR, isOnline: true,
+        lastSeen: Date.now(), createdAt: Date.now(), activeChannel: null, currentActivity: ''
       });
       currentUser = { username: SOVEREIGN_OWNER, isOwner: true, isAdmin: true, isCore: true };
     } else {
       const data = docSnap.data();
-      if (data.passwordHash && data.passwordHash !== passwordHash) {
-        return setErr('Incorrect credentials.');
-      }
+      if (data.passwordHash && data.passwordHash !== passwordHash) return setErr('Incorrect credentials.');
       await docRef.update({ isOwner: true, isAdmin: true, isCore: true, passwordHash });
       currentUser = { username: SOVEREIGN_OWNER, ...data, isOwner: true, isAdmin: true, isCore: true };
     }
@@ -1209,7 +1092,6 @@ document.getElementById('ownerLoginBtn').addEventListener('click', async () => {
   }
 });
 
-/* ---------- Reset Password ---------- */
 document.getElementById('resetSubmitBtn').addEventListener('click', async () => {
   setErr('');
   const user = sanitize(document.getElementById('resetUser').value);
@@ -1235,7 +1117,6 @@ document.getElementById('resetSubmitBtn').addEventListener('click', async () => 
   } catch(e) { setErr('Update rejected.'); }
 });
 
-/* ---------- Header Display Switcher ---------- */
 function setHeaderDisplayMode(mode, roomName = '') {
   const logo = document.getElementById('headerVLogo');
   const badge = document.getElementById('headerRoomBadge');
@@ -1253,7 +1134,6 @@ function setHeaderDisplayMode(mode, roomName = '') {
   }
 }
 
-/* ---------- Lobby Operations ---------- */
 function openLobby() {
   dismissSplash();
   if (unsubMsg) { unsubMsg(); unsubMsg = null; }
@@ -1267,6 +1147,7 @@ function openLobby() {
   document.getElementById('lobbyView').classList.add('show');
   
   document.getElementById('teamToggle').style.display = 'none';
+  document.getElementById('panicBtn').style.display = 'none';
   document.getElementById('logoutBtn').style.display = 'inline-flex';
 
   const canManage = (currentUser.isOwner || currentUser.isAdmin);
@@ -1334,7 +1215,6 @@ function listenChannels() {
   });
 }
 
-/* ---------- Connecting to Room (Chat View) ---------- */
 async function enterRoom(channelId) {
   const room = channelsData[channelId] || {};
   const isPriv = room.isPrivate || (channelId === 'team-core');
@@ -1395,7 +1275,6 @@ async function enterRoom(channelId) {
   }
 }
 
-/* ---------- Global Audio State with Seek Navigation ---------- */
 let activeAudioElement = null;
 let activePlayingMessageId = null;
 let isAudioSeeking = false;
@@ -1434,9 +1313,7 @@ function toggleVoicePlayback(id) {
   activePlayingMessageId = id;
   if (btn) btn.textContent = '❚❚';
 
-  if (slider && slider.value > 0) {
-    audio.currentTime = parseFloat(slider.value);
-  }
+  if (slider && slider.value > 0) audio.currentTime = parseFloat(slider.value);
 
   audio.onloadedmetadata = () => {
     const total = data.duration || Math.round(audio.duration) || 0;
@@ -1448,10 +1325,7 @@ function toggleVoicePlayback(id) {
     if (isAudioSeeking) return;
     const cur = audio.currentTime;
     const total = data.duration || audio.duration || 0;
-    if (slider) {
-      slider.max = total;
-      slider.value = cur;
-    }
+    if (slider) { slider.max = total; slider.value = cur; }
     if (curTimeEl) curTimeEl.textContent = formatAudioTime(cur);
     if (totalTimeEl) totalTimeEl.textContent = formatAudioTime(total);
   };
@@ -1473,13 +1347,11 @@ function toggleVoicePlayback(id) {
 function seekVoiceAudio(id, targetTime) {
   const curTimeEl = document.getElementById(`voiceCurTime-${id}`);
   if (curTimeEl) curTimeEl.textContent = formatAudioTime(targetTime);
-
   if (activePlayingMessageId === id && activeAudioElement) {
     activeAudioElement.currentTime = targetTime;
   }
 }
 
-/* ---------- Swipe to Reply Handler ---------- */
 function attachSwipeToReply(rowElement, msgId) {
   let startX = 0, currentX = 0, isDragging = false;
   const triggerDistance = 60;
@@ -1495,7 +1367,6 @@ function attachSwipeToReply(rowElement, msgId) {
     if (!isDragging) return;
     currentX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
     const diffX = currentX - startX;
-
     const limitedDiff = Math.max(-90, Math.min(90, diffX));
     rowElement.style.transform = `translateX(${limitedDiff}px)`;
 
@@ -1506,10 +1377,7 @@ function attachSwipeToReply(rowElement, msgId) {
         icon.className = limitedDiff > 0 ? 'swipe-reply-icon left' : 'swipe-reply-icon right';
       }
     } else {
-      if (icon) {
-        icon.style.opacity = '0';
-        icon.style.transform = 'scale(0.6)';
-      }
+      if (icon) { icon.style.opacity = '0'; icon.style.transform = 'scale(0.6)'; }
     }
   }
 
@@ -1520,11 +1388,7 @@ function attachSwipeToReply(rowElement, msgId) {
     rowElement.style.transition = 'transform 0.22s cubic-bezier(0.16, 1, 0.3, 1)';
     rowElement.style.transform = 'translateX(0px)';
 
-    if (icon) {
-      icon.style.opacity = '0';
-      icon.style.transform = 'scale(0.6)';
-    }
-
+    if (icon) { icon.style.opacity = '0'; icon.style.transform = 'scale(0.6)'; }
     if (Math.abs(diffX) >= triggerDistance) {
       if (window.navigator.vibrate) window.navigator.vibrate(25);
       setReplyTarget(msgId);
@@ -1534,13 +1398,8 @@ function attachSwipeToReply(rowElement, msgId) {
   rowElement.addEventListener('touchstart', onStart, { passive: true });
   rowElement.addEventListener('touchmove', onMove, { passive: true });
   rowElement.addEventListener('touchend', onEnd);
-
-  rowElement.addEventListener('mousedown', onStart);
-  window.addEventListener('mousemove', onMove);
-  window.addEventListener('mouseup', onEnd);
 }
 
-/* ---------- Pinned Messages Feature ---------- */
 function listenPinnedMessage() {
   if (unsubPinned) unsubPinned();
   unsubPinned = db.collection('channels').doc(currentChannelId).onSnapshot(doc => {
@@ -1575,9 +1434,7 @@ async function pinMessage(msgId) {
   showToast('Directive pinned to sector.');
 }
 
-/* ---------- Messaging Stream & Interaction ---------- */
 let isFirstMessagesLoad = true;
-
 function listenMessages(){
   if(unsubMsg) unsubMsg();
   isFirstMessagesLoad = true;
@@ -1632,7 +1489,6 @@ function renderSingleMessage(id, data, isNewEntry = false){
   if(document.getElementById(`msg-wrap-${id}`)) return;
   
   const isMe = currentUser && (data.user === currentUser.username);
-  
   const wrapper = document.createElement('div');
   wrapper.className = `msg-row-wrapper ${isNewEntry ? 'msg-new-entry' : ''}`;
   wrapper.id = `msg-wrap-${id}`;
@@ -1659,10 +1515,8 @@ function renderSingleMessage(id, data, isNewEntry = false){
         <button type="button" class="voice-play-btn" id="voicePlayBtn-${id}" onclick="toggleVoicePlayback('${id}')">▶</button>
         <div class="voice-meta-wrap">
           <input type="range" class="voice-seek-slider" id="voiceSlider-${id}" min="0" max="${totalSecs}" value="0" step="0.2"
-            onmousedown="isAudioSeeking=true" 
-            ontouchstart="isAudioSeeking=true"
-            oninput="seekVoiceAudio('${id}', this.value)" 
-            onchange="isAudioSeeking=false; seekVoiceAudio('${id}', this.value)">
+            onmousedown="isAudioSeeking=true" ontouchstart="isAudioSeeking=true"
+            oninput="seekVoiceAudio('${id}', this.value)" onchange="isAudioSeeking=false; seekVoiceAudio('${id}', this.value)">
           <div class="voice-timer-display">
             <span id="voiceCurTime-${id}">0:00</span>
             <span id="voiceTotalTime-${id}">${durFormat}</span>
@@ -1679,8 +1533,8 @@ function renderSingleMessage(id, data, isNewEntry = false){
   }
 
   const isPrivileged = (currentUser.isOwner || currentUser.isAdmin);
-  const pinBtn = isPrivileged ? `<button class="bubble-btn-icon" onclick="pinMessage('${id}')" title="Pin Directive">📌</button>` : '';
-  const deleteBtn = (isMe || isPrivileged) ? `<button class="bubble-btn-icon" onclick="deleteMessage('${id}')" title="Erase Record">×</button>` : '';
+  const pinBtn = isPrivileged ? `<button class="bubble-btn-icon" onclick="pinMessage('${id}')" title="Pin">📌</button>` : '';
+  const deleteBtn = (isMe || isPrivileged) ? `<button class="bubble-btn-icon" onclick="deleteMessage('${id}')" title="Delete">✕</button>` : '';
 
   wrapper.innerHTML = `
     <div class="swipe-reply-icon left">↩</div>
@@ -1797,7 +1651,6 @@ async function deleteMessage(id){
   try { await db.collection('messages').doc(id).delete(); } catch(e){}
 }
 
-/* ---------- Send Message Dispatcher ---------- */
 document.getElementById('sendForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const input = document.getElementById('msgInput');
@@ -1830,7 +1683,6 @@ document.getElementById('sendForm').addEventListener('submit', async (e) => {
   }
 });
 
-/* ---------- Live Typing Indicator Listener ---------- */
 let typingDebounceTimer = null;
 document.getElementById('msgInput').addEventListener('input', () => {
   if (!currentUser) return;
@@ -1841,7 +1693,6 @@ document.getElementById('msgInput').addEventListener('input', () => {
   }, 1800);
 });
 
-/* ---------- Direct In-Chat Image Sending with Canvas Compression ---------- */
 document.getElementById('chatImageFileInput').addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (!file || !currentUser) return;
@@ -1891,7 +1742,6 @@ document.getElementById('chatImageFileInput').addEventListener('change', async (
   reader.readAsDataURL(file);
 });
 
-/* ---------- Burner Toggle ---------- */
 document.getElementById('burnerToggleBtn').addEventListener('click', () => {
   isBurnerEnabled = !isBurnerEnabled;
   const btn = document.getElementById('burnerToggleBtn');
@@ -1899,7 +1749,6 @@ document.getElementById('burnerToggleBtn').addEventListener('click', () => {
   btn.innerHTML = `<span>🔥 Burner Message: ${isBurnerEnabled ? 'ON' : 'OFF'}</span>`;
 });
 
-/* ---------- Voice Engine with Real-Time Counters ---------- */
 let mediaRecorder = null;
 let audioChunks = [];
 let voiceRecordTimerInterval = null;
@@ -1979,7 +1828,6 @@ function stopRecordingUI() {
   clearInterval(voiceRecordTimerInterval);
 }
 
-/* ---------- Export Operations Log (Owner Feature) ---------- */
 document.getElementById('exportChatBtn')?.addEventListener('click', async () => {
   if (!currentUser.isOwner) return showToast('Clearance required.');
   const snap = await db.collection('messages').where('channel', '==', currentChannelId).get();
@@ -2003,7 +1851,6 @@ document.getElementById('exportChatBtn')?.addEventListener('click', async () => 
   showToast('Operations log downloaded.');
 });
 
-/* ---------- Room Management: Capacity, Lock, Rename ---------- */
 window.setRoomCapacity = async function(id) {
   if(!currentUser.isOwner && !currentUser.isAdmin) return;
   const currentCap = channelsData[id]?.maxCapacity || 25;
@@ -2026,11 +1873,7 @@ function handleCreateRoomModal() {
   const isPriv = confirm('Make this room Private (Core Team only)?\n[OK = Private 🔒, Cancel = Public]');
 
   db.collection('channels').doc(id).set({
-    name,
-    isPrivate: isPriv,
-    maxCapacity: cap,
-    createdAt: Date.now(),
-    createdBy: currentUser.username
+    name, isPrivate: isPriv, maxCapacity: cap, createdAt: Date.now(), createdBy: currentUser.username
   }).then(() => {
     showToast(`Sector #${id} constructed successfully.`);
   }).catch(() => {
@@ -2064,7 +1907,6 @@ window.purgeRoom = async function(id) {
   }
 };
 
-/* ---------- Dynamic Invite Tokens (Owner Only) ---------- */
 document.getElementById('generateTokenBtn')?.addEventListener('click', async () => {
   if(!currentUser.isOwner) return;
   const code = (document.getElementById('newTokenCodeInput').value || '').trim();
@@ -2072,10 +1914,7 @@ document.getElementById('generateTokenBtn')?.addEventListener('click', async () 
   if(!code) return showToast('Enter token code.');
 
   await db.collection('tokens').doc(code).set({
-    code,
-    usesRemaining: uses,
-    issuedBy: currentUser.username,
-    createdAt: Date.now()
+    code, usesRemaining: uses, issuedBy: currentUser.username, createdAt: Date.now()
   });
   document.getElementById('newTokenCodeInput').value = '';
   showToast(`Token ${code} activated for ${uses} redemptions.`);
@@ -2100,7 +1939,6 @@ window.revokeToken = async function(tokenId) {
   if(currentUser.isOwner) await db.collection('tokens').doc(tokenId).delete();
 };
 
-/* ---------- Member Redeem Code In Lobby ---------- */
 document.getElementById('openRedeemCodeBtn').addEventListener('click', async () => {
   const code = prompt('Enter Core Access Token:');
   if(!code) return;
@@ -2116,7 +1954,6 @@ document.getElementById('openRedeemCodeBtn').addEventListener('click', async () 
   }
 });
 
-/* ---------- Workspace Members List with Live Activity Tracking ---------- */
 function listenUsers(){
   if(unsubUsers) unsubUsers();
   unsubUsers = db.collection('users').onSnapshot(snap => {
@@ -2167,7 +2004,6 @@ function listenUsers(){
       list.appendChild(row);
     });
 
-    // Update Header Live Subtitle (Typing / Recording alerts)
     const subEl = document.getElementById('headerActivitySubtitle');
     if (subEl && document.getElementById('chat').classList.contains('show')) {
       if (activeOccupantsActivities.length > 0) {
@@ -2197,7 +2033,6 @@ window.kickUser = async function(uname) {
   }
 };
 
-/* ---------- Ops Kanban ---------- */
 function listenTasks(){
   if(unsubTasks) unsubTasks();
   unsubTasks = db.collection('tasks').orderBy('createdAt','desc').limit(25).onSnapshot(snap=>{
@@ -2223,7 +2058,6 @@ document.getElementById('addTaskBtn').addEventListener('click', async()=>{
 });
 async function deleteTask(id){ await db.collection('tasks').doc(id).delete(); }
 
-/* ---------- Scratchpad Sync ---------- */
 function listenScratchpad(){
   if(unsubScratchpad) unsubScratchpad();
   unsubScratchpad = db.collection('meta').doc('scratchpad').onSnapshot(doc => {
@@ -2239,7 +2073,6 @@ document.getElementById('saveScratchpadBtn').addEventListener('click', async () 
   showToast('Operational scratchpad synchronized.');
 });
 
-/* ---------- File Vault ---------- */
 function listenVault(){
   if(unsubVault) unsubVault();
   unsubVault = db.collection('vault').orderBy('createdAt','desc').limit(15).onSnapshot(snap=>{
@@ -2285,7 +2118,6 @@ document.getElementById('vaultFileInput').addEventListener('change', async (e) =
 });
 async function deleteVaultFile(id){ await db.collection('vault').doc(id).delete(); }
 
-/* ---------- Profile & Wallpaper Updates ---------- */
 document.getElementById('saveProfileBtn').addEventListener('click', async () => {
   const newName = document.getElementById('displayNameInput').value.trim();
   if(!newName) return;
@@ -2327,7 +2159,6 @@ document.getElementById('clearWallpaperBtn').addEventListener('click', () => {
 const savedWp = localStorage.getItem('topv_wallpaper');
 if(savedWp) document.getElementById('chatArea').style.backgroundImage = `url('${savedWp}')`;
 
-/* ---------- Core Invite Code Update ---------- */
 document.getElementById('saveInviteCodeBtn').addEventListener('click', async () => {
   const code = document.getElementById('coreInviteInput').value.trim();
   if(!code) return;
@@ -2335,7 +2166,6 @@ document.getElementById('saveInviteCodeBtn').addEventListener('click', async () 
   showToast('Enclave invite code updated.');
 });
 
-/* ---------- War Room State ---------- */
 let warRoomActive = false;
 document.getElementById('toggleWarRoomBtn').addEventListener('click', () => {
   warRoomActive = !warRoomActive;
@@ -2355,7 +2185,6 @@ document.getElementById('toggleWarRoomBtn').addEventListener('click', () => {
   }
 });
 
-/* ---------- Sidebar Toggle ---------- */
 const aside = document.getElementById('teamAside');
 const asideBackdrop = document.getElementById('asideBackdrop');
 const channelBar = document.getElementById('channelBar');
@@ -2376,7 +2205,6 @@ document.getElementById('channelBarToggle').addEventListener('click', () => {
   channelBar.classList.toggle('collapsed');
 });
 
-/* ---------- Panic & Logout ---------- */
 document.getElementById('panicBtn').addEventListener('click', async () => {
   if(!confirm(`PURGE RECORD: Erase all communications in #${currentChannelId.toUpperCase()}?`)) return;
   const snap = await db.collection('messages').where('channel', '==', currentChannelId).get();
