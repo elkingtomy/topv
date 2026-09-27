@@ -9,11 +9,9 @@
 <meta name="apple-mobile-web-app-title" content="TOP V">
 <title>TOP V</title>
 
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
 
-<!-- PWA Manifest Injection -->
 <link rel="manifest" id="manifestLink">
 <script>
   const manifestData = {
@@ -23,17 +21,13 @@
     display: "standalone",
     background_color: "#0d0f12",
     theme_color: "#A51C30",
-    icons: [
-      {
-        src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%237a1524'/><text y='70' x='50' font-size='60' text-anchor='middle' fill='%23C9A85C' font-family='serif'>V</text></svg>",
-        sizes: "192x192 512x512",
-        type: "image/svg+xml"
-      }
-    ]
+    icons: [{
+      src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%237a1524'/><text y='70' x='50' font-size='60' text-anchor='middle' fill='%23C9A85C' font-family='serif'>V</text></svg>",
+      sizes: "192x192 512x512",
+      type: "image/svg+xml"
+    }]
   };
-  const stringManifest = JSON.stringify(manifestData);
-  const blobManifest = new Blob([stringManifest], {type: 'application/json'});
-  document.getElementById('manifestLink').setAttribute('href', URL.createObjectURL(blobManifest));
+  document.getElementById('manifestLink').setAttribute('href', URL.createObjectURL(new Blob([JSON.stringify(manifestData)], {type: 'application/json'})));
 </script>
 
 <style>
@@ -77,16 +71,7 @@
   .header-left { display: flex; align-items: center; gap: 8px; z-index: 2; }
   .header-right { display: flex; align-items: center; gap: 6px; z-index: 2; }
   
-  .header-center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-  }
+  .header-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; pointer-events: none; }
   .crest { width: 34px; height: 34px; flex-shrink: 0; }
 
   .btn { cursor: pointer; border: 1px solid transparent; border-radius: 6px; padding: 6px 12px; font-family: inherit; font-size: 13.5px; transition: .15s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; }
@@ -101,7 +86,6 @@
   .btn-icon-labeled.danger:hover { background: var(--crimson-dark); color: #fff; border-color: var(--danger); }
 
   .svg-icon { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
   .theme-toggle-btn { background: transparent; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; }
   .theme-toggle-btn:hover { background: rgba(255,255,255,.15); border-color: var(--gold); }
 
@@ -134,8 +118,10 @@
   
   .channel-bar { width: 72px; background: var(--header-bg); display: flex; flex-direction: column; align-items: center; padding: 12px 0; gap: 8px; border-right: 1px solid rgba(255,255,255,.1); flex-shrink: 0; z-index: 30; overflow-y: auto; transition: width .22s ease, padding .22s ease; }
   .channel-bar.collapsed { width: 0; padding: 0; border-right: none; }
-  .ch-btn { width: 50px; height: 44px; border-radius: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; transition: .15s; text-transform: uppercase; letter-spacing: 0.5px; overflow: hidden; text-overflow: ellipsis; padding: 0 4px; }
+  .ch-btn { width: 50px; height: 44px; border-radius: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; transition: .15s; text-transform: uppercase; letter-spacing: 0.5px; overflow: hidden; text-overflow: ellipsis; padding: 0 4px; position: relative; }
   .ch-btn:hover, .ch-btn.active { background: var(--gold); color: #111; border-color: #fff; }
+  .ch-btn.locked::after { content: '🔒'; position: absolute; bottom: 2px; right: 2px; font-size: 8px; }
+  
   .btn-add-ch { width: 50px; height: 32px; border-radius: 6px; background: transparent; border: 1px dashed rgba(255,255,255,.3); color: var(--gold); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-top: 4px; }
   .btn-add-ch:hover { background: rgba(255,255,255,.1); border-color: var(--gold); }
 
@@ -169,6 +155,8 @@
   .role-badge { font-size: 9.5px; padding: 1px 4px; border-radius: 3px; font-weight: bold; }
   .role-badge.owner { background: var(--crimson); color: #fff; }
   .role-badge.admin { background: var(--gold); color: #111; }
+  .role-badge.core { background: #3b82f6; color: #fff; }
+  .role-badge.guest { background: #64748b; color: #fff; }
   
   .member-controls { display: flex; align-items: center; gap: 5px; margin-left: auto; }
   .action-btn-small { border: 1px solid var(--border); background: var(--card); color: var(--ink); border-radius: 4px; font-size: 11px; padding: 3px 6px; cursor: pointer; font-family: inherit; }
@@ -181,35 +169,13 @@
   .chatarea { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; position: relative; background-size: cover; background-position: center; background-repeat: no-repeat; }
   .channel-header { background: var(--card); border-bottom: 1px solid var(--border); padding: 8px 18px; font-size: 15px; font-weight: 600; color: var(--gold); display: flex; align-items: center; justify-content: flex-start; letter-spacing: .5px; }
   
-  .btn-channel-toggle {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--ink);
-    padding: 5px 10px;
-    border-radius: 6px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: .15s ease;
-  }
-  .btn-channel-toggle:hover {
-    background: var(--card);
-    border-color: var(--gold);
-    color: var(--crimson);
-  }
-  .btn-channel-toggle .svg-icon {
-    width: 16px;
-    height: 16px;
-    stroke: currentColor;
-  }
+  .btn-channel-toggle { background: var(--bg); border: 1px solid var(--border); color: var(--ink); padding: 5px 10px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: .15s ease; }
+  .btn-channel-toggle:hover { background: var(--card); border-color: var(--gold); color: var(--crimson); }
+  .btn-channel-toggle .svg-icon { width: 16px; height: 16px; stroke: currentColor; }
 
   #messages { flex: 1; overflow-y: auto; padding: 16px 18px; min-height: 0; display: flex; flex-direction: column; gap: 10px; }
   
-  @keyframes msgPopIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes msgPopIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .msg-new-entry { animation: msgPopIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
   .msg-row { display: flex; gap: 8px; max-width: 78%; align-items: flex-end; position: relative; }
@@ -317,7 +283,7 @@
     <div class="card">
       <svg class="crest" viewBox="0 0 48 48" style="width:46px;height:46px;margin:0 auto 8px;display:block;"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#A51C30" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Playfair Display', serif" font-size="18" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
       <h2>TOP V</h2>
-      <p class="sub">A private space for your team of five</p>
+      <p class="sub">Executive Enclave &amp; Workspace</p>
       <div class="tabs" id="authTabs">
         <div class="tab active" data-tab="login">Sign In</div>
         <div class="tab" data-tab="register">Register</div>
@@ -333,8 +299,13 @@
         <div class="field"><label>Email Address</label><input id="regEmail" type="email"></div>
         <div class="field"><label>Phone Number</label><input id="regPhone" type="tel"></div>
         <div class="field"><label>Choose a password</label><input id="regPass" type="password" autocomplete="new-password"></div>
+        <!-- كود الدعوة للفريق الأساسي -->
+        <div class="field">
+          <label>Invite Code <span style="font-size:10px;text-transform:none;opacity:.7;">(Optional for Core Team)</span></label>
+          <input id="regInviteCode" placeholder="Leave empty if you're a guest">
+        </div>
         <button class="btn btn-primary full" id="regBtn">Create Account</button>
-        <p style="font-size:12px;margin-top:10px;color:var(--sub);">Limited to 5 teammates. The first person to register becomes the permanent team admin.</p>
+        <p style="font-size:12px;margin-top:10px;color:var(--sub);">Without a valid invite code, you will join as a guest with public channel access only.</p>
       </div>
       <div id="resetPane" style="display:none;">
         <div class="field"><label>Username</label><input id="resetUser"></div>
@@ -371,7 +342,16 @@
         </div>
       </div>
 
-      <div class="panel-box">
+      <!-- إعدادات كود الدعوة للمالك فقط -->
+      <div class="panel-box" id="inviteCodePanelBox" style="display:none;">
+        <div class="panel-toggle-head" onclick="toggleAccordion('invitePanel', this)"><span>Core Invite Code</span><span class="panel-icon-indicator">+</span></div>
+        <div class="panel-body" id="invitePanel">
+          <input type="text" id="coreInviteInput" placeholder="Invite Code">
+          <button class="btn btn-primary" id="saveInviteCodeBtn" style="font-size:12px;padding:6px;justify-content:center;">Update Invite Code</button>
+        </div>
+      </div>
+
+      <div class="panel-box" id="vaultPanelBox">
         <div class="panel-toggle-head" onclick="toggleAccordion('vaultPanel', this)"><span>File Vault</span><span class="panel-icon-indicator">+</span></div>
         <div class="panel-body" id="vaultPanel">
           <label class="action-file-label">Upload File (max 650KB)<input type="file" id="vaultFileInput" style="display:none;"></label>
@@ -379,7 +359,7 @@
         </div>
       </div>
 
-      <div class="panel-box">
+      <div class="panel-box" id="taskPanelBox">
         <div class="panel-toggle-head" onclick="toggleAccordion('taskPanel', this)"><span>Team Tasks</span><span class="panel-icon-indicator">+</span></div>
         <div class="panel-body" id="taskPanel">
           <div style="display:flex;gap:4px;">
@@ -401,7 +381,7 @@
       </div>
 
       <div style="margin-top:6px;">
-        <h4 style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--sub);margin-bottom:6px;">Teammates</h4>
+        <h4 style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--sub);margin-bottom:6px;">Workspace Members</h4>
         <div id="memberList"></div>
       </div>
     </aside>
@@ -593,13 +573,14 @@ document.getElementById('backToLoginLink').addEventListener('click', () => {
   }
 })();
 
-/* ---------- Registration: Founder/Owner Admin Protection ---------- */
+/* ---------- Registration: Core Invite Code & Guest Role ---------- */
 document.getElementById('regBtn').addEventListener('click', async () => {
   setErr('');
   const username = sanitize(document.getElementById('regUser').value);
   const email = document.getElementById('regEmail').value.trim().toLowerCase();
   const phone = document.getElementById('regPhone').value.trim();
   const password = document.getElementById('regPass').value;
+  const inviteCodeEntered = document.getElementById('regInviteCode').value.trim();
 
   if(!username || username.length < 3) return setErr('Choose a username of at least 3 characters.');
   if(!password || password.length < 4) return setErr('Choose a password of at least 4 characters.');
@@ -612,25 +593,49 @@ document.getElementById('regBtn').addEventListener('click', async () => {
     const result = await db.runTransaction(async (tx) => {
       const [userSnap, metaSnap] = [await tx.get(userRef), await tx.get(metaRef)];
       if(userSnap.exists) return 'TAKEN';
-      const count = metaSnap.exists ? (metaSnap.data().count || 0) : 0;
-      if(count >= 5) return 'LIMIT';
       
-      // أول مسجل فقط هو المؤسس والمسؤول الدائم (Owner & Permanent Admin)
-      const isOwner = count === 0;
-      const isAdmin = count === 0;
+      const metaData = metaSnap.exists ? metaSnap.data() : {};
+      const coreCount = metaData.count || 0;
+      const actualInviteCode = metaData.inviteCode || 'TOPV-CORE';
+
+      const isFirstUser = coreCount === 0;
+      const isCodeValid = (inviteCodeEntered === actualInviteCode);
+
+      // أول مستخدم دائماً هو المالك وأول فرد في الـ Core
+      let isOwner = false, isCore = false, isAdmin = false;
+
+      if (isFirstUser) {
+        isOwner = true;
+        isAdmin = true;
+        isCore = true;
+      } else if (isCodeValid) {
+        if (coreCount >= 5) return 'CORE_LIMIT';
+        isCore = true;
+        isAdmin = false;
+      } else {
+        // ضيف عادي (Guest) بدون صلاحيات الكور
+        isCore = false;
+        isAdmin = false;
+      }
 
       tx.set(userRef, {
         passwordHash, email: email || '', phone: phone || '',
-        isAdmin, isOwner,
+        isAdmin, isOwner, isCore,
+        role: isOwner ? 'owner' : (isCore ? 'core' : 'guest'),
         displayName: username, avatarUrl: DEFAULT_AVATAR, isOnline: true,
         lastSeen: Date.now(), createdAt: Date.now()
       });
-      tx.set(metaRef, { count: FieldValue.increment(1) }, { merge: true });
-      return { username, isAdmin, isOwner };
+
+      // نزيد عداد الفريق فقط إذا كان عضواً أساسياً
+      if (isCore) {
+        tx.set(metaRef, { count: FieldValue.increment(1), inviteCode: actualInviteCode }, { merge: true });
+      }
+
+      return { username, isAdmin, isOwner, isCore };
     });
 
     if(result === 'TAKEN') return setErr('That username is already taken.');
-    if(result === 'LIMIT') return setErr('Limit reached (5 members max).');
+    if(result === 'CORE_LIMIT') return setErr('Core team is full (5/5). Register without invite code as a guest.');
 
     localStorage.setItem('topv_user', result.username);
     const finalSnap = await userRef.get();
@@ -698,17 +703,35 @@ document.getElementById('resetSubmitBtn').addEventListener('click', async () => 
 });
 
 /* ---------- Main Session Dispatcher ---------- */
-function enterChat(){
+async function enterChat(){
   document.getElementById('auth').style.display = 'none';
   document.getElementById('chat').classList.add('show');
   document.getElementById('teamToggle').style.display = 'inline-flex';
   document.getElementById('logoutBtn').style.display = 'inline-flex';
+  
   if (currentUser.isAdmin) {
     document.getElementById('panicBtn').style.display = 'inline-flex';
     document.getElementById('addChannelBtn').style.display = 'flex';
   } else {
     document.getElementById('addChannelBtn').style.display = 'none';
   }
+
+  // عزل أدوات الفريق الأساسي عن الضيوف
+  const isCoreOrAdmin = currentUser.isCore || currentUser.isAdmin || currentUser.isOwner;
+  document.getElementById('vaultPanelBox').style.display = isCoreOrAdmin ? 'block' : 'none';
+  document.getElementById('taskPanelBox').style.display = isCoreOrAdmin ? 'block' : 'none';
+  
+  // لوحة إدارة كود الدعوة للمالك فقط
+  if (currentUser.isOwner) {
+    document.getElementById('inviteCodePanelBox').style.display = 'block';
+    try {
+      const metaDoc = await db.collection('meta').doc('team').get();
+      if (metaDoc.exists) {
+        document.getElementById('coreInviteInput').value = metaDoc.data().inviteCode || 'TOPV-CORE';
+      }
+    } catch(e){}
+  }
+
   document.getElementById('displayNameInput').value = currentUser.displayName || currentUser.username;
   document.getElementById('myAvatarImg').src = currentUser.avatarUrl || DEFAULT_AVATAR;
 
@@ -718,8 +741,10 @@ function enterChat(){
   setLivePresence(true);
   subscribeChannels();
   subscribeMembers();
-  subscribeTasks();
-  subscribeVault();
+  if (isCoreOrAdmin) {
+    subscribeTasks();
+    subscribeVault();
+  }
 
   if(burnerTimer) clearInterval(burnerTimer);
   burnerTimer = setInterval(() => {
@@ -736,20 +761,31 @@ function enterChat(){
   }, 4000);
 }
 
+/* ---------- Save Invite Code (Owner Only) ---------- */
+document.getElementById('saveInviteCodeBtn').addEventListener('click', async () => {
+  if (!currentUser || !currentUser.isOwner) return;
+  const newCode = document.getElementById('coreInviteInput').value.trim();
+  if (!newCode) return alert('Invite code cannot be empty.');
+  try {
+    await db.collection('meta').doc('team').set({ inviteCode: newCode }, { merge: true });
+    showToast('Core Invite Code updated!');
+  } catch(e) { alert('Failed to update code.'); }
+});
+
 /* ---------- Collection Reference Helpers ---------- */
 function getChannelMessagesRef(chId) {
   return db.collection('messages_' + chId);
 }
 
-/* ---------- Dynamic Channels System ---------- */
+/* ---------- Dynamic Channels & Privacy Isolation ---------- */
 function subscribeChannels(){
   if(unsubChannels) unsubChannels();
   unsubChannels = db.collection('channels').orderBy('createdAt', 'asc').onSnapshot(async snap => {
     if(snap.empty){
       const defaults = [
-        { id: 'general', name: 'GEN', title: '#GENERAL' },
-        { id: 'intelligence', name: 'INT', title: '#INTELLIGENCE' },
-        { id: 'war-room', name: 'WAR', title: '#WAR-ROOM' }
+        { id: 'general', name: 'GEN', title: '#GENERAL', coreOnly: false },
+        { id: 'intelligence', name: 'INT', title: '#INTELLIGENCE', coreOnly: true },
+        { id: 'war-room', name: 'WAR', title: '#WAR-ROOM', coreOnly: true }
       ];
       const batch = db.batch();
       defaults.forEach(d => {
@@ -762,14 +798,21 @@ function subscribeChannels(){
     const container = document.getElementById('channelButtonsList');
     container.innerHTML = '';
     let activeChannelExists = false;
+    const isUserCore = (currentUser.isCore || currentUser.isAdmin || currentUser.isOwner);
 
     snap.docs.forEach(doc => {
       const ch = doc.data();
       const chId = doc.id;
+
+      // إخفاء قنوات التيم الخاصة عن الضيوف تماماً
+      if (ch.coreOnly && !isUserCore) {
+        return;
+      }
+
       if (chId === currentChannelId) activeChannelExists = true;
 
       const btn = document.createElement('div');
-      btn.className = `ch-btn ${chId === currentChannelId ? 'active' : ''}`;
+      btn.className = `ch-btn ${chId === currentChannelId ? 'active' : ''} ${ch.coreOnly ? 'locked' : ''}`;
       btn.textContent = '#' + (ch.name || chId).slice(0, 4).toUpperCase();
       btn.title = ch.title || `#${chId.toUpperCase()}`;
       btn.dataset.id = chId;
@@ -788,9 +831,10 @@ function subscribeChannels(){
       container.appendChild(btn);
     });
 
-    if(!activeChannelExists && snap.docs.length > 0){
-      currentChannelId = snap.docs[0].id;
-      document.getElementById('channelNameDisplay').textContent = snap.docs[0].data().title || `#${currentChannelId.toUpperCase()}`;
+    if(!activeChannelExists){
+      // الضيف يرجع تلقائياً لـ general
+      currentChannelId = 'general';
+      document.getElementById('channelNameDisplay').textContent = '#GENERAL';
     }
     subscribeMessages();
   });
@@ -802,10 +846,12 @@ document.getElementById('addChannelBtn').addEventListener('click', async () => {
   if(!name) return;
   const clean = sanitize(name);
   if(!clean) return alert('Invalid channel format.');
+  const isCoreOnly = confirm("Should this channel be EXCLUSIVE to the Core Team (hidden from guests)?");
   try {
     await db.collection('channels').doc(clean).set({
       name: clean.slice(0, 4).toUpperCase(),
       title: '#' + clean.toUpperCase(),
+      coreOnly: isCoreOnly,
       createdAt: Date.now()
     });
     showToast(`Channel #${clean.toUpperCase()} deployed.`);
@@ -937,7 +983,6 @@ function subscribeMembers(){
     allUsersMap = {};
     let html = '';
     
-    // تحديث بيانات المستخدم الحالي لضمان التزامن المباشر للصلاحيات
     snap.docs.forEach(d => {
       const u = { username: d.id, ...d.data() };
       allUsersMap[u.username] = u;
@@ -953,11 +998,11 @@ function subscribeMembers(){
       
       const isOwner = u.isOwner === true;
       const isAdmin = u.isAdmin === true;
+      const isCore = u.isCore === true;
       const isMe = currentUser && currentUser.username === u.username;
       const amIOwner = currentUser && currentUser.isOwner === true;
       const amIAdmin = currentUser && currentUser.isAdmin === true;
 
-      // الأدمن الأساسي (Owner) لا يمكن حذفه أو سحب رتبته نهائياً
       let controlsHtml = '';
       if (!isOwner && !isMe) {
         if (amIOwner) {
@@ -977,6 +1022,10 @@ function subscribeMembers(){
         roleBadgeHtml = `<span class="role-badge owner">OWNER</span>`;
       } else if (isAdmin) {
         roleBadgeHtml = `<span class="role-badge admin">MOD</span>`;
+      } else if (isCore) {
+        roleBadgeHtml = `<span class="role-badge core">CORE</span>`;
+      } else {
+        roleBadgeHtml = `<span class="role-badge guest">GUEST</span>`;
       }
 
       html += `
@@ -999,7 +1048,6 @@ function subscribeMembers(){
   });
 }
 
-// ترقية عضو لمشرف
 window.promoteAdmin = async function(username) {
   if (!currentUser || !currentUser.isOwner) return showToast("Only the Owner can appoint moderators.");
   try {
@@ -1008,7 +1056,6 @@ window.promoteAdmin = async function(username) {
   } catch(e) { showToast("Failed to promote user."); }
 };
 
-// سحب الإشراف من عضو
 window.demoteAdmin = async function(username) {
   if (!currentUser || !currentUser.isOwner) return showToast("Only the Owner can revoke moderators.");
   const target = allUsersMap[username];
@@ -1019,11 +1066,10 @@ window.demoteAdmin = async function(username) {
   } catch(e) { showToast("Failed to demote user."); }
 };
 
-// طرد أو إزالة عضو
 async function deleteMember(username){
   const target = allUsersMap[username];
   if (target && target.isOwner) {
-    return alert("Protected account: The Founder cannot be removed under any circumstances.");
+    return alert("Protected account: The Founder cannot be removed.");
   }
   if (!confirm('Kick ' + username + ' from the workspace?')) return;
   try {
@@ -1033,10 +1079,16 @@ async function deleteMember(username){
       const metaSnap = await tx.get(metaRef);
       const userSnap = await tx.get(userRef);
       if(!userSnap.exists) return;
-      if (userSnap.data().isOwner) return; // حماية إضافية على مستوى الـ Transaction
+      if (userSnap.data().isOwner) return;
+      
+      const wasCore = userSnap.data().isCore === true;
       tx.delete(userRef);
-      const count = metaSnap.exists ? (metaSnap.data().count || 0) : 1;
-      tx.set(metaRef, { count: Math.max(0, count - 1) }, { merge: true });
+      
+      // تقليص عداد الـ Core فقط إذا كان المحذوف من الـ Core
+      if (wasCore) {
+        const count = metaSnap.exists ? (metaSnap.data().count || 0) : 1;
+        tx.set(metaRef, { count: Math.max(0, count - 1) }, { merge: true });
+      }
     });
     showToast(`Member ${username} removed.`);
   } catch(e){ showToast("Kick action rejected."); }
