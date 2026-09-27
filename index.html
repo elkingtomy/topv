@@ -45,8 +45,16 @@
 
   header { background: var(--header-bg); color: var(--header-text); min-height: 52px; padding: 8px 14px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; box-shadow: 0 2px 10px rgba(0,0,0,.15); flex-shrink: 0; border-bottom: 1px solid var(--border); z-index: 40; }
   .header-left { display: flex; align-items: center; gap: 8px; order: 1; }
-  .header-center { display: flex; align-items: center; justify-content: center; gap: 8px; order: 3; flex-basis: 100%; }
-  .header-right { display: flex; align-items: center; gap: 8px; justify-content: flex-end; order: 2; }
+  .header-center { display: flex; align-items: center; justify-content: center; gap: 6px; order: 2; }
+  .header-right { display: flex; align-items: center; gap: 6px; justify-content: flex-end; order: 3; }
+  .lbl-full { display: inline; }
+  @media (max-width: 480px){
+    .lbl-full { display: none; }
+    header h1 { font-size: 17px; }
+    header .tag { display: none; }
+    .crest { width: 26px; height: 26px; }
+    .btn { padding: 6px 9px; }
+  }
   .crest { width: 32px; height: 32px; flex-shrink: 0; }
   header h1 { font-family: 'Playfair Display', serif; font-size: 22px; letter-spacing: 1px; color: #fff; line-height: 1; }
   header .tag { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; text-align: center; }
@@ -81,11 +89,12 @@
 
   #chat { display: none; flex: 1; overflow: hidden; width: 100%; position: relative; }
   #chat.show { display: flex; }
-  .channel-bar { width: 64px; background: var(--header-bg); display: flex; flex-direction: column; align-items: center; padding: 12px 0; gap: 10px; border-right: 1px solid rgba(255,255,255,.1); flex-shrink: 0; z-index: 30; }
+  .channel-bar { width: 64px; background: var(--header-bg); display: flex; flex-direction: column; align-items: center; padding: 12px 0; gap: 10px; border-right: 1px solid rgba(255,255,255,.1); flex-shrink: 0; z-index: 30; overflow: hidden; transition: width .22s ease, padding .22s ease; }
+  .channel-bar.collapsed { width: 0; padding: 0; border-right: none; }
   .ch-btn { width: 44px; height: 44px; border-radius: 10px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; transition: .15s; }
   .ch-btn:hover, .ch-btn.active { background: var(--gold); color: #111; border-color: #fff; }
 
-  aside { position: fixed; top: 52px; left: 64px; height: calc(100% - 52px); width: 300px; max-width: 85vw; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 16px; overflow-y: auto; transition: transform .28s cubic-bezier(.16,1,.3,1); display: flex; flex-direction: column; gap: 12px; z-index: 50; transform: translateX(-150%); box-shadow: 8px 0 30px rgba(0,0,0,.25); }
+  aside { position: fixed; top: 0; left: 0; height: 100%; width: 300px; max-width: 85vw; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 16px; overflow-y: auto; transition: transform .28s cubic-bezier(.16,1,.3,1); display: flex; flex-direction: column; gap: 12px; z-index: 55; transform: translateX(-150%); box-shadow: 8px 0 30px rgba(0,0,0,.25); }
   aside.open { transform: translateX(0); }
   .aside-head { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 4px; }
   #asideClose { cursor: pointer; font-size: 24px; color: var(--sub); line-height: 1; }
@@ -179,7 +188,7 @@
 
 <header>
   <div class="header-left">
-    <button class="btn btn-outline" id="teamToggle" style="display:none; padding:4px 12px; font-size:13px;">☰ Team</button>
+    <button class="btn btn-outline" id="teamToggle" style="display:none; padding:4px 12px; font-size:13px;">☰<span class="lbl-full"> Team</span></button>
   </div>
   <div class="header-center">
     <svg class="crest" viewBox="0 0 48 48"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#7a1524" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Playfair Display', serif" font-size="18" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
@@ -190,8 +199,8 @@
       <svg id="themeIconSun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
       <svg id="themeIconMoon" viewBox="0 0 24 24" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
     </button>
-    <button class="btn btn-danger" id="panicBtn" style="display:none; font-size:12px; padding:4px 8px;" title="Purge Current Channel">Panic Wipe</button>
-    <button class="btn btn-outline" id="logoutBtn" style="display:none; font-size:13px; padding:4px 10px;">Sign Out</button>
+    <button class="btn btn-danger" id="panicBtn" style="display:none; font-size:12px; padding:4px 8px;" title="Purge Current Channel">🗑<span class="lbl-full"> Panic Wipe</span></button>
+    <button class="btn btn-outline" id="logoutBtn" style="display:none; font-size:13px; padding:4px 10px;">⎋<span class="lbl-full"> Sign Out</span></button>
   </div>
 </header>
 
@@ -231,7 +240,7 @@
   </div>
 
   <div id="chat">
-    <div class="channel-bar">
+    <div class="channel-bar collapsed" id="channelBar">
       <div class="ch-btn active" data-ch="general" title="General Comms">#GEN</div>
       <div class="ch-btn" data-ch="intelligence" title="Intelligence &amp; Tools">#INT</div>
       <div class="ch-btn" data-ch="war-room" title="War Room">#WAR</div>
@@ -294,7 +303,10 @@
 
     <div class="chatarea" id="chatArea">
       <div class="channel-header">
-        <span id="channelNameDisplay">#GENERAL</span>
+        <span style="display:flex;align-items:center;gap:8px;">
+          <button type="button" id="channelBarToggle" class="btn btn-outline" style="padding:3px 8px;font-size:12px;" title="Channels">☰</button>
+          <span id="channelNameDisplay">#GENERAL</span>
+        </span>
         <span style="font-size:11px;opacity:.8;">PRIVATE ENCLAVE</span>
       </div>
       <div id="messages"><div class="empty">No messages yet — start the conversation.</div></div>
@@ -524,7 +536,19 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
       }
     });
     if(!foundDoc) return setErr('No such member found.');
-    if(foundDoc.passwordHash !== passwordHash) return setErr('Incorrect password.');
+    if(foundDoc.passwordHash){
+      if(foundDoc.passwordHash !== passwordHash) return setErr('Incorrect password.');
+    } else if(foundDoc.password !== undefined){
+      // Legacy account created before password hashing was added — verify
+      // against the old plain-text field, then silently migrate it.
+      if(foundDoc.password !== password) return setErr('Incorrect password.');
+      try{
+        await db.collection('users').doc(foundDoc.username).update({ passwordHash, password: FieldValue.delete() });
+        foundDoc.passwordHash = passwordHash;
+      }catch(e){}
+    } else {
+      return setErr('This account has no password on record. Use "Forgot password?" to set a new one.');
+    }
     currentUser = foundDoc;
     localStorage.setItem('topv_user', currentUser.username);
     enterChat();
@@ -547,7 +571,7 @@ document.getElementById('resetSubmitBtn').addEventListener('click', async () => 
     const data = docSnap.data();
     if((data.email && data.email.toLowerCase() === contact) || (data.phone && data.phone === contact)) {
       const passwordHash = await hashPassword(newPass);
-      await docRef.update({ passwordHash });
+      await docRef.update({ passwordHash, password: FieldValue.delete() });
       showToast('Password updated successfully. Please sign in.');
       document.getElementById('resetPane').style.display = 'none';
       document.getElementById('loginPane').style.display = '';
@@ -689,6 +713,11 @@ burnerToggleBtn.addEventListener('click', () => {
    and no composite index is required) ---------- */
 function messagesCollection(){ return db.collection('messages_' + currentChannel); }
 
+/* ---------- Channel bar toggle (closed by default, opens only on click) ---------- */
+document.getElementById('channelBarToggle').addEventListener('click', () => {
+  document.getElementById('channelBar').classList.toggle('collapsed');
+});
+
 document.querySelectorAll('.ch-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
@@ -697,6 +726,7 @@ document.querySelectorAll('.ch-btn').forEach(btn => {
     const titles = { general: '#GENERAL', intelligence: '#INTELLIGENCE', 'war-room': '#WAR-ROOM' };
     document.getElementById('channelNameDisplay').textContent = titles[currentChannel];
     subscribeMessages();
+    document.getElementById('channelBar').classList.add('collapsed');
   });
 });
 
