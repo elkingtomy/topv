@@ -211,7 +211,7 @@
   .delete-msg-btn:hover { opacity: 1; color: var(--gold); }
   .bubble .txt { font-size: 15px; line-height: 1.45; word-wrap: break-word; }
   .bubble .time { font-size: 10px; opacity: .65; margin-top: 3px; text-align: right; }
-  pre.code-block { background: #181b22; color: #e2e8f0; padding: 8px 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px; overflow-x: auto; border: 1px solid rgba(255,255,255,.08); margin: 4px 0; }
+  pre.code-block { background: #181b22; color: #e2e8f0; padding: 8px 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px; overflow-x: auto; border: 1px solid rgba(255,255,200,.08); margin: 4px 0; }
   .burner-badge { display: inline-flex; align-items: center; font-size: 10px; background: rgba(220,38,38,.2); color: #f87171; border: 1px solid #f87171; border-radius: 3px; padding: 0 4px; }
   .msg-row.me .burner-badge { color: #fff; border-color: #fff; }
   .voice-msg-player { display: flex; align-items: center; gap: 8px; padding: 3px 0; }
@@ -574,7 +574,6 @@ function dismissSplash() {
     setTimeout(() => { if (splash.parentNode) splash.remove(); }, 250); 
   }
 }
-// Dismiss splash quickly so the page does not hang
 setTimeout(dismissSplash, 280);
 window.addEventListener('DOMContentLoaded', () => setTimeout(dismissSplash, 200));
 document.getElementById('splashScreen')?.addEventListener('click', dismissSplash);
@@ -612,4 +611,5 @@ const firebaseConfig = {
   authDomain: "top-v-9abfb.firebaseapp.com",
   projectId: "top-v-9abfb",
   storageBucket: "top-v-9abfb.firebasestorage.app",
-  messagingSender
+  messagingSenderId: "436986529374",
+  appId: "1:436986529374:web:2de
