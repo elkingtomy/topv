@@ -59,7 +59,7 @@
   html, body { height: 100%; height: 100dvh; width: 100%; }
   body { background: var(--bg); color: var(--ink); font-family: 'EB Garamond', Georgia, serif; display: flex; flex-direction: column; overflow: hidden; transition: background .2s ease, color .2s ease; }
 
-  #splashScreen { position: fixed; inset: 0; background: #090a0d; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; cursor: pointer; transition: opacity .4s ease, visibility .4s; padding: 20px; user-select: none; }
+  #splashScreen { position: fixed; inset: 0; background: #090a0d; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; cursor: pointer; transition: opacity .4s ease; padding: 20px; user-select: none; }
   .splash-content { text-align: center; }
   .splash-sub { font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
   .splash-title { font-family: 'Playfair Display', serif; font-size: 28px; letter-spacing: 2px; font-weight: 700; margin-bottom: 24px; white-space: nowrap; }
@@ -113,21 +113,21 @@
   .msg-err { color: var(--danger); font-size: 13px; margin-top: 8px; min-height: 16px; }
   .forgot-link { display: inline-block; margin-top: 12px; font-size: 13px; color: var(--crimson); text-decoration: none; cursor: pointer; }
 
-  /* ---------- DISCORD-LIKE LOBBY (ROOMS / SECTORS) ---------- */
+  /* ---------- Operational Sectors Lobby ---------- */
   #lobbyView { display: none; flex: 1; overflow-y: auto; padding: 24px; flex-direction: column; align-items: center; width: 100%; }
   #lobbyView.show { display: flex; }
   .lobby-container { width: 100%; max-width: 860px; display: flex; flex-direction: column; gap: 16px; }
-  .lobby-header-bar { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+  .lobby-header-bar { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 12px; flex-wrap: wrap; gap: 10px; }
   .lobby-title { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--crimson); }
   .server-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 10px; }
-  .server-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: transform .15s ease, border-color .15s ease; position: relative; }
-  .server-card:hover { transform: translateY(-2px); border-color: var(--gold); }
+  .server-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: transform .2s cubic-bezier(0.16, 1, 0.3, 1), border-color .2s ease; }
+  .server-card:hover { transform: translateY(-3px); border-color: var(--gold); }
   .server-info h4 { font-family: 'Playfair Display', serif; font-size: 17px; display: flex; align-items: center; gap: 6px; }
-  .server-meta { font-size: 12px; color: var(--sub); display: flex; gap: 10px; margin-top: 6px; }
-  .server-actions { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 6px; }
-  .owner-tools-row { display: flex; gap: 4px; }
+  .server-meta { font-size: 12px; color: var(--sub); display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .server-actions { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .owner-tools-row { display: flex; gap: 4px; flex-wrap: wrap; }
 
-  /* ---------- CHAT VIEW ---------- */
+  /* ---------- Chat View ---------- */
   #chat { display: none; flex: 1; overflow: hidden; width: 100%; position: relative; }
   #chat.show { display: flex; }
   
@@ -136,8 +136,11 @@
   .ch-btn { width: 50px; height: 44px; border-radius: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; transition: .15s; text-transform: uppercase; letter-spacing: 0.5px; overflow: hidden; text-overflow: ellipsis; padding: 0 4px; position: relative; }
   .ch-btn:hover, .ch-btn.active { background: var(--gold); color: #111; border-color: #fff; }
   .ch-btn.locked::after { content: '🔒'; position: absolute; bottom: 2px; right: 2px; font-size: 8px; }
+  
+  .btn-add-ch { width: 50px; height: 32px; border-radius: 6px; background: transparent; border: 1px dashed rgba(255,255,255,.3); color: var(--gold); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-top: 4px; }
+  .btn-add-ch:hover { background: rgba(255,255,255,.1); border-color: var(--gold); }
 
-  aside { position: fixed; top: 0; left: 0; height: 100%; width: 340px; max-width: 88vw; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 16px; overflow-y: auto; transition: transform .28s cubic-bezier(.16,1,.3,1); display: flex; flex-direction: column; gap: 12px; z-index: 55; transform: translateX(-150%); box-shadow: 8px 0 30px rgba(0,0,0,.25); }
+  aside { position: fixed; top: 0; left: 0; height: 100%; width: 330px; max-width: 88vw; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 16px; overflow-y: auto; transition: transform .28s cubic-bezier(.16,1,.3,1); display: flex; flex-direction: column; gap: 12px; z-index: 55; transform: translateX(-150%); box-shadow: 8px 0 30px rgba(0,0,0,.25); }
   aside.open { transform: translateX(0); }
   .aside-head { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 4px; }
   #asideClose { cursor: pointer; font-size: 24px; color: var(--sub); line-height: 1; }
@@ -148,7 +151,7 @@
   .panel-icon-indicator { font-size: 14px; color: var(--gold); font-weight: bold; }
   .panel-body { padding: 10px 12px; border-top: 1px solid var(--border); display: none; flex-direction: column; gap: 8px; }
   .panel-body.open { display: flex; }
-  .panel-body input[type="text"] { width: 100%; padding: 6px 10px; font-size: 14px; border-radius: 5px; border: 1px solid var(--border); background: var(--card); color: var(--ink); font-family: inherit; }
+  .panel-body input[type="text"], .panel-body input[type="number"], .panel-body textarea { width: 100%; padding: 6px 10px; font-size: 14px; border-radius: 5px; border: 1px solid var(--border); background: var(--card); color: var(--ink); font-family: inherit; }
   .profile-avatar-wrap { display: flex; align-items: center; gap: 10px; }
   .profile-avatar-wrap img { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--gold); object-fit: cover; }
 
@@ -170,7 +173,7 @@
   .role-badge.core { background: #3b82f6; color: #fff; }
   .role-badge.guest { background: #64748b; color: #fff; }
   
-  .member-controls { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+  .member-controls { display: flex; align-items: center; gap: 5px; margin-left: auto; }
   .action-btn-small { border: 1px solid var(--border); background: var(--card); color: var(--ink); border-radius: 4px; font-size: 11px; padding: 3px 6px; cursor: pointer; font-family: inherit; }
   .action-btn-small:hover { border-color: var(--gold); }
   .action-btn-small.danger { color: var(--danger); }
@@ -293,7 +296,7 @@
     <button class="btn btn-outline" id="lobbyReturnBtn" style="display:none;" title="Operational Sectors Hub">
       <span>☵ Sectors</span>
     </button>
-    <button class="btn btn-outline" id="teamToggle" style="display:none;" title="Workspace Terminal">
+    <button class="btn btn-outline" id="teamToggle" style="display:none;" title="Workspace">
       <svg class="svg-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       <span class="btn-text">Workspace</span>
     </button>
@@ -323,7 +326,6 @@
 </header>
 
 <main>
-  <!-- AUTH -->
   <div id="auth">
     <div class="card">
       <svg class="crest" viewBox="0 0 48 48" style="width:46px;height:46px;margin:0 auto 8px;display:block;"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#A51C30" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Playfair Display', serif" font-size="18" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
@@ -334,7 +336,7 @@
         <div class="tab" data-tab="register">Register</div>
       </div>
       <div id="loginPane">
-        <div class="field"><label>Username / Email</label><input id="loginIdentifier" autocomplete="username"></div>
+        <div class="field"><label>Username / Email / Phone</label><input id="loginIdentifier" autocomplete="username"></div>
         <div class="field"><label>Password</label><input id="loginPass" type="password" autocomplete="current-password"></div>
         <button class="btn btn-primary full" id="loginBtn">Sign In</button>
         <a class="forgot-link" id="forgotPwdLink">Forgot password?</a>
@@ -349,7 +351,7 @@
           <input id="regInviteCode" placeholder="Leave blank if guest">
         </div>
         <button class="btn btn-primary full" id="regBtn">Create Account</button>
-        <p style="font-size:12px;margin-top:10px;color:var(--sub);">Without a valid token, you will join as a guest with public channel access only.</p>
+        <p style="font-size:12px;margin-top:10px;color:var(--sub);">Without a valid access token, you will join as a guest with public channel access only.</p>
       </div>
       <div id="resetPane" style="display:none;">
         <div class="field"><label>Username</label><input id="resetUser"></div>
@@ -362,7 +364,7 @@
     </div>
   </div>
 
-  <!-- DISCORD-LIKE LOBBY (ROOM SELECTOR) -->
+  <!-- SECTOR LOBBY -->
   <div id="lobbyView">
     <div class="lobby-container">
       <div class="lobby-header-bar">
@@ -379,15 +381,16 @@
     </div>
   </div>
 
-  <!-- CHAT INTERFACE -->
+  <!-- CHAT AREA -->
   <div id="chat">
     <div class="channel-bar collapsed" id="channelBar">
       <div id="channelButtonsList" style="display:flex; flex-direction:column; gap:8px; align-items:center; width:100%;"></div>
+      <button class="btn-add-ch" id="addChannelBtn" title="Create New Channel">+</button>
     </div>
 
     <aside id="teamAside">
       <div class="aside-head">
-        <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);">Enclave Workspace</h3>
+        <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);">Team &amp; Workspace</h3>
         <span id="asideClose">&times;</span>
       </div>
 
@@ -398,10 +401,10 @@
           <span class="panel-icon-indicator">+</span>
         </div>
         <div class="panel-body" id="ownerPanel">
-          <p style="font-size:11px;color:var(--sub);">Generate active single/multi-use access codes:</p>
+          <p style="font-size:11px;color:var(--sub);">Issue dynamic enclave entry tokens:</p>
           <div style="display:flex;gap:4px;">
             <input type="text" id="newTokenCodeInput" placeholder="Code (e.g. VIP-2026)">
-            <input type="number" id="newTokenUsesInput" placeholder="Uses" style="width:65px;" value="1">
+            <input type="number" id="newTokenUsesInput" placeholder="Uses" style="width:65px;" value="1" min="1">
           </div>
           <button class="btn btn-primary" id="generateTokenBtn" style="font-size:11px;padding:4px 8px;justify-content:center;">Issue Token</button>
           <div id="activeTokensList" style="font-size:11px;max-height:80px;overflow-y:auto;border:1px dashed var(--border);padding:4px;display:flex;flex-direction:column;gap:3px;"></div>
@@ -417,6 +420,14 @@
           </div>
           <input type="text" id="displayNameInput" placeholder="Display Name">
           <button class="btn btn-primary" id="saveProfileBtn" style="font-size:12px;padding:6px;justify-content:center;">Save Profile</button>
+        </div>
+      </div>
+
+      <div class="panel-box" id="inviteCodePanelBox" style="display:none;">
+        <div class="panel-toggle-head" onclick="toggleAccordion('invitePanel', this)"><span>Core Invite Code</span><span class="panel-icon-indicator">+</span></div>
+        <div class="panel-body" id="invitePanel">
+          <input type="text" id="coreInviteInput" placeholder="Invite Code">
+          <button class="btn btn-primary" id="saveInviteCodeBtn" style="font-size:12px;padding:6px;justify-content:center;">Update Invite Code</button>
         </div>
       </div>
 
@@ -522,18 +533,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
-/* ---------- Immediate Splash Dismissal ---------- */
-function dismissSplash() {
-  const splash = document.getElementById('splashScreen');
-  if (splash) {
-    splash.style.pointerEvents = 'none';
-    splash.style.opacity = '0';
-    setTimeout(() => { if (splash.parentNode) splash.remove(); }, 300);
-  }
-}
-setTimeout(dismissSplash, 900);
-document.getElementById('splashScreen')?.addEventListener('click', dismissSplash);
-
 /* ---------- Accordion ---------- */
 function toggleAccordion(panelId, headElem) {
   const panel = document.getElementById(panelId);
@@ -543,7 +542,7 @@ function toggleAccordion(panelId, headElem) {
   if (ind) ind.textContent = isOpen ? '+' : '−';
 }
 
-/* ---------- Audio Feedback Engine ---------- */
+/* ---------- Audio Engine ---------- */
 let audioCtx = null;
 function getAudioContext() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -570,6 +569,18 @@ function playTactileSound(type) {
     }
   } catch(e) {}
 }
+
+/* ---------- Splash Screen Auto-Dismiss ---------- */
+function dismissSplash() {
+  const splash = document.getElementById('splashScreen');
+  if (splash) { 
+    splash.style.opacity = '0'; 
+    splash.style.pointerEvents = 'none'; 
+    setTimeout(() => { if (splash.parentNode) splash.remove(); }, 400); 
+  }
+}
+setTimeout(dismissSplash, 900);
+document.getElementById('splashScreen')?.addEventListener('click', dismissSplash);
 
 /* ---------- Notification Toast ---------- */
 function showToast(msg) {
@@ -612,21 +623,24 @@ const db = firebase.firestore();
 const FieldValue = firebase.firestore.FieldValue;
 
 let currentUser = null;
+let unsubMsg = null, unsubUsers = null, unsubTasks = null, unsubVault = null, unsubChannels = null, unsubScratchpad = null, unsubTokens = null;
+let allUsersMap = {};
 let currentChannelId = 'general';
 let channelsData = {};
-let allUsersMap = {};
-let unsubMsg = null, unsubUsers = null, unsubTasks = null, unsubVault = null, unsubChannels = null, unsubScratchpad = null, unsubTokens = null;
 let isBurnerEnabled = false;
 let activeReplyTarget = null;
-let latestChannelDocs = [];
+let incidentClockInterval = null;
 
 const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%23191614'/><circle cx='32' cy='23' r='11' fill='%23c59b46'/><path d='M14 54 C14 42 22 38 32 38 C42 38 50 42 50 54 Z' fill='%23c59b46'/><path d='M32 38 L30 45 L32 47 L34 45 Z' fill='%239e182c'/></svg>";
 
 function sanitize(s){ return (s||'').trim().toLowerCase().replace(/[^a-z0-9_\-]/g,'').slice(0,25); }
 function setErr(t){ document.getElementById('authErr').textContent = t || ''; }
 function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
 function getTimestampMs(data) {
-  if (data.serverTime && typeof data.serverTime.toMillis === 'function') return data.serverTime.toMillis();
+  if (data.serverTime && typeof data.serverTime.toMillis === 'function') {
+    return data.serverTime.toMillis();
+  }
   return typeof data.createdAt === 'number' ? data.createdAt : Date.now();
 }
 
@@ -649,6 +663,20 @@ function enforceOwnerConstraint() {
   }
 }
 
+/* ---------- Live Presence ---------- */
+async function setLivePresence(isOnline, activeChannel = null) {
+  if (!currentUser) return;
+  try { 
+    const p = { isOnline, lastSeen: Date.now() };
+    if (activeChannel !== undefined) p.activeChannel = activeChannel;
+    await db.collection('users').doc(currentUser.username).update(p); 
+  } catch(e){}
+}
+document.addEventListener('visibilitychange', () => { 
+  if (currentUser) setLivePresence(document.visibilityState === 'visible', document.visibilityState === 'visible' ? currentChannelId : null); 
+});
+window.addEventListener('beforeunload', () => { if (currentUser) setLivePresence(false, null); });
+
 /* ---------- Tabs Switching ---------- */
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
@@ -667,30 +695,22 @@ document.getElementById('backToLoginLink').addEventListener('click', () => {
   document.getElementById('loginPane').style.display = '';
 });
 
-/* ---------- Auto Session Load ---------- */
+/* ---------- Session Auto-Load ---------- */
 (async function init(){
   const saved = localStorage.getItem('topv_user');
   if(saved){
     try{
       const snap = await db.collection('users').doc(saved).get();
-      if(snap.exists){
-        currentUser = { username: saved, ...snap.data() };
+      if(snap.exists){ 
+        currentUser = { username: saved, ...snap.data() }; 
         enforceOwnerConstraint();
-        openLobby();
-        return;
+        openLobby(); 
+        return; 
       }
     }catch(e){}
     localStorage.removeItem('topv_user');
   }
 })();
-
-/* ---------- Live Presence ---------- */
-async function setLivePresence(isOnline) {
-  if (!currentUser) return;
-  try { await db.collection('users').doc(currentUser.username).update({ isOnline, lastSeen: Date.now() }); } catch(e){}
-}
-document.addEventListener('visibilitychange', () => { if (currentUser) setLivePresence(document.visibilityState === 'visible'); });
-window.addEventListener('beforeunload', () => { if (currentUser) setLivePresence(false); });
 
 /* ---------- Registration ---------- */
 document.getElementById('regBtn').addEventListener('click', async () => {
@@ -699,51 +719,57 @@ document.getElementById('regBtn').addEventListener('click', async () => {
   const email = document.getElementById('regEmail').value.trim().toLowerCase();
   const phone = document.getElementById('regPhone').value.trim();
   const password = document.getElementById('regPass').value;
-  const tokenEntered = document.getElementById('regInviteCode').value.trim();
+  const inviteCodeEntered = document.getElementById('regInviteCode').value.trim();
 
   if(!username || username.length < 3) return setErr('Choose a username of at least 3 characters.');
   if(!password || password.length < 4) return setErr('Choose a password of at least 4 characters.');
 
-  try {
+  try{
+    const passwordHash = await hashPassword(password);
     const userRef = db.collection('users').doc(username);
-    const snap = await userRef.get();
-    if(snap.exists) return setErr('That username is already taken.');
+    const metaRef = db.collection('meta').doc('team');
 
-    const isVex = (username === 'vex');
-    let hasCore = isVex;
+    const result = await db.runTransaction(async (tx) => {
+      const [userSnap, metaSnap] = [await tx.get(userRef), await tx.get(metaRef)];
+      if(userSnap.exists) return 'TAKEN';
+      
+      const isVex = (username === 'vex');
+      let isOwner = isVex, isCore = isVex, isAdmin = isVex;
 
-    if (!hasCore && tokenEntered) {
-      const tSnap = await db.collection('tokens').doc(tokenEntered).get();
-      if (tSnap.exists && (tSnap.data().usesRemaining > 0)) {
-        hasCore = true;
-        await db.collection('tokens').doc(tokenEntered).update({
-          usesRemaining: FieldValue.increment(-1)
-        });
-      } else {
-        return setErr('Invalid or expired access code/token.');
+      if (!isVex && inviteCodeEntered) {
+        const tokenRef = db.collection('tokens').doc(inviteCodeEntered);
+        const tSnap = await tx.get(tokenRef);
+        if (tSnap.exists && (tSnap.data().usesRemaining > 0)) {
+          isCore = true;
+          tx.update(tokenRef, { usesRemaining: FieldValue.increment(-1) });
+        } else {
+          const metaData = metaSnap.exists ? metaSnap.data() : {};
+          const actualInviteCode = metaData.inviteCode || 'TOPV-CORE';
+          if (inviteCodeEntered === actualInviteCode) {
+            isCore = true;
+          }
+        }
       }
-    }
 
-    const userData = {
-      passwordHash: await hashPassword(password),
-      email: email || '',
-      phone: phone || '',
-      isOwner: isVex,
-      isAdmin: isVex,
-      isCore: hasCore,
-      role: isVex ? 'owner' : (hasCore ? 'core' : 'guest'),
-      displayName: username,
-      avatarUrl: DEFAULT_AVATAR,
-      isOnline: true,
-      lastSeen: Date.now(),
-      createdAt: Date.now()
-    };
+      tx.set(userRef, {
+        passwordHash, email: email || '', phone: phone || '',
+        isAdmin, isOwner, isCore,
+        role: isOwner ? 'owner' : (isAdmin ? 'admin' : (isCore ? 'core' : 'guest')),
+        displayName: username, avatarUrl: DEFAULT_AVATAR, isOnline: true,
+        lastSeen: Date.now(), createdAt: Date.now(), activeChannel: null
+      });
 
-    await userRef.set(userData);
-    currentUser = { username, ...userData };
-    localStorage.setItem('topv_user', username);
+      return { username, isAdmin, isOwner, isCore };
+    });
+
+    if(result === 'TAKEN') return setErr('That username is already taken.');
+
+    localStorage.setItem('topv_user', result.username);
+    const finalSnap = await userRef.get();
+    currentUser = { username: result.username, ...finalSnap.data() };
+    enforceOwnerConstraint();
     openLobby();
-  } catch(e) { setErr('Database unreachable.'); }
+  }catch(e){ setErr('Database unreachable. Check connection.'); }
 });
 
 /* ---------- Sign In ---------- */
@@ -760,13 +786,18 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
     const cleanId = sanitize(identifier);
     snap.forEach(doc => {
       const data = doc.data();
-      if(doc.id === cleanId || (data.email && data.email.toLowerCase() === identifier.toLowerCase())) {
+      if(doc.id === cleanId || (data.email && data.email.toLowerCase() === identifier.toLowerCase()) || (data.phone && data.phone === identifier)) {
         foundDoc = { username: doc.id, ...data };
       }
     });
     if(!foundDoc) return setErr('Member record not found.');
-    if(foundDoc.passwordHash !== passwordHash) return setErr('Invalid credentials.');
-
+    if(foundDoc.passwordHash){
+      if(foundDoc.passwordHash !== passwordHash) return setErr('Invalid credentials.');
+    } else if(foundDoc.password !== undefined){
+      if(foundDoc.password !== password) return setErr('Invalid credentials.');
+      await db.collection('users').doc(foundDoc.username).update({ passwordHash, password: FieldValue.delete() });
+      foundDoc.passwordHash = passwordHash;
+    }
     currentUser = foundDoc;
     enforceOwnerConstraint();
     localStorage.setItem('topv_user', currentUser.username);
@@ -774,7 +805,7 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
   }catch(e){ setErr('Authentication failure.'); }
 });
 
-/* ---------- Password Reset ---------- */
+/* ---------- Reset Password ---------- */
 document.getElementById('resetSubmitBtn').addEventListener('click', async () => {
   setErr('');
   const user = sanitize(document.getElementById('resetUser').value);
@@ -790,19 +821,46 @@ document.getElementById('resetSubmitBtn').addEventListener('click', async () => 
     const data = docSnap.data();
     if((data.email && data.email.toLowerCase() === contact) || (data.phone && data.phone === contact)) {
       const passwordHash = await hashPassword(newPass);
-      await docRef.update({ passwordHash });
+      await docRef.update({ passwordHash, password: FieldValue.delete() });
       showToast('Credentials updated. Please authenticate.');
       document.getElementById('resetPane').style.display = 'none';
       document.getElementById('loginPane').style.display = '';
     } else {
-      setErr('Verification contact did not match.');
+      setErr('Verification identity does not match.');
     }
   } catch(e) { setErr('Update rejected.'); }
 });
 
-/* ---------- Screen Routing: Open Lobby ---------- */
+/* ---------- Infrastructure & Default Sectors ---------- */
+async function initializeInfrastructure() {
+  try {
+    const gen = await db.collection('channels').doc('general').get();
+    if (!gen.exists) {
+      await db.collection('channels').doc('general').set({
+        name: 'General Assembly',
+        isPrivate: false,
+        maxCapacity: 50,
+        createdAt: 1000
+      });
+    }
+    const core = await db.collection('channels').doc('team-core').get();
+    if (!core.exists) {
+      await db.collection('channels').doc('team-core').set({
+        name: 'Command Core',
+        isPrivate: true,
+        maxCapacity: 10,
+        createdAt: 2000
+      });
+    }
+  } catch(e){}
+}
+
+/* ---------- Lobby Operations ---------- */
 function openLobby() {
   dismissSplash();
+  if (unsubMsg) { unsubMsg(); unsubMsg = null; }
+  setLivePresence(true, null);
+
   document.getElementById('auth').style.display = 'none';
   document.getElementById('chat').classList.remove('show');
   document.getElementById('lobbyView').classList.add('show');
@@ -814,44 +872,16 @@ function openLobby() {
 
   const canManage = (currentUser.isOwner || currentUser.isAdmin);
   document.getElementById('lobbyCreateRoomBtn').style.display = canManage ? 'inline-flex' : 'none';
+  document.getElementById('addChannelBtn').style.display = canManage ? 'flex' : 'none';
 
-  setLivePresence(true);
   listenChannels();
 }
 
-document.getElementById('lobbyReturnBtn').addEventListener('click', () => {
-  if (unsubMsg) unsubMsg();
-  openLobby();
-});
-
-/* ---------- Default Rooms & Channels Stream ---------- */
-async function ensureDefaultRooms() {
-  try {
-    const gen = await db.collection('channels').doc('general').get();
-    if(!gen.exists) {
-      await db.collection('channels').doc('general').set({
-        name: 'General Assembly',
-        isPrivate: false,
-        maxCapacity: 50,
-        createdAt: 1
-      });
-    }
-    const core = await db.collection('channels').doc('team-core').get();
-    if(!core.exists) {
-      await db.collection('channels').doc('team-core').set({
-        name: 'Command Core',
-        isPrivate: true,
-        maxCapacity: 10,
-        createdAt: 2
-      });
-    }
-  }catch(e){}
-}
+document.getElementById('lobbyReturnBtn').addEventListener('click', openLobby);
 
 function listenChannels() {
-  ensureDefaultRooms();
   if (unsubChannels) unsubChannels();
-  unsubChannels = db.collection('channels').orderBy('createdAt', 'asc').onSnapshot(snap => {
+  unsubChannels = db.collection('channels').onSnapshot(snap => {
     const grid = document.getElementById('lobbyRoomsGrid');
     const chBar = document.getElementById('channelButtonsList');
     if (grid) grid.innerHTML = '';
@@ -863,15 +893,15 @@ function listenChannels() {
       const id = doc.id;
       channelsData[id] = c;
 
-      // Lobby Cards
       if (grid) {
         const card = document.createElement('div');
         card.className = 'server-card';
         
         let ownerActions = '';
-        if (currentUser && currentUser.isOwner) {
+        if (currentUser && (currentUser.isOwner || currentUser.isAdmin)) {
           ownerActions = `
             <div class="owner-tools-row">
+              <button class="action-btn-small" onclick="setRoomCapacity('${id}')" title="Set Seat Capacity">👥 Cap</button>
               <button class="action-btn-small" onclick="renameRoom('${id}')" title="Rename">✏️</button>
               <button class="action-btn-small" onclick="toggleLockRoom('${id}', ${c.isPrivate})" title="Lock/Unlock">${c.isPrivate ? '🔓' : '🔒'}</button>
               ${id !== 'general' ? `<button class="action-btn-small danger" onclick="purgeRoom('${id}')" title="Delete">✕</button>` : ''}
@@ -883,8 +913,8 @@ function listenChannels() {
           <div class="server-info">
             <h4>${escapeHtml(c.name || id)} ${c.isPrivate ? '🔒' : ''}</h4>
             <div class="server-meta">
-              <span>Capacity: ${c.maxCapacity || '∞'} Max</span>
-              <span>Status: ${c.isPrivate ? 'Core/Private' : 'Open Public'}</span>
+              <span><strong>Capacity:</strong> ${c.maxCapacity || '∞'} Seats Allowed</span>
+              <span><strong>Access:</strong> ${c.isPrivate ? 'Core Verified Only' : 'Open Assembly'}</span>
             </div>
           </div>
           <div class="server-actions">
@@ -895,7 +925,6 @@ function listenChannels() {
         grid.appendChild(card);
       }
 
-      // Quick Bar Buttons
       if (chBar) {
         const btn = document.createElement('button');
         btn.className = `ch-btn ${c.isPrivate ? 'locked' : ''} ${id === currentChannelId ? 'active' : ''}`;
@@ -908,18 +937,30 @@ function listenChannels() {
   });
 }
 
-/* ---------- Connecting to Room ---------- */
+/* ---------- Connecting to Room (Chat View) ---------- */
 async function enterRoom(channelId) {
   const room = channelsData[channelId] || {};
   const isPriv = room.isPrivate || (channelId === 'team-core');
 
   if (isPriv && !currentUser.isCore && !currentUser.isAdmin && !currentUser.isOwner) {
-    return showToast('🔒 Clearance Denied: Core Team Token Required.');
+    return showToast('🔒 Clearance Denied: Core Team Access Token Required.');
+  }
+
+  // Enforce Max Capacity
+  if (room.maxCapacity && !currentUser.isOwner) {
+    try {
+      const activeOccupantsSnap = await db.collection('users').where('activeChannel', '==', channelId).get();
+      if (activeOccupantsSnap.size >= room.maxCapacity) {
+        return showToast(`Sector Full (${room.maxCapacity}/${room.maxCapacity} seats occupied).`);
+      }
+    } catch(e){}
   }
 
   currentChannelId = channelId;
+  await setLivePresence(true, channelId);
+
   document.getElementById('channelNameDisplay').textContent = '#' + (room.name || channelId).toUpperCase();
-  document.getElementById('channelOccupancyDisplay').textContent = `[Max: ${room.maxCapacity || '∞'}]`;
+  document.getElementById('channelOccupancyDisplay').textContent = `[Cap: ${room.maxCapacity || '∞'} Seats]`;
 
   document.getElementById('lobbyView').classList.remove('show');
   document.getElementById('chat').classList.add('show');
@@ -934,6 +975,7 @@ async function enterRoom(channelId) {
   document.getElementById('vaultPanelBox').style.display = isCoreOrAdmin ? 'block' : 'none';
   document.getElementById('taskPanelBox').style.display = isCoreOrAdmin ? 'block' : 'none';
   document.getElementById('scratchpadPanelBox').style.display = isCoreOrAdmin ? 'block' : 'none';
+  document.getElementById('inviteCodePanelBox').style.display = (currentUser.isOwner || currentUser.isAdmin) ? 'block' : 'none';
 
   if (currentUser.isOwner) {
     document.getElementById('vexControlPanel').style.display = 'block';
@@ -947,109 +989,13 @@ async function enterRoom(channelId) {
 
   listenUsers();
   listenMessages();
+
   if (isCoreOrAdmin) {
     listenTasks();
     listenVault();
     listenScratchpad();
   }
 }
-
-/* ---------- Owner Room Operations ---------- */
-document.getElementById('lobbyCreateRoomBtn').addEventListener('click', async () => {
-  if (!currentUser.isOwner && !currentUser.isAdmin) return showToast('Vex clearance required.');
-  const idRaw = prompt('Room Identifier (e.g. offensive-ops):');
-  if(!idRaw) return;
-  const id = sanitize(idRaw);
-  const name = prompt('Display Name:', idRaw) || id;
-  const cap = parseInt(prompt('Member Capacity limit:', '20')) || 25;
-  const isPriv = confirm('Make this room Private (Core Team only)?\n[OK = Private 🔒, Cancel = Public]');
-
-  await db.collection('channels').doc(id).set({
-    name,
-    isPrivate: isPriv,
-    maxCapacity: cap,
-    createdAt: Date.now(),
-    createdBy: currentUser.username
-  });
-  showToast(`Sector #${id} constructed.`);
-});
-
-window.toggleLockRoom = async function(id, curState) {
-  if(!currentUser.isOwner) return;
-  await db.collection('channels').doc(id).update({ isPrivate: !curState });
-  showToast(`Sector #${id} security toggled.`);
-};
-
-window.renameRoom = async function(id) {
-  if(!currentUser.isOwner) return;
-  const newName = prompt('New Sector Name:');
-  if(!newName) return;
-  await db.collection('channels').doc(id).update({ name: newName });
-  showToast('Sector renamed.');
-};
-
-window.purgeRoom = async function(id) {
-  if(!currentUser.isOwner) return;
-  if(confirm(`Erase sector #${id} and all contained data?`)) {
-    await db.collection('channels').doc(id).delete();
-    showToast('Sector eradicated.');
-  }
-};
-
-/* ---------- Dynamic Invite Tokens (Vex Only) ---------- */
-document.getElementById('generateTokenBtn')?.addEventListener('click', async () => {
-  if(!currentUser.isOwner) return;
-  const code = (document.getElementById('newTokenCodeInput').value || '').trim();
-  const uses = parseInt(document.getElementById('newTokenUsesInput').value) || 1;
-  if(!code) return showToast('Enter token identifier.');
-
-  await db.collection('tokens').doc(code).set({
-    code,
-    usesRemaining: uses,
-    issuedBy: 'Vex',
-    createdAt: Date.now()
-  });
-  document.getElementById('newTokenCodeInput').value = '';
-  showToast(`Token ${code} activated.`);
-});
-
-function listenTokens() {
-  if (unsubTokens) unsubTokens();
-  unsubTokens = db.collection('tokens').onSnapshot(snap => {
-    const list = document.getElementById('activeTokensList');
-    if(!list) return;
-    list.innerHTML = '';
-    snap.forEach(d => {
-      const t = d.data();
-      const div = document.createElement('div');
-      div.style.cssText = "display:flex;justify-content:space-between;padding:3px 0;align-items:center;border-bottom:1px solid rgba(0,0,0,0.05);";
-      div.innerHTML = `<span><strong>${escapeHtml(t.code)}</strong> (${t.usesRemaining} uses left)</span> <a style="color:var(--danger);cursor:pointer;font-weight:bold;" onclick="revokeToken('${d.id}')">Revoke</a>`;
-      list.appendChild(div);
-    });
-  });
-}
-window.revokeToken = async function(tokenId) {
-  if(currentUser.isOwner) await db.collection('tokens').doc(tokenId).delete();
-};
-
-/* ---------- Member Redeem Code In Lobby ---------- */
-document.getElementById('openRedeemCodeBtn').addEventListener('click', async () => {
-  const code = prompt('Enter Core Access Token:');
-  if(!code) return;
-  const ref = db.collection('tokens').doc(code.trim());
-  const snap = await ref.get();
-  if(snap.exists && snap.data().usesRemaining > 0) {
-    await ref.update({ usesRemaining: FieldValue.increment(-1) });
-    await db.collection('users').doc(currentUser.username).update({
-      isCore: true,
-      role: currentUser.isOwner ? 'owner' : 'core'
-    });
-    currentUser.isCore = true;
-    showToast('Token verified. Access granted to Core Enclave.');
-  } else {
-    showToast('Invalid or expired token.');
-  }
-});
 
 /* ---------- Messaging Stream & Interaction ---------- */
 function listenMessages(){
@@ -1059,32 +1005,22 @@ function listenMessages(){
 
   unsubMsg = db.collection('messages')
     .where('channel', '==', currentChannelId)
-    .orderBy('createdAt', 'asc')
-    .limitToLast(120)
     .onSnapshot(snap => {
-      latestChannelDocs = [];
+      box.innerHTML = '';
       if(snap.empty){
         box.innerHTML = '<div class="empty">No communications registered in this sector.</div>';
         return;
       }
-      if(box.querySelector('.empty')) box.innerHTML = '';
 
-      snap.docChanges().forEach(change => {
-        const doc = change.doc;
-        const data = doc.data();
-        if(change.type === 'added'){
-          renderSingleMessage(doc.id, data, true);
-          if(data.user !== currentUser.username) playTactileSound('receive');
-        } else if(change.type === 'modified'){
-          renderReactions(doc.id, data.reactions || {});
-        } else if(change.type === 'removed'){
-          const el = document.getElementById(`msg-${doc.id}`);
-          if(el) el.remove();
-        }
+      const docs = [];
+      snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
+      docs.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+
+      docs.forEach(data => renderSingleMessage(data.id, data, false));
+      
+      requestAnimationFrame(() => {
+        box.scrollTop = box.scrollHeight;
       });
-
-      snap.forEach(d => latestChannelDocs.push({ id: d.id, ...d.data() }));
-      box.scrollTop = box.scrollHeight;
     });
 }
 
@@ -1218,7 +1154,7 @@ async function deleteMessage(id){
   try { await db.collection('messages').doc(id).delete(); } catch(e){}
 }
 
-/* ---------- Send Message ---------- */
+/* ---------- Send Message Dispatcher ---------- */
 document.getElementById('sendForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const input = document.getElementById('msgInput');
@@ -1306,6 +1242,122 @@ function playVoiceData(base64) {
   const snd = new Audio(base64);
   snd.play();
 }
+
+/* ---------- Room Management: Capacity, Lock, Rename (Vex Only) ---------- */
+window.setRoomCapacity = async function(id) {
+  if(!currentUser.isOwner && !currentUser.isAdmin) return;
+  const currentCap = channelsData[id]?.maxCapacity || 25;
+  const newCapRaw = prompt(`Enter max seat capacity for #${id}:`, currentCap);
+  if(newCapRaw === null) return;
+  const newCap = parseInt(newCapRaw);
+  if(isNaN(newCap) || newCap < 1) return showToast('Please enter a valid number (min 1).');
+
+  await db.collection('channels').doc(id).update({ maxCapacity: newCap });
+  showToast(`Seat limit for #${id} set to ${newCap}.`);
+};
+
+function handleCreateRoomModal() {
+  if(!currentUser.isOwner && !currentUser.isAdmin) return showToast('Clearance required.');
+  const idRaw = prompt('Room Identifier (e.g. offensive-ops):');
+  if(!idRaw) return;
+  const id = sanitize(idRaw);
+  const name = prompt('Display Name:', idRaw) || id;
+  const cap = parseInt(prompt('Max Seat Capacity Limit (number of members):', '20')) || 25;
+  const isPriv = confirm('Make this room Private (Core Team only)?\n[OK = Private 🔒, Cancel = Public]');
+
+  db.collection('channels').doc(id).set({
+    name,
+    isPrivate: isPriv,
+    maxCapacity: cap,
+    createdAt: Date.now(),
+    createdBy: currentUser.username
+  }).then(() => {
+    showToast(`Sector #${id} constructed successfully.`);
+  }).catch(() => {
+    showToast('Failed to create sector.');
+  });
+}
+
+document.getElementById('lobbyCreateRoomBtn').addEventListener('click', handleCreateRoomModal);
+document.getElementById('addChannelBtn').addEventListener('click', handleCreateRoomModal);
+
+window.toggleLockRoom = async function(id, curState) {
+  if(!currentUser.isOwner && !currentUser.isAdmin) return;
+  await db.collection('channels').doc(id).update({ isPrivate: !curState });
+  showToast(`Sector #${id} security toggled.`);
+};
+
+window.renameRoom = async function(id) {
+  if(!currentUser.isOwner && !currentUser.isAdmin) return;
+  const newName = prompt('New Sector Name:');
+  if(!newName) return;
+  await db.collection('channels').doc(id).update({ name: newName });
+  showToast('Sector renamed.');
+};
+
+window.purgeRoom = async function(id) {
+  if(!currentUser.isOwner && !currentUser.isAdmin) return;
+  if(confirm(`Erase sector #${id} and all contained data?`)) {
+    await db.collection('channels').doc(id).delete();
+    if(currentChannelId === id) openLobby();
+    showToast('Sector eradicated.');
+  }
+};
+
+/* ---------- Dynamic Invite Tokens (Vex Only) ---------- */
+document.getElementById('generateTokenBtn')?.addEventListener('click', async () => {
+  if(!currentUser.isOwner) return;
+  const code = (document.getElementById('newTokenCodeInput').value || '').trim();
+  const uses = parseInt(document.getElementById('newTokenUsesInput').value) || 1;
+  if(!code) return showToast('Enter token code.');
+
+  await db.collection('tokens').doc(code).set({
+    code,
+    usesRemaining: uses,
+    issuedBy: 'Vex',
+    createdAt: Date.now()
+  });
+  document.getElementById('newTokenCodeInput').value = '';
+  showToast(`Token ${code} activated for ${uses} redemptions.`);
+});
+
+function listenTokens() {
+  if (unsubTokens) unsubTokens();
+  unsubTokens = db.collection('tokens').onSnapshot(snap => {
+    const list = document.getElementById('activeTokensList');
+    if(!list) return;
+    list.innerHTML = '';
+    snap.forEach(d => {
+      const t = d.data();
+      const div = document.createElement('div');
+      div.style.cssText = "display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid rgba(0,0,0,0.05);";
+      div.innerHTML = `<span><strong>${escapeHtml(t.code)}</strong> (${t.usesRemaining} uses left)</span> <a style="color:var(--danger);cursor:pointer;font-weight:bold;" onclick="revokeToken('${d.id}')">✕</a>`;
+      list.appendChild(div);
+    });
+  });
+}
+window.revokeToken = async function(tokenId) {
+  if(currentUser.isOwner) await db.collection('tokens').doc(tokenId).delete();
+};
+
+/* ---------- Member Redeem Code In Lobby ---------- */
+document.getElementById('openRedeemCodeBtn').addEventListener('click', async () => {
+  const code = prompt('Enter Core Access Token:');
+  if(!code) return;
+  const ref = db.collection('tokens').doc(code.trim());
+  const snap = await ref.get();
+  if(snap.exists && snap.data().usesRemaining > 0) {
+    await ref.update({ usesRemaining: FieldValue.increment(-1) });
+    await db.collection('users').doc(currentUser.username).update({
+      isCore: true,
+      role: currentUser.isOwner ? 'owner' : (currentUser.isAdmin ? 'admin' : 'core')
+    });
+    currentUser.isCore = true;
+    showToast('Token verified. Access granted to Core Enclave.');
+  } else {
+    showToast('Invalid or expired token.');
+  }
+});
 
 /* ---------- User Moderation & Directory (Vex Control) ---------- */
 function listenUsers(){
@@ -1460,7 +1512,7 @@ document.getElementById('vaultFileInput').addEventListener('change', async (e) =
 });
 async function deleteVaultFile(id){ await db.collection('vault').doc(id).delete(); }
 
-/* ---------- Profile Updates ---------- */
+/* ---------- Profile & Wallpaper Updates ---------- */
 document.getElementById('saveProfileBtn').addEventListener('click', async () => {
   const newName = document.getElementById('displayNameInput').value.trim();
   if(!newName) return;
@@ -1481,6 +1533,53 @@ document.getElementById('avatarFileInput').addEventListener('change', (e) => {
     showToast('Avatar updated.');
   };
   reader.readAsDataURL(file);
+});
+
+document.getElementById('wallpaperFileInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    document.getElementById('chatArea').style.backgroundImage = `url('${reader.result}')`;
+    localStorage.setItem('topv_wallpaper', reader.result);
+    showToast('Wallpaper applied.');
+  };
+  reader.readAsDataURL(file);
+});
+document.getElementById('clearWallpaperBtn').addEventListener('click', () => {
+  document.getElementById('chatArea').style.backgroundImage = 'none';
+  localStorage.removeItem('topv_wallpaper');
+  showToast('Wallpaper reset.');
+});
+const savedWp = localStorage.getItem('topv_wallpaper');
+if(savedWp) document.getElementById('chatArea').style.backgroundImage = `url('${savedWp}')`;
+
+/* ---------- Core Invite Code Update ---------- */
+document.getElementById('saveInviteCodeBtn').addEventListener('click', async () => {
+  const code = document.getElementById('coreInviteInput').value.trim();
+  if(!code) return;
+  await db.collection('meta').doc('team').set({ inviteCode: code }, { merge: true });
+  showToast('Enclave invite code updated.');
+});
+
+/* ---------- War Room State ---------- */
+let warRoomActive = false;
+document.getElementById('toggleWarRoomBtn').addEventListener('click', () => {
+  warRoomActive = !warRoomActive;
+  const banner = document.getElementById('warRoomBanner');
+  banner.style.display = warRoomActive ? 'flex' : 'none';
+  if(warRoomActive) {
+    let secs = 0;
+    incidentClockInterval = setInterval(() => {
+      secs++;
+      const m = Math.floor(secs / 60).toString().padStart(2, '0');
+      const s = (secs % 60).toString().padStart(2, '0');
+      document.getElementById('warRoomTimer').textContent = `${m}:${s}`;
+    }, 1000);
+    showToast('🚨 WAR ROOM PROTOCOL ENGAGED.');
+  } else {
+    clearInterval(incidentClockInterval);
+  }
 });
 
 /* ---------- Sidebar Toggle ---------- */
@@ -1515,7 +1614,7 @@ document.getElementById('panicBtn').addEventListener('click', async () => {
 });
 
 document.getElementById('logoutBtn').addEventListener('click', async () => {
-  await setLivePresence(false);
+  await setLivePresence(false, null);
   localStorage.removeItem('topv_user');
   location.reload();
 });
@@ -1527,6 +1626,8 @@ const cmdPaletteResults = document.getElementById('cmdPaletteResults');
 
 const COMMANDS = [
   { name: 'Return to Sectors Hub (Lobby)', action: () => openLobby() },
+  { name: 'Switch to #GENERAL', action: () => enterRoom('general') },
+  { name: 'Switch to #TEAM-CORE', action: () => enterRoom('team-core') },
   { name: 'Toggle Dark / Light Mode', action: () => themeToggleBtn.click() },
   { name: 'Purge Current Room (Admin)', action: () => document.getElementById('panicBtn').click() },
   { name: 'Disconnect Session', action: () => document.getElementById('logoutBtn').click() }
@@ -1580,6 +1681,9 @@ function renderCmdResults(q) {
     cmdPaletteResults.appendChild(el);
   });
 }
+
+// Initialize System Infrastructure
+initializeInfrastructure();
 </script>
 </body>
 </html>
