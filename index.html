@@ -8,15 +8,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap">
 <style>
   :root {
-    --crimson: #A51C30; 
-    --crimson-dark: #7a1524; 
+    --crimson: #A51C30;
+    --crimson-dark: #7a1524;
     --gold: #C9A85C;
     --gold-glow: rgba(201, 168, 92, 0.25);
-    --bg: #f6f2ea; 
-    --card: #ffffff; 
-    --ink: #1f1a17; 
+    --bg: #f6f2ea;
+    --card: #ffffff;
+    --ink: #1f1a17;
     --sub: #6b615a;
-    --border: #e3dccf; 
+    --border: #e3dccf;
     --danger: #a51c30;
     --bubble-me: #A51C30;
     --bubble-other: #ece5d8;
@@ -25,484 +25,138 @@
     --sidebar-bg: #faf7f2;
     --panel-bg: #f0ebe1;
   }
-
   [data-theme="dark"] {
-    --crimson: #c6233d;
-    --crimson-dark: #8c1426;
-    --gold: #e5c378;
-    --gold-glow: rgba(229, 195, 120, 0.2);
-    --bg: #0d0f12; 
-    --card: #15181f; 
-    --ink: #f0ede6; 
-    --sub: #9ca3af;
-    --border: #232834; 
-    --danger: #ff4d6d;
-    --bubble-me: #A51C30;
-    --bubble-other: #1b202a;
-    --header-bg: #12151b;
-    --header-text: #f0ede6;
-    --sidebar-bg: #13161e;
-    --panel-bg: #191e27;
+    --crimson: #c6233d; --crimson-dark: #8c1426; --gold: #e5c378; --gold-glow: rgba(229,195,120,0.2);
+    --bg: #0d0f12; --card: #15181f; --ink: #f0ede6; --sub: #9ca3af; --border: #232834; --danger: #ff4d6d;
+    --bubble-me: #A51C30; --bubble-other: #1b202a; --header-bg: #12151b; --header-text: #f0ede6;
+    --sidebar-bg: #13161e; --panel-bg: #191e27;
   }
-
   * { box-sizing: border-box; outline: none; margin: 0; padding: 0; }
   html, body { height: 100%; width: 100%; }
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'EB Garamond', Georgia, serif;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: background 0.2s ease, color 0.2s ease;
-  }
+  body { background: var(--bg); color: var(--ink); font-family: 'EB Garamond', Georgia, serif; display: flex; flex-direction: column; overflow: hidden; transition: background .2s ease, color .2s ease; }
 
-  /* SPLASH SCREEN */
-  #splashScreen {
-    position: fixed;
-    inset: 0;
-    background: #090a0d;
-    z-index: 99999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    cursor: pointer;
-    transition: opacity 0.5s ease;
-  }
+  #splashScreen { position: fixed; inset: 0; background: #090a0d; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; cursor: pointer; transition: opacity .5s ease; }
   .splash-content { text-align: center; }
   .splash-sub { font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
   .splash-title { font-family: 'Playfair Display', serif; font-size: 34px; letter-spacing: 2px; font-weight: 700; margin-bottom: 24px; }
-  .splash-title span { color: #A51C30; text-shadow: 0 0 25px rgba(165, 28, 48, 0.6); }
-  .car-brands { display: flex; gap: 26px; align-items: center; justify-content: center; padding-top: 18px; border-top: 1px solid rgba(201, 168, 92, 0.25); }
-  .brand-icon { width: 32px; height: 32px; fill: #cbd5e1; opacity: 0.85; transition: 0.2s; }
-  .brand-icon:hover { opacity: 1; fill: var(--gold); }
+  .splash-title span { color: #A51C30; text-shadow: 0 0 25px rgba(165,28,48,.6); }
+  .car-brands { display: flex; gap: 26px; align-items: center; justify-content: center; padding-top: 18px; border-top: 1px solid rgba(201,168,92,.25); }
+  .brand-icon { width: 32px; height: 32px; fill: #cbd5e1; opacity: .85; }
 
-  /* HEADER */
-  header {
-    background: var(--header-bg);
-    color: var(--header-text);
-    height: 52px;
-    padding: 0 18px;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    flex-shrink: 0;
-    border-bottom: 1px solid var(--border);
-    z-index: 40;
-  }
+  header { background: var(--header-bg); color: var(--header-text); height: 52px; padding: 0 18px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,.15); flex-shrink: 0; border-bottom: 1px solid var(--border); z-index: 40; }
   .header-left { display: flex; align-items: center; gap: 8px; }
-  .header-center { display: flex; align-items: center; justify-content: center; gap: 10px; cursor: default; }
+  .header-center { display: flex; align-items: center; justify-content: center; gap: 10px; }
   .header-right { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
-  
   .crest { width: 32px; height: 32px; flex-shrink: 0; }
   header h1 { font-family: 'Playfair Display', serif; font-size: 22px; letter-spacing: 1px; color: #fff; line-height: 1; }
   header .tag { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; text-align: center; }
 
-  .btn {
-    cursor: pointer;
-    border: 1px solid transparent;
-    border-radius: 6px;
-    padding: 6px 14px;
-    font-family: inherit;
-    font-size: 14.5px;
-    transition: 0.15s;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-  }
-  .btn-outline { background: transparent; border-color: rgba(255,255,255,0.45); color: #fff; }
-  .btn-outline:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
+  .btn { cursor: pointer; border: 1px solid transparent; border-radius: 6px; padding: 6px 14px; font-family: inherit; font-size: 14.5px; transition: .15s; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .btn-outline { background: transparent; border-color: rgba(255,255,255,.45); color: #fff; }
+  .btn-outline:hover { background: rgba(255,255,255,.15); border-color: #fff; }
   .btn-primary { background: var(--crimson); color: #fff; }
   .btn-primary:hover { background: var(--crimson-dark); }
   .btn-danger { background: #8b0000; color: #fff; border-color: #550000; }
   .btn-danger:hover { background: #a51c30; }
 
-  .theme-toggle-btn {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.4);
-    border-radius: 50%;
-    width: 34px;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: #fff;
-    transition: 0.15s;
-    padding: 0;
-  }
-  .theme-toggle-btn:hover { background: rgba(255,255,255,0.15); border-color: var(--gold); }
+  .theme-toggle-btn { background: transparent; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; padding: 0; }
+  .theme-toggle-btn:hover { background: rgba(255,255,255,.15); border-color: var(--gold); }
   .theme-toggle-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
   main { flex: 1; display: flex; overflow: hidden; min-height: 0; position: relative; }
-  
-  /* AUTH SCREEN */
   #auth { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: 0 10px 35px rgba(0,0,0,0.1);
-    max-width: 380px;
-    width: 100%;
-    padding: 28px 24px;
-    text-align: center;
-  }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 10px 35px rgba(0,0,0,.1); max-width: 380px; width: 100%; padding: 28px 24px; text-align: center; }
   .card h2 { font-family: 'Playfair Display', serif; font-size: 24px; margin: 4px 0; }
   .card p.sub { color: var(--sub); font-size: 14px; margin-bottom: 18px; }
   .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 18px; }
   .tab { flex: 1; padding: 8px; cursor: pointer; color: var(--sub); border-bottom: 2px solid transparent; font-size: 15px; }
   .tab.active { color: var(--crimson); border-color: var(--crimson); font-weight: 600; }
-  
   .field { margin-bottom: 12px; text-align: left; }
   .field label { display: block; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--sub); margin-bottom: 4px; }
-  .field input {
-    width: 100%;
-    padding: 9px 12px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: inherit;
-    font-size: 15px;
-  }
+  .field input { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--ink); font-family: inherit; font-size: 15px; }
   .field input:focus { border-color: var(--crimson); }
   .full { width: 100%; margin-top: 6px; justify-content: center; }
   .msg-err { color: var(--danger); font-size: 13px; margin-top: 8px; min-height: 16px; }
   .forgot-link { display: inline-block; margin-top: 12px; font-size: 13px; color: var(--crimson); text-decoration: none; cursor: pointer; }
 
-  /* CHAT APPLICATION (FOCUSED VIEW) */
   #chat { display: none; flex: 1; overflow: hidden; width: 100%; position: relative; }
   #chat.show { display: flex; }
-  
-  /* CHANNELS STRIP */
-  .channel-bar {
-    width: 64px;
-    background: var(--header-bg);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 12px 0;
-    gap: 10px;
-    border-right: 1px solid rgba(255,255,255,0.1);
-    flex-shrink: 0;
-    z-index: 30;
-  }
-  .ch-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: #fff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 600;
-    transition: 0.15s;
-  }
-  .ch-btn:hover, .ch-btn.active {
-    background: var(--gold);
-    color: #111;
-    border-color: #fff;
-  }
+  .channel-bar { width: 64px; background: var(--header-bg); display: flex; flex-direction: column; align-items: center; padding: 12px 0; gap: 10px; border-right: 1px solid rgba(255,255,255,.1); flex-shrink: 0; z-index: 30; }
+  .ch-btn { width: 44px; height: 44px; border-radius: 10px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; transition: .15s; }
+  .ch-btn:hover, .ch-btn.active { background: var(--gold); color: #111; border-color: #fff; }
 
-  /* SLIDE-OUT ASIDE (DRAWER) - Hidden by default for full chat focus */
-  aside {
-    position: fixed;
-    top: 52px;
-    left: 64px;
-    height: calc(100% - 52px);
-    width: 300px;
-    max-width: 85vw;
-    background: var(--sidebar-bg);
-    border-right: 1px solid var(--border);
-    padding: 16px;
-    overflow-y: auto;
-    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    z-index: 50;
-    transform: translateX(-150%);
-    box-shadow: 8px 0 30px rgba(0,0,0,0.25);
-  }
+  aside { position: fixed; top: 52px; left: 64px; height: calc(100% - 52px); width: 300px; max-width: 85vw; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 16px; overflow-y: auto; transition: transform .28s cubic-bezier(.16,1,.3,1); display: flex; flex-direction: column; gap: 12px; z-index: 50; transform: translateX(-150%); box-shadow: 8px 0 30px rgba(0,0,0,.25); }
   aside.open { transform: translateX(0); }
   .aside-head { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 4px; }
   #asideClose { cursor: pointer; font-size: 24px; color: var(--sub); line-height: 1; }
-  
-  /* ACCORDION PANELS */
-  .panel-box {
-    background: var(--panel-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .panel-toggle-head {
-    padding: 9px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    user-select: none;
-    font-size: 13.5px;
-    font-weight: 600;
-    color: var(--ink);
-  }
-  .panel-toggle-head:hover { background: rgba(0,0,0,0.03); }
-  .panel-icon-indicator { font-size: 14px; color: var(--gold); font-weight: bold; }
-  .panel-body {
-    padding: 10px 12px;
-    border-top: 1px solid var(--border);
-    display: none;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .panel-body.open { display: flex; }
 
-  .panel-body input[type="text"], .panel-body select {
-    width: 100%;
-    padding: 6px 10px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--ink);
-    font-family: inherit;
-  }
-  
+  .panel-box { background: var(--panel-bg); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .panel-toggle-head { padding: 9px 12px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+  .panel-toggle-head:hover { background: rgba(0,0,0,.03); }
+  .panel-icon-indicator { font-size: 14px; color: var(--gold); font-weight: bold; }
+  .panel-body { padding: 10px 12px; border-top: 1px solid var(--border); display: none; flex-direction: column; gap: 8px; }
+  .panel-body.open { display: flex; }
+  .panel-body input[type="text"], .panel-body select { width: 100%; padding: 6px 10px; font-size: 14px; border-radius: 5px; border: 1px solid var(--border); background: var(--card); color: var(--ink); font-family: inherit; }
   .profile-avatar-wrap { display: flex; align-items: center; gap: 10px; }
   .profile-avatar-wrap img { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--gold); object-fit: cover; }
-  
-  /* LIVE PRESENCE STATUS INDICATOR */
-  .status-pulse {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: 5px;
-    box-shadow: 0 0 6px currentColor;
-  }
+
+  .status-pulse { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; box-shadow: 0 0 6px currentColor; }
   .status-online { color: #10b981; background: #10b981; animation: liveBlink 1.8s infinite; }
   .status-offline { color: #64748b; background: #64748b; }
-  @keyframes liveBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  @keyframes liveBlink { 0%,100%{opacity:1;} 50%{opacity:.4;} }
 
-  .action-file-label {
-    font-size: 12px;
-    cursor: pointer;
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 5px 9px;
-    border-radius: 4px;
-    color: var(--ink);
-    display: inline-block;
-    text-align: center;
-  }
+  .action-file-label { font-size: 12px; cursor: pointer; background: var(--card); border: 1px solid var(--border); padding: 5px 9px; border-radius: 4px; color: var(--ink); display: inline-block; text-align: center; }
   .action-file-label:hover { border-color: var(--crimson); }
 
   .member { display: flex; align-items: center; gap: 8px; padding: 7px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
   .member img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); }
   .member .status-txt { font-size: 11px; color: var(--sub); display: flex; align-items: center; margin-top: 2px; }
-  .member .del { margin-left: auto; color: var(--danger); cursor: pointer; font-size: 12px; opacity: 0.7; }
+  .member .del { margin-left: auto; color: var(--danger); cursor: pointer; font-size: 12px; opacity: .7; }
   .member .del:hover { opacity: 1; }
 
-  .task-item {
-    font-size: 12.5px;
-    background: var(--card);
-    padding: 5px 8px;
-    border-radius: 4px;
-    border-left: 3px solid var(--gold);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  .task-item { font-size: 12.5px; background: var(--card); padding: 5px 8px; border-radius: 4px; border-left: 3px solid var(--gold); display: flex; align-items: center; justify-content: space-between; }
 
-  /* CHAT AREA (FOCUSED FULL WIDTH) */
-  .chatarea {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    min-height: 0;
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-  
-  .channel-header {
-    background: var(--card);
-    border-bottom: 1px solid var(--border);
-    padding: 8px 18px;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--gold);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    letter-spacing: 0.5px;
-  }
-
-  #messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 16px 20px;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
+  .chatarea { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; position: relative; background-size: cover; background-position: center; background-repeat: no-repeat; }
+  .channel-header { background: var(--card); border-bottom: 1px solid var(--border); padding: 8px 18px; font-size: 15px; font-weight: 600; color: var(--gold); display: flex; align-items: center; justify-content: space-between; letter-spacing: .5px; }
+  #messages { flex: 1; overflow-y: auto; padding: 16px 20px; min-height: 0; display: flex; flex-direction: column; gap: 12px; }
   .msg-row { display: flex; gap: 8px; max-width: 76%; align-items: flex-end; }
   .msg-row.me { align-self: flex-end; flex-direction: row-reverse; }
   .msg-avatar { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--gold); object-fit: cover; flex-shrink: 0; }
-  
-  .bubble {
-    background: var(--bubble-other);
-    border: 1px solid var(--border);
-    padding: 8px 13px;
-    border-radius: 12px;
-    position: relative;
-    color: var(--ink);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-  }
+  .bubble { background: var(--bubble-other); border: 1px solid var(--border); padding: 8px 13px; border-radius: 12px; position: relative; color: var(--ink); box-shadow: 0 1px 4px rgba(0,0,0,.04); }
   .msg-row.me .bubble { background: var(--bubble-me); color: #fff; border-color: var(--bubble-me); }
-  
   .bubble-header { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
   .bubble .name { font-size: 12.5px; font-weight: 600; }
   .msg-row.me .bubble .name { color: #fecdd3; }
-  
-  .delete-msg-btn { cursor: pointer; font-size: 11px; opacity: 0.6; margin-left: auto; color: inherit; border: none; background: transparent; padding: 0 4px; }
+  .delete-msg-btn { cursor: pointer; font-size: 11px; opacity: .6; margin-left: auto; color: inherit; border: none; background: transparent; padding: 0 4px; }
   .delete-msg-btn:hover { opacity: 1; color: var(--gold); }
-  
   .bubble .txt { font-size: 15.5px; line-height: 1.45; word-wrap: break-word; }
-  .bubble .time { font-size: 10px; opacity: 0.65; margin-top: 3px; text-align: right; }
-
-  pre.code-block {
-    background: #181b22;
-    color: #e2e8f0;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-family: monospace;
-    font-size: 13px;
-    overflow-x: auto;
-    border: 1px solid rgba(255,255,255,0.08);
-    margin: 4px 0;
-  }
-
-  .burner-badge {
-    display: inline-flex;
-    align-items: center;
-    font-size: 10px;
-    background: rgba(220, 38, 38, 0.2);
-    color: #f87171;
-    border: 1px solid #f87171;
-    border-radius: 3px;
-    padding: 0 4px;
-  }
+  .bubble .time { font-size: 10px; opacity: .65; margin-top: 3px; text-align: right; }
+  pre.code-block { background: #181b22; color: #e2e8f0; padding: 8px 12px; border-radius: 6px; font-family: monospace; font-size: 13px; overflow-x: auto; border: 1px solid rgba(255,255,255,.08); margin: 4px 0; }
+  .burner-badge { display: inline-flex; align-items: center; font-size: 10px; background: rgba(220,38,38,.2); color: #f87171; border: 1px solid #f87171; border-radius: 3px; padding: 0 4px; }
   .msg-row.me .burner-badge { color: #fff; border-color: #fff; }
-
   .voice-msg-player { display: flex; align-items: center; gap: 8px; padding: 3px 0; }
-  .voice-play-btn {
-    background: var(--gold);
-    color: #111;
-    border: none;
-    border-radius: 50%;
-    width: 26px;
-    height: 26px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: bold;
-  }
+  .voice-play-btn { background: var(--gold); color: #111; border: none; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; }
 
-  /* INPUT BAR */
-  .input-bar-container {
-    padding: 10px 16px;
-    background: var(--card);
-    border-top: 1px solid var(--border);
-    flex-shrink: 0;
-  }
+  .input-bar-container { padding: 10px 16px; background: var(--card); border-top: 1px solid var(--border); flex-shrink: 0; }
   .input-controls { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .toggle-btn-small {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--ink);
-    border-radius: 12px;
-    padding: 3px 10px;
-    font-size: 11.5px;
-    cursor: pointer;
-    transition: 0.15s;
-    font-family: inherit;
-  }
+  .toggle-btn-small { background: var(--bg); border: 1px solid var(--border); color: var(--ink); border-radius: 12px; padding: 3px 10px; font-size: 11.5px; cursor: pointer; font-family: inherit; }
   .toggle-btn-small.active { background: var(--danger); color: #fff; border-color: var(--danger); }
-
-  form#sendForm {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 3px 6px 3px 16px;
-  }
-  form#sendForm input {
-    flex: 1;
-    min-width: 0;
-    border: none;
-    background: transparent;
-    color: var(--ink);
-    font-family: inherit;
-    font-size: 15px;
-    padding: 8px 0;
-  }
-  .circle-btn {
-    border-radius: 50%;
-    width: 34px;
-    height: 34px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    cursor: pointer;
-    border: none;
-    transition: 0.15s;
-  }
+  form#sendForm { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 24px; padding: 3px 6px 3px 16px; }
+  form#sendForm input { flex: 1; min-width: 0; border: none; background: transparent; color: var(--ink); font-family: inherit; font-size: 15px; padding: 8px 0; }
+  .circle-btn { border-radius: 50%; width: 34px; height: 34px; padding: 0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; border: none; }
   .record-btn { background: #334155; color: #fff; }
-  .record-btn.recording { background: #dc2626; animation: recordPulse 0.9s infinite alternate; }
-  @keyframes recordPulse { from { transform: scale(1); } to { transform: scale(1.1); } }
+  .record-btn.recording { background: #dc2626; animation: recordPulse .9s infinite alternate; }
+  @keyframes recordPulse { from{transform:scale(1);} to{transform:scale(1.1);} }
   .send-submit-btn { background: var(--crimson); color: #fff; }
-
   .empty { color: var(--sub); text-align: center; margin: auto; font-style: italic; font-size: 15.5px; }
 
   #toastBox { position: fixed; top: 16px; right: 16px; z-index: 100000; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
-  .toast {
-    pointer-events: auto;
-    background: var(--card);
-    color: var(--ink);
-    border: 1px solid var(--gold);
-    border-left: 4px solid var(--gold);
-    border-radius: 5px;
-    padding: 8px 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
-    font-size: 13.5px;
-    animation: toastIn 0.25s ease forwards;
-  }
-  @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+  .toast { pointer-events: auto; background: var(--card); color: var(--ink); border: 1px solid var(--gold); border-left: 4px solid var(--gold); border-radius: 5px; padding: 8px 14px; box-shadow: 0 6px 20px rgba(0,0,0,.18); font-size: 13.5px; animation: toastIn .25s ease forwards; }
+  @keyframes toastIn { from{opacity:0; transform:translateX(20px);} to{opacity:1; transform:translateX(0);} }
 
   #poweredBy { flex-shrink: 0; text-align: center; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--sub); padding: 6px 0; background: var(--card); border-top: 1px solid var(--border); }
   #poweredBy span { color: var(--crimson); font-weight: 700; }
-
-  #asideBackdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 45; }
+  #asideBackdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 45; }
   #asideBackdrop.show { display: block; }
 </style>
 </head>
@@ -510,7 +164,6 @@
 
 <div id="toastBox"></div>
 
-<!-- SPLASH SCREEN -->
 <div id="splashScreen">
   <div class="splash-content">
     <div class="splash-sub">Welcome to excellence</div>
@@ -526,18 +179,12 @@
 
 <header>
   <div class="header-left">
-    <!-- Team Drawer Button: Only visible after login -->
     <button class="btn btn-outline" id="teamToggle" style="display:none; padding:4px 12px; font-size:13px;">☰ Team</button>
   </div>
-
   <div class="header-center">
     <svg class="crest" viewBox="0 0 48 48"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#7a1524" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Playfair Display', serif" font-size="18" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
-    <div>
-      <h1>TOP V</h1>
-      <div class="tag">Private Team</div>
-    </div>
+    <div><h1>TOP V</h1><div class="tag">Private Team</div></div>
   </div>
-
   <div class="header-right">
     <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme">
       <svg id="themeIconSun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
@@ -549,34 +196,29 @@
 </header>
 
 <main>
-  <!-- AUTH SCREEN -->
   <div id="auth">
     <div class="card">
-      <svg class="crest" viewBox="0 0 48 48" style="width:46px; height:46px; margin:0 auto 8px; display:block;"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#A51C30" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Playfair Display', serif" font-size="18" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
+      <svg class="crest" viewBox="0 0 48 48" style="width:46px;height:46px;margin:0 auto 8px;display:block;"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#A51C30" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Playfair Display', serif" font-size="18" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
       <h2>TOP V</h2>
       <p class="sub">A private space for your team of five</p>
-      
       <div class="tabs" id="authTabs">
         <div class="tab active" data-tab="login">Sign In</div>
         <div class="tab" data-tab="register">Register</div>
       </div>
-
       <div id="loginPane">
-        <div class="field"><label>Username / Email / Phone</label><input id="loginIdentifier" placeholder="" autocomplete="username"></div>
+        <div class="field"><label>Username / Email / Phone</label><input id="loginIdentifier" autocomplete="username"></div>
         <div class="field"><label>Password</label><input id="loginPass" type="password" autocomplete="current-password"></div>
         <button class="btn btn-primary full" id="loginBtn">Sign In</button>
         <a class="forgot-link" id="forgotPwdLink">Forgot password?</a>
       </div>
-
       <div id="registerPane" style="display:none;">
         <div class="field"><label>Choose a username</label><input id="regUser" autocomplete="username"></div>
         <div class="field"><label>Email Address</label><input id="regEmail" type="email"></div>
         <div class="field"><label>Phone Number</label><input id="regPhone" type="tel"></div>
         <div class="field"><label>Choose a password</label><input id="regPass" type="password" autocomplete="new-password"></div>
         <button class="btn btn-primary full" id="regBtn">Create Account</button>
-        <p class="msg-info" style="font-size:12px; margin-top:10px; color:var(--sub);">Limited to 5 teammates. The first person to register becomes the team admin.</p>
+        <p style="font-size:12px;margin-top:10px;color:var(--sub);">Limited to 5 teammates. The first person to register becomes the team admin.</p>
       </div>
-
       <div id="resetPane" style="display:none;">
         <div class="field"><label>Username</label><input id="resetUser"></div>
         <div class="field"><label>Verification Email or Phone</label><input id="resetContact"></div>
@@ -584,122 +226,84 @@
         <button class="btn btn-primary full" id="resetSubmitBtn">Update Password</button>
         <a class="forgot-link" id="backToLoginLink">Back to Sign In</a>
       </div>
-
       <div class="msg-err" id="authErr"></div>
     </div>
   </div>
 
-  <!-- CHAT APPLICATION -->
   <div id="chat">
-    <!-- SUB-CHANNELS STRIP -->
     <div class="channel-bar">
       <div class="ch-btn active" data-ch="general" title="General Comms">#GEN</div>
-      <div class="ch-btn" data-ch="intelligence" title="Intelligence & Tools">#INT</div>
+      <div class="ch-btn" data-ch="intelligence" title="Intelligence &amp; Tools">#INT</div>
       <div class="ch-btn" data-ch="war-room" title="War Room">#WAR</div>
     </div>
 
-    <!-- PULL-OUT OPS SIDEBAR (Hidden by default to keep chat clear) -->
     <aside id="teamAside">
       <div class="aside-head">
-        <h3 style="font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--gold);">Team & Workspace</h3>
+        <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);">Team &amp; Workspace</h3>
         <span id="asideClose">&times;</span>
       </div>
 
-      <!-- Identity & Status Accordion -->
       <div class="panel-box">
-        <div class="panel-toggle-head" onclick="toggleAccordion('profilePanel', this)">
-          <span>My Profile</span>
-          <span class="panel-icon-indicator">+</span>
-        </div>
+        <div class="panel-toggle-head" onclick="toggleAccordion('profilePanel', this)"><span>My Profile</span><span class="panel-icon-indicator">+</span></div>
         <div class="panel-body" id="profilePanel">
           <div class="profile-avatar-wrap">
             <img id="myAvatarImg" src="" alt="Avatar">
-            <label class="action-file-label">
-              Change Photo
-              <input type="file" id="avatarFileInput" accept="image/*" style="display:none;">
-            </label>
+            <label class="action-file-label">Change Photo<input type="file" id="avatarFileInput" accept="image/*" style="display:none;"></label>
           </div>
           <input type="text" id="displayNameInput" placeholder="Display Name">
-          <button class="btn btn-primary" id="saveProfileBtn" style="font-size:12px; padding:6px; justify-content:center;">Save Profile</button>
+          <button class="btn btn-primary" id="saveProfileBtn" style="font-size:12px;padding:6px;justify-content:center;">Save Profile</button>
         </div>
       </div>
 
-      <!-- File Vault Accordion -->
       <div class="panel-box">
-        <div class="panel-toggle-head" onclick="toggleAccordion('vaultPanel', this)">
-          <span>File Vault</span>
-          <span class="panel-icon-indicator">+</span>
-        </div>
+        <div class="panel-toggle-head" onclick="toggleAccordion('vaultPanel', this)"><span>File Vault</span><span class="panel-icon-indicator">+</span></div>
         <div class="panel-body" id="vaultPanel">
-          <label class="action-file-label">
-            Upload File
-            <input type="file" id="vaultFileInput" style="display:none;">
-          </label>
-          <div id="vaultList" style="display:flex; flex-direction:column; gap:4px; max-height:90px; overflow-y:auto;"></div>
+          <label class="action-file-label">Upload File (max 650KB)<input type="file" id="vaultFileInput" style="display:none;"></label>
+          <div id="vaultList" style="display:flex;flex-direction:column;gap:4px;max-height:90px;overflow-y:auto;"></div>
         </div>
       </div>
 
-      <!-- Tactical Task Board Accordion -->
       <div class="panel-box">
-        <div class="panel-toggle-head" onclick="toggleAccordion('taskPanel', this)">
-          <span>Team Tasks</span>
-          <span class="panel-icon-indicator">+</span>
-        </div>
+        <div class="panel-toggle-head" onclick="toggleAccordion('taskPanel', this)"><span>Team Tasks</span><span class="panel-icon-indicator">+</span></div>
         <div class="panel-body" id="taskPanel">
-          <div style="display:flex; gap:4px;">
-            <input type="text" id="taskInput" placeholder="New task…" style="font-size:13px; padding:5px 8px;">
-            <button class="btn btn-primary" id="addTaskBtn" style="font-size:12px; padding:4px 8px;">Add</button>
+          <div style="display:flex;gap:4px;">
+            <input type="text" id="taskInput" placeholder="New task…" style="font-size:13px;padding:5px 8px;">
+            <button class="btn btn-primary" id="addTaskBtn" style="font-size:12px;padding:4px 8px;">Add</button>
           </div>
-          <div id="taskList" style="display:flex; flex-direction:column; gap:4px; max-height:100px; overflow-y:auto;"></div>
+          <div id="taskList" style="display:flex;flex-direction:column;gap:4px;max-height:100px;overflow-y:auto;"></div>
         </div>
       </div>
 
-      <!-- Wallpaper & Customization Accordion -->
       <div class="panel-box">
-        <div class="panel-toggle-head" onclick="toggleAccordion('wallpaperPanel', this)">
-          <span>Chat Wallpaper</span>
-          <span class="panel-icon-indicator">+</span>
-        </div>
+        <div class="panel-toggle-head" onclick="toggleAccordion('wallpaperPanel', this)"><span>Chat Wallpaper</span><span class="panel-icon-indicator">+</span></div>
         <div class="panel-body" id="wallpaperPanel">
-          <div style="display:flex; gap:6px;">
-            <label class="action-file-label" style="flex:1;">
-              Upload Background
-              <input type="file" id="wallpaperFileInput" accept="image/*" style="display:none;">
-            </label>
-            <button class="btn btn-outline" id="clearWallpaperBtn" style="font-size:11px; padding:4px 8px; color:var(--danger); border-color:var(--border);">Reset</button>
+          <div style="display:flex;gap:6px;">
+            <label class="action-file-label" style="flex:1;">Upload Background<input type="file" id="wallpaperFileInput" accept="image/*" style="display:none;"></label>
+            <button class="btn btn-outline" id="clearWallpaperBtn" style="font-size:11px;padding:4px 8px;color:var(--danger);border-color:var(--border);">Reset</button>
           </div>
         </div>
       </div>
 
-      <!-- Active Team Roster with Live Presence -->
       <div style="margin-top:6px;">
-        <h4 style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--sub); margin-bottom:6px;">Teammates</h4>
+        <h4 style="font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--sub);margin-bottom:6px;">Teammates</h4>
         <div id="memberList"></div>
       </div>
     </aside>
 
     <div id="asideBackdrop"></div>
 
-    <!-- MAIN CHAT AREA (FOCUSED FULL VIEW) -->
     <div class="chatarea" id="chatArea">
       <div class="channel-header">
         <span id="channelNameDisplay">#GENERAL</span>
-        <span style="font-size:11px; opacity:0.8;">PRIVATE ENCLAVE</span>
+        <span style="font-size:11px;opacity:.8;">PRIVATE ENCLAVE</span>
       </div>
-
-      <div id="messages">
-        <div class="empty">No messages yet — start the conversation.</div>
-      </div>
-      
-      <!-- INPUT BAR -->
+      <div id="messages"><div class="empty">No messages yet — start the conversation.</div></div>
       <div class="input-bar-container">
         <div class="input-controls">
-          <button type="button" class="toggle-btn-small" id="burnerToggleBtn">
-            <span>🔥 Burner Message: OFF</span>
-          </button>
+          <button type="button" class="toggle-btn-small" id="burnerToggleBtn"><span>🔥 Burner Message: OFF</span></button>
         </div>
         <form id="sendForm">
-          <button type="button" class="circle-btn record-btn" id="recordVoiceBtn" title="Record Voice">
+          <button type="button" class="circle-btn record-btn" id="recordVoiceBtn" title="Record Voice (max 45s)">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
           </button>
           <input id="msgInput" placeholder="Write a message…" autocomplete="off">
@@ -714,68 +318,50 @@
 
 <footer id="poweredBy">Powered by <span>Vex</span></footer>
 
-<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
-/* Accordion Controller */
+/* ---------- Accordion ---------- */
 function toggleAccordion(panelId, headElem) {
   const panel = document.getElementById(panelId);
   const ind = headElem.querySelector('.panel-icon-indicator');
   const isOpen = panel.classList.contains('open');
-  if(isOpen) {
-    panel.classList.remove('open');
-    ind.textContent = '+';
-  } else {
-    panel.classList.add('open');
-    ind.textContent = '−';
-  }
+  panel.classList.toggle('open', !isOpen);
+  ind.textContent = isOpen ? '+' : '−';
 }
 
-/* Safe Splash Screen Dismissal */
+/* ---------- Splash ---------- */
 function dismissSplash() {
   const splash = document.getElementById('splashScreen');
-  if (splash) {
-    splash.style.opacity = '0';
-    splash.style.pointerEvents = 'none';
-    setTimeout(() => splash.remove(), 500);
-  }
+  if (splash) { splash.style.opacity = '0'; splash.style.pointerEvents = 'none'; setTimeout(() => splash.remove(), 500); }
 }
 setTimeout(dismissSplash, 1800);
 document.getElementById('splashScreen')?.addEventListener('click', dismissSplash);
 
-/* Auditory Feedback (Safe Execution) */
+/* ---------- Sound ---------- */
 let audioCtx = null;
 function playTactileSound(type) {
   try {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
-    
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
+    const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
     if (type === 'send') {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(640, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.07);
-      gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.07);
-      osc.start(); osc.stop(audioCtx.currentTime + 0.07);
+      osc.type = 'sine'; osc.frequency.setValueAtTime(640, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + .07);
+      gain.gain.setValueAtTime(.06, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + .07);
+      osc.start(); osc.stop(audioCtx.currentTime + .07);
     } else if (type === 'receive') {
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(520, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(740, audioCtx.currentTime + 0.1);
-      gain.gain.setValueAtTime(0.07, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-      osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+      osc.type = 'triangle'; osc.frequency.setValueAtTime(520, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(740, audioCtx.currentTime + .1);
+      gain.gain.setValueAtTime(.07, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + .1);
+      osc.start(); osc.stop(audioCtx.currentTime + .1);
     }
   } catch(e) {}
 }
 
-/* Toast */
+/* ---------- Toast ---------- */
 function showToast(msg) {
   const box = document.getElementById('toastBox');
   const toast = document.createElement('div');
@@ -783,35 +369,26 @@ function showToast(msg) {
   toast.innerHTML = `<span>✧</span> <span>${escapeHtml(msg)}</span>`;
   box.appendChild(toast);
   setTimeout(() => {
-    toast.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(-10px)';
+    toast.style.transition = 'opacity .25s ease, transform .25s ease';
+    toast.style.opacity = '0'; toast.style.transform = 'translateY(-10px)';
     setTimeout(() => toast.remove(), 250);
   }, 3500);
 }
 
-/* Theme Toggle */
+/* ---------- Theme ---------- */
 const themeToggleBtn = document.getElementById('themeToggle');
 const sunIcon = document.getElementById('themeIconSun');
 const moonIcon = document.getElementById('themeIconMoon');
-
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('topv_theme', theme);
-  if (theme === 'dark') {
-    sunIcon.style.display = 'none';
-    moonIcon.style.display = 'block';
-  } else {
-    sunIcon.style.display = 'block';
-    moonIcon.style.display = 'none';
-  }
+  sunIcon.style.display = theme === 'dark' ? 'none' : 'block';
+  moonIcon.style.display = theme === 'dark' ? 'block' : 'none';
 }
 applyTheme(localStorage.getItem('topv_theme') || 'light');
-themeToggleBtn.addEventListener('click', () => {
-  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-});
+themeToggleBtn.addEventListener('click', () => applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
 
-/* Firebase Configuration */
+/* ---------- Firebase ---------- */
 const firebaseConfig = {
   apiKey: "AIzaSyDqpxJdkGO75kefy1rN8zE34Fsm98iEMcQ",
   authDomain: "top-v-9abfb.firebaseapp.com",
@@ -822,40 +399,39 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+const FieldValue = firebase.firestore.FieldValue;
 
 let currentUser = null, unsubMsg = null, unsubUsers = null, unsubTasks = null, unsubVault = null;
 let allUsersMap = {};
 let currentChannel = 'general';
 let isBurnerEnabled = false;
+let burnerTimer = null;
+let latestChannelDocs = [];
 
 const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%23191614'/><circle cx='32' cy='23' r='11' fill='%23c59b46'/><path d='M14 54 C14 42 22 38 32 38 C42 38 50 42 50 54 Z' fill='%23c59b46'/><path d='M32 38 L30 45 L32 47 L34 45 Z' fill='%239e182c'/></svg>";
 
 function sanitize(s){ return (s||'').trim().toLowerCase().replace(/[^a-z0-9_\-]/g,'').slice(0,25); }
 function setErr(t){ document.getElementById('authErr').textContent = t || ''; }
+function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-/* LIVE PRESENCE ENGINE (Online / Offline Detector) */
-async function setLivePresence(isOnline) {
-  if (!currentUser) return;
-  try {
-    await db.collection('users').doc(currentUser.username).update({
-      isOnline: isOnline,
-      lastSeen: Date.now()
-    });
-  } catch(e) {}
+/* ---------- Password hashing (SHA-256, client-side) ----------
+   Not a substitute for real server-side auth, but avoids storing
+   plain-text passwords readable by anyone with database access. */
+async function hashPassword(pw){
+  const enc = new TextEncoder().encode(pw);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 
-document.addEventListener('visibilitychange', () => {
-  if (currentUser) {
-    setLivePresence(document.visibilityState === 'visible');
-  }
-});
-window.addEventListener('beforeunload', () => {
-  if (currentUser) {
-    setLivePresence(false);
-  }
-});
+/* ---------- Presence ---------- */
+async function setLivePresence(isOnline) {
+  if (!currentUser) return;
+  try { await db.collection('users').doc(currentUser.username).update({ isOnline, lastSeen: Date.now() }); } catch(e){}
+}
+document.addEventListener('visibilitychange', () => { if (currentUser) setLivePresence(document.visibilityState === 'visible'); });
+window.addEventListener('beforeunload', () => { if (currentUser) setLivePresence(false); });
 
-/* Auth Views */
+/* ---------- Auth tabs ---------- */
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
   t.classList.add('active'); setErr('');
@@ -863,7 +439,6 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
   document.getElementById('registerPane').style.display = t.dataset.tab === 'register' ? '' : 'none';
   document.getElementById('resetPane').style.display = 'none';
 }));
-
 document.getElementById('forgotPwdLink').addEventListener('click', () => {
   document.getElementById('loginPane').style.display = 'none';
   document.getElementById('registerPane').style.display = 'none';
@@ -874,23 +449,22 @@ document.getElementById('backToLoginLink').addEventListener('click', () => {
   document.getElementById('loginPane').style.display = '';
 });
 
-/* Session Recovery */
+/* ---------- Session recovery ---------- */
 (async function init(){
   const saved = localStorage.getItem('topv_user');
   if(saved){
     try{
       const snap = await db.collection('users').doc(saved).get();
-      if(snap.exists){
-        currentUser = { username: saved, ...snap.data() };
-        enterChat();
-        return;
-      }
+      if(snap.exists){ currentUser = { username: saved, ...snap.data() }; enterChat(); return; }
     }catch(e){}
     localStorage.removeItem('topv_user');
   }
 })();
 
-/* Registration */
+/* ---------- Registration (atomic, race-condition safe) ----------
+   Uses a counter document (meta/team) inside a Firestore transaction
+   so two people registering at the same instant cannot both become
+   admin, and the team cannot exceed 5 members. */
 document.getElementById('regBtn').addEventListener('click', async () => {
   setErr('');
   const username = sanitize(document.getElementById('regUser').value);
@@ -899,34 +473,39 @@ document.getElementById('regBtn').addEventListener('click', async () => {
   const password = document.getElementById('regPass').value;
 
   if(!username || username.length < 3) return setErr('Choose a username of at least 3 characters.');
-  if(!password) return setErr('Please choose a password.');
+  if(!password || password.length < 4) return setErr('Choose a password of at least 4 characters.');
 
   try{
-    const usersSnap = await db.collection('users').get();
-    if(usersSnap.size >= 5) return setErr('TOP V limit reached (5 members).');
-    const ref = db.collection('users').doc(username);
-    if((await ref.get()).exists) return setErr('That username is already taken.');
-    
-    const isAdmin = usersSnap.size === 0;
-    const userData = {
-      password,
-      email: email || '',
-      phone: phone || '',
-      isAdmin,
-      displayName: username,
-      avatarUrl: DEFAULT_AVATAR,
-      isOnline: true,
-      lastSeen: Date.now(),
-      createdAt: Date.now()
-    };
-    await ref.set(userData);
-    localStorage.setItem('topv_user', username);
-    currentUser = { username, ...userData };
+    const passwordHash = await hashPassword(password);
+    const userRef = db.collection('users').doc(username);
+    const metaRef = db.collection('meta').doc('team');
+
+    const result = await db.runTransaction(async (tx) => {
+      const [userSnap, metaSnap] = [await tx.get(userRef), await tx.get(metaRef)];
+      if(userSnap.exists) return 'TAKEN';
+      const count = metaSnap.exists ? (metaSnap.data().count || 0) : 0;
+      if(count >= 5) return 'LIMIT';
+      const isAdmin = count === 0;
+      tx.set(userRef, {
+        passwordHash, email: email || '', phone: phone || '', isAdmin,
+        displayName: username, avatarUrl: DEFAULT_AVATAR, isOnline: true,
+        lastSeen: Date.now(), createdAt: Date.now()
+      });
+      tx.set(metaRef, { count: FieldValue.increment(1) }, { merge: true });
+      return { username, isAdmin };
+    });
+
+    if(result === 'TAKEN') return setErr('That username is already taken.');
+    if(result === 'LIMIT') return setErr('TOP V limit reached (5 members).');
+
+    localStorage.setItem('topv_user', result.username);
+    const finalSnap = await userRef.get();
+    currentUser = { username: result.username, ...finalSnap.data() };
     enterChat();
   }catch(e){ setErr('Database unreachable. Check Firebase permissions.'); }
 });
 
-/* Sign In */
+/* ---------- Sign in ---------- */
 document.getElementById('loginBtn').addEventListener('click', async () => {
   setErr('');
   const identifier = document.getElementById('loginIdentifier').value.trim();
@@ -934,43 +513,41 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
   if(!identifier || !password) return setErr('Enter your credentials and password.');
 
   try{
+    const passwordHash = await hashPassword(password);
     const snap = await db.collection('users').get();
     let foundDoc = null;
     const cleanId = sanitize(identifier);
-
     snap.forEach(doc => {
       const data = doc.data();
       if(doc.id === cleanId || (data.email && data.email.toLowerCase() === identifier.toLowerCase()) || (data.phone && data.phone === identifier)) {
         foundDoc = { username: doc.id, ...data };
       }
     });
-
     if(!foundDoc) return setErr('No such member found.');
-    if(foundDoc.password !== password) return setErr('Incorrect password.');
-    
+    if(foundDoc.passwordHash !== passwordHash) return setErr('Incorrect password.');
     currentUser = foundDoc;
     localStorage.setItem('topv_user', currentUser.username);
     enterChat();
   }catch(e){ setErr('Database error.'); }
 });
 
-/* Reset Password */
+/* ---------- Reset password ---------- */
 document.getElementById('resetSubmitBtn').addEventListener('click', async () => {
   setErr('');
   const user = sanitize(document.getElementById('resetUser').value);
   const contact = document.getElementById('resetContact').value.trim().toLowerCase();
   const newPass = document.getElementById('resetNewPass').value;
-
   if(!user || !contact || !newPass) return setErr('All fields are required.');
+  if(newPass.length < 4) return setErr('Password must be at least 4 characters.');
 
   try {
     const docRef = db.collection('users').doc(user);
     const docSnap = await docRef.get();
     if(!docSnap.exists) return setErr('User does not exist.');
-
     const data = docSnap.data();
     if((data.email && data.email.toLowerCase() === contact) || (data.phone && data.phone === contact)) {
-      await docRef.update({ password: newPass });
+      const passwordHash = await hashPassword(newPass);
+      await docRef.update({ passwordHash });
       showToast('Password updated successfully. Please sign in.');
       document.getElementById('resetPane').style.display = 'none';
       document.getElementById('loginPane').style.display = '';
@@ -980,14 +557,13 @@ document.getElementById('resetSubmitBtn').addEventListener('click', async () => 
   } catch(e) { setErr('Could not reset password.'); }
 });
 
-/* Enter Chat Room */
+/* ---------- Enter chat ---------- */
 function enterChat(){
   document.getElementById('auth').style.display = 'none';
   document.getElementById('chat').classList.add('show');
   document.getElementById('teamToggle').style.display = 'inline-block';
   document.getElementById('logoutBtn').style.display = '';
   if (currentUser.isAdmin) document.getElementById('panicBtn').style.display = 'inline-block';
-
   document.getElementById('displayNameInput').value = currentUser.displayName || currentUser.username;
   document.getElementById('myAvatarImg').src = currentUser.avatarUrl || DEFAULT_AVATAR;
 
@@ -999,15 +575,21 @@ function enterChat(){
   subscribeMessages();
   subscribeTasks();
   subscribeVault();
+
+  // Re-render every few seconds so expired "burner" messages disappear
+  // even if no new message triggers a fresh snapshot.
+  if(burnerTimer) clearInterval(burnerTimer);
+  burnerTimer = setInterval(renderMessages, 3000);
 }
 
-/* Logout */
+/* ---------- Logout ---------- */
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   await setLivePresence(false);
   if(unsubMsg) unsubMsg();
   if(unsubUsers) unsubUsers();
   if(unsubTasks) unsubTasks();
   if(unsubVault) unsubVault();
+  if(burnerTimer) clearInterval(burnerTimer);
   localStorage.removeItem('topv_user');
   currentUser = null;
   document.getElementById('chat').classList.remove('show');
@@ -1018,7 +600,7 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
   closeAside();
 });
 
-/* Team Drawer Navigation */
+/* ---------- Team drawer ---------- */
 function closeAside(){
   document.getElementById('teamAside').classList.remove('open');
   document.getElementById('asideBackdrop').classList.remove('show');
@@ -1030,55 +612,63 @@ document.getElementById('teamToggle').addEventListener('click', () => {
 document.getElementById('asideClose').addEventListener('click', closeAside);
 document.getElementById('asideBackdrop').addEventListener('click', closeAside);
 
-/* Avatar Upload & Direct Canvas Compression */
-document.getElementById('avatarFileInput').addEventListener('change', (e) => {
+/* ---------- Image resize helper (keeps documents under Firestore's 1MB limit) ---------- */
+function resizeImageFile(file, maxDim, quality){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width, h = img.height;
+        if(w > h){ if(w > maxDim){ h = Math.round(h * maxDim / w); w = maxDim; } }
+        else { if(h > maxDim){ w = Math.round(w * maxDim / h); h = maxDim; } }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = ev.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ---------- Avatar upload ---------- */
+document.getElementById('avatarFileInput').addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if(!file) return;
-  const reader = new FileReader();
-  reader.onload = (event) => {
-    const img = new Image();
-    img.onload = async () => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = 96; canvas.height = 96;
-      ctx.drawImage(img, 0, 0, 96, 96);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-      document.getElementById('myAvatarImg').src = dataUrl;
-      currentUser.avatarUrl = dataUrl;
-      try {
-        await db.collection('users').doc(currentUser.username).update({ avatarUrl: dataUrl });
-        showToast("Profile photo updated successfully!");
-      } catch(err){ showToast("Failed to upload avatar."); }
-    };
-    img.src = event.target.result;
-  };
-  reader.readAsDataURL(file);
+  try{
+    const dataUrl = await resizeImageFile(file, 128, 0.85);
+    document.getElementById('myAvatarImg').src = dataUrl;
+    currentUser.avatarUrl = dataUrl;
+    await db.collection('users').doc(currentUser.username).update({ avatarUrl: dataUrl });
+    showToast("Profile photo updated successfully!");
+  }catch(err){ showToast("Failed to upload avatar."); }
 });
 
-/* Save Profile Status */
+/* ---------- Save profile ---------- */
 document.getElementById('saveProfileBtn').addEventListener('click', async () => {
   const newName = document.getElementById('displayNameInput').value.trim();
   if(!newName) return alert('Name cannot be empty.');
   try {
-    await db.collection('users').doc(currentUser.username).update({
-      displayName: newName
-    });
+    await db.collection('users').doc(currentUser.username).update({ displayName: newName });
     currentUser.displayName = newName;
     showToast("Profile updated successfully!");
   } catch(e) { alert('Update failed.'); }
 });
 
-/* Wallpaper Controls */
-document.getElementById('wallpaperFileInput').addEventListener('change', (e) => {
+/* ---------- Wallpaper (resized before storing in localStorage) ---------- */
+document.getElementById('wallpaperFileInput').addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if(!file) return;
-  const reader = new FileReader();
-  reader.onload = (event) => {
-    const bgUrl = event.target.result;
+  try{
+    const bgUrl = await resizeImageFile(file, 1000, 0.7);
     document.getElementById('chatArea').style.backgroundImage = `url("${bgUrl}")`;
-    try { localStorage.setItem('topv_chat_bg', bgUrl); showToast("Wallpaper applied."); } catch(err){}
-  };
-  reader.readAsDataURL(file);
+    localStorage.setItem('topv_chat_bg', bgUrl);
+    showToast("Wallpaper applied.");
+  }catch(err){ showToast("Could not apply wallpaper (file too large)."); }
 });
 document.getElementById('clearWallpaperBtn').addEventListener('click', () => {
   document.getElementById('chatArea').style.backgroundImage = 'none';
@@ -1086,102 +676,99 @@ document.getElementById('clearWallpaperBtn').addEventListener('click', () => {
   showToast("Wallpaper reset.");
 });
 
-/* Burner Toggle */
+/* ---------- Burner toggle ---------- */
 const burnerToggleBtn = document.getElementById('burnerToggleBtn');
 burnerToggleBtn.addEventListener('click', () => {
   isBurnerEnabled = !isBurnerEnabled;
-  if(isBurnerEnabled) {
-    burnerToggleBtn.classList.add('active');
-    burnerToggleBtn.innerHTML = '<span>🔥 Burner Message: ON (30s)</span>';
-  } else {
-    burnerToggleBtn.classList.remove('active');
-    burnerToggleBtn.innerHTML = '<span>🔥 Burner Message: OFF</span>';
-  }
+  burnerToggleBtn.classList.toggle('active', isBurnerEnabled);
+  burnerToggleBtn.innerHTML = isBurnerEnabled ? '<span>🔥 Burner Message: ON (30s)</span>' : '<span>🔥 Burner Message: OFF</span>';
 });
 
-/* Channel Switcher */
+/* ---------- Channels (each channel is its own Firestore collection,
+   so switching channels never starves another channel's message list
+   and no composite index is required) ---------- */
+function messagesCollection(){ return db.collection('messages_' + currentChannel); }
+
 document.querySelectorAll('.ch-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentChannel = btn.dataset.ch;
-    const titles = {
-      general: '#GENERAL',
-      intelligence: '#INTELLIGENCE',
-      'war-room': '#WAR-ROOM'
-    };
+    const titles = { general: '#GENERAL', intelligence: '#INTELLIGENCE', 'war-room': '#WAR-ROOM' };
     document.getElementById('channelNameDisplay').textContent = titles[currentChannel];
     subscribeMessages();
   });
 });
 
-/* Panic Wipe */
+/* ---------- Panic wipe (current channel only) ---------- */
 document.getElementById('panicBtn').addEventListener('click', async () => {
   if(!currentUser.isAdmin) return;
   if(!confirm(`Delete all messages in #${currentChannel}?`)) return;
   try {
-    const snap = await db.collection('messages').get();
+    const snap = await messagesCollection().get();
     const batch = db.batch();
-    snap.docs.forEach(doc => {
-      if(doc.data().channel === currentChannel) batch.delete(doc.ref);
-    });
+    snap.docs.forEach(doc => batch.delete(doc.ref));
     await batch.commit();
     showToast(`Channel #${currentChannel} cleared.`);
   } catch(e) { alert('Purge failed.'); }
 });
 
-/* Members Subscription (Real-time Live Presence) */
+/* ---------- Members ---------- */
 function subscribeMembers(){
+  if(unsubUsers) unsubUsers();
   unsubUsers = db.collection('users').onSnapshot(snap => {
     allUsersMap = {};
-    const memberListEl = document.getElementById('memberList');
     let html = '';
     snap.docs.forEach(d => {
       const u = { username: d.id, ...d.data() };
       allUsersMap[u.username] = u;
       const canDelete = currentUser.isAdmin && u.username !== currentUser.username;
-      
       const isOnline = u.isOnline === true;
       const statusClass = isOnline ? 'status-online' : 'status-offline';
-      const statusLabel = isOnline ? 'Online' : 'Offline';
-
       html += `
         <div class="member">
           <img src="${u.avatarUrl || DEFAULT_AVATAR}" alt="">
           <div>
-            <div>${u.isAdmin ? '<span style="color:var(--gold); font-size:11px;">★ </span>' : ''}<strong>${escapeHtml(u.displayName || u.username)}</strong></div>
-            <div class="status-txt"><span class="status-pulse ${statusClass}"></span>${statusLabel}</div>
+            <div>${u.isAdmin ? '<span style="color:var(--gold);font-size:11px;">★ </span>' : ''}<strong>${escapeHtml(u.displayName || u.username)}</strong></div>
+            <div class="status-txt"><span class="status-pulse ${statusClass}"></span>${isOnline ? 'Online' : 'Offline'}</div>
           </div>
           ${canDelete ? `<span class="del" data-u="${escapeHtml(u.username)}">remove</span>` : ''}
         </div>`;
     });
+    const memberListEl = document.getElementById('memberList');
     memberListEl.innerHTML = html;
-    memberListEl.querySelectorAll('.del').forEach(btn => 
-      btn.addEventListener('click', () => deleteMember(btn.dataset.u))
-    );
+    memberListEl.querySelectorAll('.del').forEach(btn => btn.addEventListener('click', () => deleteMember(btn.dataset.u)));
+    renderMessages(); // sender names/avatars may have changed
   });
 }
 
 async function deleteMember(username){
   if(!confirm('Remove ' + username + ' from the team?')) return;
-  try { await db.collection('users').doc(username).delete(); } catch(e){}
+  try {
+    await db.runTransaction(async (tx) => {
+      const metaRef = db.collection('meta').doc('team');
+      const userRef = db.collection('users').doc(username);
+      const metaSnap = await tx.get(metaRef);
+      const userSnap = await tx.get(userRef);
+      if(!userSnap.exists) return;
+      tx.delete(userRef);
+      const count = metaSnap.exists ? (metaSnap.data().count || 0) : 1;
+      tx.set(metaRef, { count: Math.max(0, count - 1) }, { merge: true });
+    });
+  } catch(e){}
 }
 
-/* Messages Chronological Pipeline */
-let isInitialLoad = true;
+/* ---------- Messages ---------- */
 function subscribeMessages(){
   if(unsubMsg) unsubMsg();
-  
-  const q = db.collection('messages').orderBy('createdAt', 'asc').limitToLast(150);
-
+  let isInitialLoad = true; // reset every time we switch channels
+  const q = messagesCollection().orderBy('createdAt', 'asc').limitToLast(150);
   unsubMsg = q.onSnapshot(snap => {
-    const el = document.getElementById('messages');
-    
-    if(!isInitialLoad) {
+    if(!isInitialLoad){
       snap.docChanges().forEach(change => {
-        if(change.type === 'added') {
+        if(change.type === 'added'){
           const m = change.doc.data();
-          if((m.channel || 'general') === currentChannel && m.username !== currentUser.username) {
+          if(m.username !== currentUser.username){
             playTactileSound('receive');
             const sender = allUsersMap[m.username] || {};
             showToast(`${sender.displayName || m.username}: New message`);
@@ -1190,240 +777,221 @@ function subscribeMessages(){
       });
     }
     isInitialLoad = false;
+    latestChannelDocs = snap.docs;
+    renderMessages();
+  }, () => {
+    document.getElementById('messages').innerHTML = '<div class="empty">Could not load this channel.</div>';
+  });
+}
 
-    const channelDocs = snap.docs.filter(d => (d.data().channel || 'general') === currentChannel);
+function renderMessages(){
+  const el = document.getElementById('messages');
+  if(!currentUser) return;
 
-    if(channelDocs.length === 0){
-      el.innerHTML = '<div class="empty">No messages yet — start the conversation.</div>';
-      return;
+  // Expired burner messages get removed once (each client attempts the
+  // delete; Firestore deletes are safe to repeat on an already-gone doc).
+  const stillVisible = [];
+  latestChannelDocs.forEach(d => {
+    const m = d.data();
+    if(m.burner && m.createdAt){
+      const remaining = 30 - Math.floor((Date.now() - m.createdAt) / 1000);
+      if(remaining <= 0){ d.ref.delete().catch(()=>{}); return; }
+    }
+    stillVisible.push(d);
+  });
+
+  if(stillVisible.length === 0){
+    el.innerHTML = '<div class="empty">No messages yet — start the conversation.</div>';
+    return;
+  }
+
+  const rendered = stillVisible.map(d => {
+    const m = d.data();
+    const isMe = m.username === currentUser.username;
+    const canDelete = isMe || currentUser.isAdmin;
+    const sender = allUsersMap[m.username] || {};
+    const display = sender.displayName || m.displayName || m.username;
+    const avatar = sender.avatarUrl || m.avatarUrl || DEFAULT_AVATAR;
+    const timeStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
+
+    let contentHtml = formatMessageContent(m.text);
+    if(m.audioData){
+      contentHtml = `<div class="voice-msg-player"><button class="voice-play-btn" onclick="playVoiceNote('${d.id}')">▶</button><span style="font-size:12px;font-style:italic;">Voice message</span></div>`;
     }
 
-    const rendered = channelDocs.map(d => {
-      const m = d.data();
-      const isMe = m.username === currentUser.username;
-      const canDelete = isMe || currentUser.isAdmin;
-      const sender = allUsersMap[m.username] || {};
-      const display = sender.displayName || m.displayName || m.username;
-      const avatar = sender.avatarUrl || m.avatarUrl || DEFAULT_AVATAR;
-      const timeStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '';
-
-      if(m.burner && m.createdAt) {
-        const remaining = 30 - Math.floor((Date.now() - m.createdAt) / 1000);
-        if(remaining <= 0) {
-          d.ref.delete().catch(()=>{});
-          return '';
-        }
-      }
-
-      let contentHtml = formatMessageContent(m.text);
-
-      if(m.audioData) {
-        contentHtml = `
-          <div class="voice-msg-player">
-            <button class="voice-play-btn" onclick="playVoiceNote('${m.audioData}')">▶</button>
-            <span style="font-size:12px; font-style:italic;">Voice Message</span>
+    return `
+      <div class="msg-row ${isMe ? 'me' : ''}">
+        <img class="msg-avatar" src="${avatar}" alt="">
+        <div class="bubble">
+          <div class="bubble-header">
+            <span class="name">${escapeHtml(display)}</span>
+            ${m.burner ? `<span class="burner-badge">🔥 BURNER</span>` : ''}
+            ${canDelete ? `<button class="delete-msg-btn" onclick="deleteMessage('${d.id}')" title="Delete">✕</button>` : ''}
           </div>
-        `;
-      }
-
-      return `
-        <div class="msg-row ${isMe ? 'me' : ''}">
-          <img class="msg-avatar" src="${avatar}" alt="">
-          <div class="bubble">
-            <div class="bubble-header">
-              <span class="name">${escapeHtml(display)}</span>
-              ${m.burner ? `<span class="burner-badge">🔥 BURNER</span>` : ''}
-              ${canDelete ? `<button class="delete-msg-btn" onclick="deleteMessage('${d.id}')" title="Delete">✕</button>` : ''}
-            </div>
-            <div class="txt">${contentHtml}</div>
-            <div class="time">${timeStr}</div>
-          </div>
+          <div class="txt">${contentHtml}</div>
+          <div class="time">${timeStr}</div>
         </div>
-      `;
-    });
-
-    el.innerHTML = rendered.join('');
-    el.scrollTop = el.scrollHeight;
+      </div>`;
   });
+
+  const wasAtBottom = (el.scrollHeight - el.scrollTop - el.clientHeight) < 60;
+  el.innerHTML = rendered.join('');
+  if(wasAtBottom) el.scrollTop = el.scrollHeight;
 }
 
 function formatMessageContent(str) {
   if (!str) return '';
   if (str.includes('```')) {
     const parts = str.split('```');
-    return parts.map((chunk, i) => {
-      if (i % 2 === 1) {
-        return `<pre class="code-block"><code>${escapeHtml(chunk.trim())}</code></pre>`;
-      }
-      return escapeHtml(chunk);
-    }).join('');
+    return parts.map((chunk, i) => i % 2 === 1
+      ? `<pre class="code-block"><code>${escapeHtml(chunk.trim())}</code></pre>`
+      : escapeHtml(chunk)
+    ).join('');
   }
   return escapeHtml(str);
 }
 
 window.deleteMessage = async function(msgId){
-  try { await db.collection('messages').doc(msgId).delete(); } catch(e){}
+  try { await messagesCollection().doc(msgId).delete(); } catch(e){}
+};
+window.playVoiceNote = function(msgId){
+  const doc = latestChannelDocs.find(d => d.id === msgId);
+  if(!doc) return;
+  const audio = new Audio(doc.data().audioData);
+  audio.play().catch(()=> showToast('Could not play the voice message.'));
 };
 
-window.playVoiceNote = function(base64Audio){
-  const audio = new Audio(base64Audio);
-  audio.play();
-};
-
-/* Send Message */
+/* ---------- Send text ---------- */
 document.getElementById('sendForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const input = document.getElementById('msgInput');
   const text = input.value.trim();
   if(!text) return;
-
   input.value = '';
   playTactileSound('send');
-  
   try {
-    await db.collection('messages').add({
+    await messagesCollection().add({
       username: currentUser.username,
       displayName: currentUser.displayName || currentUser.username,
       avatarUrl: currentUser.avatarUrl || DEFAULT_AVATAR,
-      channel: currentChannel,
-      text: text,
-      burner: isBurnerEnabled,
-      createdAt: Date.now()
+      text, burner: isBurnerEnabled, createdAt: Date.now()
     });
-  } catch(err){}
+  } catch(err){ showToast('Message failed to send.'); }
 });
 
-/* Voice Recording Engine */
-let mediaRecorder = null;
-let audioChunks = [];
+/* ---------- Voice recording (capped at 45s and ~700KB so it always
+   fits inside a single Firestore document) ---------- */
+let mediaRecorder = null, audioChunks = [], recordAutoStopTimer = null;
+const MAX_RECORD_MS = 45000;
+const MAX_AUDIO_BASE64_LEN = 700000;
 const recordVoiceBtn = document.getElementById('recordVoiceBtn');
 
 recordVoiceBtn.addEventListener('click', async () => {
   if (mediaRecorder && mediaRecorder.state === 'recording') {
     mediaRecorder.stop();
-    recordVoiceBtn.classList.remove('recording');
     return;
   }
-
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4';
-    mediaRecorder = new MediaRecorder(stream);
+    const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : (MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : '');
+    mediaRecorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
     audioChunks = [];
-    
     mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
-    mediaRecorder.onstop = async () => {
-      const audioBlob = new Blob(audioChunks, { type: mimeType });
+    mediaRecorder.onstop = () => {
+      clearTimeout(recordAutoStopTimer);
+      recordVoiceBtn.classList.remove('recording');
+      stream.getTracks().forEach(track => track.stop());
+      const audioBlob = new Blob(audioChunks, { type: mimeType || 'audio/webm' });
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64Audio = reader.result;
+        if(base64Audio.length > MAX_AUDIO_BASE64_LEN){
+          showToast('Recording too long — keep it under ~30 seconds.');
+          return;
+        }
         playTactileSound('send');
-        await db.collection('messages').add({
-          username: currentUser.username,
-          displayName: currentUser.displayName || currentUser.username,
-          avatarUrl: currentUser.avatarUrl || DEFAULT_AVATAR,
-          channel: currentChannel,
-          text: '[Voice Message]',
-          audioData: base64Audio,
-          burner: isBurnerEnabled,
-          createdAt: Date.now()
-        });
+        try {
+          await messagesCollection().add({
+            username: currentUser.username,
+            displayName: currentUser.displayName || currentUser.username,
+            avatarUrl: currentUser.avatarUrl || DEFAULT_AVATAR,
+            text: '[Voice Message]', audioData: base64Audio,
+            burner: isBurnerEnabled, createdAt: Date.now()
+          });
+        } catch(err){ showToast('Voice message failed to send.'); }
       };
       reader.readAsDataURL(audioBlob);
-      stream.getTracks().forEach(track => track.stop());
     };
-
     mediaRecorder.start();
     recordVoiceBtn.classList.add('recording');
-    showToast("Recording… Click again to send.");
+    showToast("Recording… click again to send (auto-stops at 45s).");
+    recordAutoStopTimer = setTimeout(() => { if(mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop(); }, MAX_RECORD_MS);
   } catch(err) {
     alert("Microphone access unavailable or denied.");
   }
 });
 
-/* Vault */
+/* ---------- File vault (size capped to stay under Firestore's 1MB
+   per-document limit once the file is base64-encoded, ~+33% size) ---------- */
+const MAX_VAULT_FILE_BYTES = 650 * 1024;
 document.getElementById('vaultFileInput').addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if(!file) return;
-  if(file.size > 1.5 * 1024 * 1024) return alert("File exceeds 1.5MB limit.");
-
+  if(file.size > MAX_VAULT_FILE_BYTES) return alert("File exceeds the 650KB limit (database documents are capped at 1MB).");
   const reader = new FileReader();
   reader.onload = async (evt) => {
     try {
-      await db.collection('vault').add({
-        fileName: file.name,
-        fileData: evt.target.result,
-        uploader: currentUser.username,
-        uploadedAt: Date.now()
-      });
+      await db.collection('vault').add({ fileName: file.name, fileData: evt.target.result, uploader: currentUser.username, uploadedAt: Date.now() });
       showToast(`File "${file.name}" uploaded successfully.`);
     } catch(err){ alert("Upload failed."); }
   };
+  reader.onerror = () => alert('Could not read the file.');
   reader.readAsDataURL(file);
 });
 
 function subscribeVault(){
+  if(unsubVault) unsubVault();
   unsubVault = db.collection('vault').orderBy('uploadedAt', 'desc').limit(8).onSnapshot(snap => {
     const list = document.getElementById('vaultList');
-    if(snap.empty) { list.innerHTML = '<span style="color:var(--sub); font-style:italic; font-size:12px;">No files uploaded.</span>'; return; }
+    if(snap.empty){ list.innerHTML = '<span style="color:var(--sub);font-style:italic;font-size:12px;">No files uploaded.</span>'; return; }
     list.innerHTML = snap.docs.map(doc => {
       const item = doc.data();
-      return `
-        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--card); padding:4px 6px; border-radius:4px; font-size:12px;">
-          <a href="${item.fileData}" download="${escapeHtml(item.fileName)}" style="color:var(--gold); text-decoration:none; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:160px;">📄 ${escapeHtml(item.fileName)}</a>
-          <button style="border:none; background:transparent; color:var(--danger); cursor:pointer;" onclick="deleteVaultFile('${doc.id}')">✕</button>
-        </div>`;
+      return `<div style="display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:4px 6px;border-radius:4px;font-size:12px;">
+        <a href="${item.fileData}" download="${escapeHtml(item.fileName)}" style="color:var(--gold);text-decoration:none;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:160px;">📄 ${escapeHtml(item.fileName)}</a>
+        <button style="border:none;background:transparent;color:var(--danger);cursor:pointer;" onclick="deleteVaultFile('${doc.id}')">✕</button>
+      </div>`;
     }).join('');
-  });
+  }, () => {});
 }
+window.deleteVaultFile = async function(id) { try { await db.collection('vault').doc(id).delete(); } catch(e){} };
 
-window.deleteVaultFile = async function(id) {
-  try { await db.collection('vault').doc(id).delete(); } catch(e){}
-};
-
-/* Tasks */
+/* ---------- Tasks ---------- */
 document.getElementById('addTaskBtn').addEventListener('click', async () => {
   const inp = document.getElementById('taskInput');
   const task = inp.value.trim();
   if(!task) return;
   inp.value = '';
-  try {
-    await db.collection('tasks').add({
-      title: task,
-      done: false,
-      creator: currentUser.username,
-      createdAt: Date.now()
-    });
-  } catch(e){}
+  try { await db.collection('tasks').add({ title: task, done: false, creator: currentUser.username, createdAt: Date.now() }); } catch(e){}
 });
-
 function subscribeTasks(){
+  if(unsubTasks) unsubTasks();
   unsubTasks = db.collection('tasks').orderBy('createdAt', 'desc').limit(12).onSnapshot(snap => {
     const list = document.getElementById('taskList');
-    if(snap.empty) { list.innerHTML = '<span style="color:var(--sub); font-style:italic; font-size:12px;">No active tasks.</span>'; return; }
+    if(snap.empty){ list.innerHTML = '<span style="color:var(--sub);font-style:italic;font-size:12px;">No active tasks.</span>'; return; }
     list.innerHTML = snap.docs.map(doc => {
       const t = doc.data();
-      return `
-        <div class="task-item">
-          <span style="${t.done ? 'text-decoration:line-through; opacity:0.6;' : ''}">${escapeHtml(t.title)}</span>
-          <div style="display:flex; gap:6px;">
-            <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask('${doc.id}', ${!t.done})">
-            <span style="color:var(--danger); cursor:pointer;" onclick="deleteTask('${doc.id}')">✕</span>
-          </div>
-        </div>`;
+      return `<div class="task-item">
+        <span style="${t.done ? 'text-decoration:line-through;opacity:.6;' : ''}">${escapeHtml(t.title)}</span>
+        <div style="display:flex;gap:6px;">
+          <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask('${doc.id}', ${!t.done})">
+          <span style="color:var(--danger);cursor:pointer;" onclick="deleteTask('${doc.id}')">✕</span>
+        </div>
+      </div>`;
     }).join('');
-  });
+  }, () => {});
 }
-
-window.toggleTask = async function(id, status){
-  try { await db.collection('tasks').doc(id).update({ done: status }); } catch(e){}
-};
-
-window.deleteTask = async function(id){
-  try { await db.collection('tasks').doc(id).delete(); } catch(e){}
-};
-
-function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+window.toggleTask = async function(id, status){ try { await db.collection('tasks').doc(id).update({ done: status }); } catch(e){} };
+window.deleteTask = async function(id){ try { await db.collection('tasks').doc(id).delete(); } catch(e){} };
 </script>
 </body>
 </html>
