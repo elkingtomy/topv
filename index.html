@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TOP V — Elite Operations</title>
-<link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-<link rel="stylesheet" href="[https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap](https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
   :root {
     --crimson: #A51C30; 
@@ -68,11 +68,10 @@
     align-items: center;
     justify-content: center;
     color: #fff;
-    opacity: 1;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    cursor: pointer;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
   }
-  #splashScreen.fade-out { opacity: 0; visibility: hidden; }
-  .splash-content { text-align: center; animation: fadeInScale 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .splash-content { text-align: center; animation: fadeInScale 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
   .splash-subtitle { font-size: 13px; letter-spacing: 7px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
   .splash-title { font-family: 'Cinzel', serif; font-size: 38px; letter-spacing: 4px; margin: 0 0 28px; font-weight: 700; }
   .splash-title span { color: #A51C30; text-shadow: 0 0 25px rgba(165, 28, 48, 0.6); }
@@ -184,11 +183,10 @@
   .msg-info { color: var(--sub); font-size: 12px; margin-top: 14px; line-height: 1.5; }
   .forgot-link { display: inline-block; margin-top: 10px; font-size: 13px; color: var(--crimson); text-decoration: none; cursor: pointer; }
 
-  /* CHAT VIEW LAYOUT */
+  /* CHAT / OPS DASHBOARD */
   #chat { display: none; flex: 1; overflow: hidden; width: 100%; min-height: 0; }
   #chat.show { display: flex; }
   
-  /* CHANNELS BAR */
   .channel-bar {
     width: 70px;
     background: var(--header-bg);
@@ -223,7 +221,6 @@
     transform: scale(1.05);
   }
 
-  /* SIDEBAR */
   aside {
     width: 280px;
     flex-shrink: 0;
@@ -290,7 +287,6 @@
   .member .del { margin-left: auto; color: var(--danger); cursor: pointer; font-size: 11px; opacity: 0.7; }
   .member .del:hover { opacity: 1; }
 
-  /* KANBAN / TASKS MODAL & LIST */
   .task-item {
     font-size: 12px;
     background: var(--card);
@@ -302,7 +298,6 @@
     justify-content: space-between;
   }
 
-  /* CHAT AREA */
   .chatarea {
     flex: 1;
     display: flex;
@@ -338,7 +333,6 @@
     gap: 12px;
   }
   
-  /* MESSAGE ROW */
   .msg-row { display: flex; gap: 10px; max-width: 80%; align-items: flex-end; }
   .msg-row.me { align-self: flex-end; flex-direction: row-reverse; }
   .msg-avatar { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--gold); object-fit: cover; flex-shrink: 0; }
@@ -364,7 +358,6 @@
   .bubble .txt { font-size: 15px; line-height: 1.45; word-wrap: break-word; }
   .bubble .time { font-size: 10px; opacity: 0.65; margin-top: 4px; text-align: right; }
 
-  /* CODE SNIPPET FORMATTING */
   pre.code-block {
     background: var(--code-bg);
     color: var(--code-text);
@@ -377,7 +370,6 @@
     margin: 6px 0;
   }
 
-  /* BURNER TIMER BADGE */
   .burner-badge {
     display: inline-flex;
     align-items: center;
@@ -391,7 +383,6 @@
   }
   .msg-row.me .burner-badge { color: #fff; border-color: #fff; }
 
-  /* AUDIO PLAYER IN CHAT */
   .voice-msg-player {
     display: flex;
     align-items: center;
@@ -413,7 +404,6 @@
     font-weight: bold;
   }
 
-  /* INPUT BAR */
   .input-bar-container {
     padding: 10px 16px;
     background: var(--chat-input-bg);
@@ -487,7 +477,6 @@
 
   .empty { color: var(--sub); text-align: center; margin: auto; font-style: italic; font-size: 16px; }
 
-  /* TOAST */
   #toastBox { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
   .toast {
     pointer-events: auto;
@@ -538,13 +527,9 @@
     <div class="splash-subtitle">Excellence & Prestige</div>
     <h2 class="splash-title">WELCOME TO <span>TOP V</span></h2>
     <div class="car-brands">
-      <!-- Mercedes Benz -->
       <svg class="brand-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 1.6c4.64 0 8.4 3.76 8.4 8.4 0 4.64-3.76 8.4-8.4 8.4-4.64 0-8.4-3.76-8.4-8.4 0-4.64 3.76-8.4 8.4-8.4zm-.02 2.21l-3.32 8.5 7.74-4.52-4.42-3.98zm-4.7 9.87l8.48-.12-4.14-7.51-4.34 7.63zm9.39-.7l-7.68 4.47 8.35-1.57-.67-2.9z"/></svg>
-      <!-- BMW -->
       <svg class="brand-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1"/><path d="M12 4 A8 8 0 0 1 20 12 L12 12 Z" fill="currentColor"/><path d="M12 12 L4 12 A8 8 0 0 1 12 4 Z" fill="none"/><path d="M12 12 L12 20 A8 8 0 0 1 4 12 Z" fill="currentColor"/></svg>
-      <!-- Ferrari -->
       <svg class="brand-icon" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 5.5l1.5 3h3.5l-2.8 2 1 3.5-3.2-2.2-3.2 2.2 1-3.5-2.8-2h3.5z" fill="currentColor"/><line x1="5" y1="18" x2="19" y2="18" stroke="currentColor" stroke-width="1.4"/></svg>
-      <!-- Bugatti -->
       <svg class="brand-icon" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 8h4a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-4v-4zm0 4h4.5a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H9v-4z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15 8h-6v8" stroke="currentColor" stroke-width="1.6"/></svg>
     </div>
   </div>
@@ -616,21 +601,18 @@
 
   <!-- CHAT / OPS DASHBOARD -->
   <div id="chat">
-    <!-- SUB-CHANNELS STRIP -->
     <div class="channel-bar">
       <div class="ch-btn active" data-ch="general" title="General Comms">#GEN</div>
       <div class="ch-btn" data-ch="intelligence" title="Intelligence & Payloads">#INT</div>
       <div class="ch-btn" data-ch="war-room" title="War Room (Urgent)">#WAR</div>
     </div>
 
-    <!-- OPS SIDEBAR -->
     <aside id="teamAside">
       <div class="aside-head">
         <h3 style="margin:0; font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--gold);">Operations Hub</h3>
         <span id="asideClose">&times;</span>
       </div>
 
-      <!-- Identity & Status -->
       <div class="panel-box">
         <h4>Operator Identity</h4>
         <div class="profile-avatar-wrap">
@@ -649,7 +631,6 @@
         <button class="btn btn-primary" id="saveProfileBtn" style="font-size:12px; padding:6px; justify-content:center;">Update Status</button>
       </div>
 
-      <!-- Dead Drop / Vault -->
       <div class="panel-box">
         <h4>Dead Drop Vault (Files)</h4>
         <label class="action-file-label" style="text-align:center;">
@@ -659,7 +640,6 @@
         <div id="vaultList" style="font-size:12px; display:flex; flex-direction:column; gap:4px; max-height:80px; overflow-y:auto;"></div>
       </div>
 
-      <!-- Tactical Task Board -->
       <div class="panel-box">
         <h4>Tactical Tasks</h4>
         <div style="display:flex; gap:4px;">
@@ -669,7 +649,6 @@
         <div id="taskList" style="display:flex; flex-direction:column; gap:4px; max-height:100px; overflow-y:auto;"></div>
       </div>
 
-      <!-- Wallpaper & Customization -->
       <div class="panel-box">
         <h4>Environment Setup</h4>
         <div style="display:flex; gap:6px;">
@@ -681,7 +660,6 @@
         </div>
       </div>
 
-      <!-- Member Registry -->
       <div>
         <h4 style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--sub); margin-bottom:6px;">Squad Operatives</h4>
         <div id="memberList"></div>
@@ -690,7 +668,6 @@
 
     <div id="asideBackdrop"></div>
 
-    <!-- MAIN CHAT AREA -->
     <div class="chatarea" id="chatArea">
       <div class="channel-header">
         <span id="channelNameDisplay">#GENERAL — Tactical Comms</span>
@@ -701,7 +678,6 @@
         <div class="empty">Channel initialized. Ready for operations.</div>
       </div>
       
-      <!-- INPUT BAR -->
       <div class="input-bar-container">
         <div class="input-controls">
           <button type="button" class="toggle-btn-small" id="burnerToggleBtn">
@@ -724,14 +700,26 @@
 
 <footer id="poweredBy">Powered by <span>Vex</span></footer>
 
-<!-- Firebase Libraries -->
-<script src="[https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js](https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js)"></script>
-<script src="[https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js](https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js)"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
-/* =========================================================
-   1. AUDITORY FEEDBACK (Web Audio API Synthesizer)
-========================================================= */
+/* Safe Splash Screen Dismissal */
+function dismissSplash() {
+  const splash = document.getElementById('splashScreen');
+  if (splash) {
+    splash.style.opacity = '0';
+    splash.style.pointerEvents = 'none';
+    setTimeout(() => {
+      splash.style.display = 'none';
+      splash.remove();
+    }, 500);
+  }
+}
+setTimeout(dismissSplash, 1800);
+document.getElementById('splashScreen')?.addEventListener('click', dismissSplash);
+
+/* Auditory Feedback */
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 function playTactileSound(type) {
   try {
@@ -759,9 +747,7 @@ function playTactileSound(type) {
   } catch(e) {}
 }
 
-/* =========================================================
-   2. CLIENT-SIDE ENCRYPTION ENGINE (AES-GCM Web Crypto)
-========================================================= */
+/* Encryption Engine (AES-GCM Web Crypto) */
 const TEAM_SECRET_SALT = "TOP_V_ELITE_OPS_SECURE_KEY_2026";
 let cryptoKey = null;
 
@@ -804,13 +790,11 @@ async function decryptPayload(payloadStr) {
     const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, data);
     return new TextDecoder().decode(decrypted);
   } catch(e) {
-    return payloadStr; // Return plaintext fallback if legacy
+    return payloadStr;
   }
 }
 
-/* =========================================================
-   3. UI & THEME TOGGLE
-========================================================= */
+/* UI & Theme Setup */
 function showToast(msg) {
   const box = document.getElementById('toastBox');
   const toast = document.createElement('div');
@@ -845,16 +829,7 @@ themeToggleBtn.addEventListener('click', () => {
   applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
 });
 
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    const splash = document.getElementById('splashScreen');
-    if (splash) splash.classList.add('fade-out');
-  }, 2200);
-});
-
-/* =========================================================
-   4. FIREBASE DATA & STATE
-========================================================= */
+/* Firebase Init */
 const firebaseConfig = {
   apiKey: "AIzaSyDqpxJdkGO75kefy1rN8zE34Fsm98iEMcQ",
   authDomain: "top-v-9abfb.firebaseapp.com",
@@ -871,7 +846,7 @@ let allUsersMap = {};
 let currentChannel = 'general';
 let isBurnerEnabled = false;
 
-const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%231f242d'/><circle cx='32' cy='23' r='11' fill='%23C9A85C'/><path d='M14 54 C14 42 22 38 32 38 C42 38 50 42 50 54 Z' fill='%23C9A85C'/><path d='M32 38 L30 45 L32 47 L34 45 Z' fill='%23A51C30'/></svg>";
+const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%231f242d'/><circle cx='32' cy='23' r='11' fill='%23C9A85C'/><path d='M14 54 C14 42 22 38 32 38 C42 38 50 42 50 54 Z' fill='%23C9A85C'/><path d='M32 38 L30 45 L32 47 L34 45 Z' fill='%23A51C30'/></svg>";
 
 function sanitize(s){ return (s||'').trim().toLowerCase().replace(/[^a-z0-9_\-]/g,'').slice(0,25); }
 function setErr(t){ document.getElementById('authErr').textContent = t || ''; }
@@ -1149,9 +1124,7 @@ document.getElementById('panicBtn').addEventListener('click', async () => {
   } catch(e) { alert('Purge failed.'); }
 });
 
-/* =========================================================
-   5. REAL-TIME MEMBERS & OPERATIONAL STATUS
-========================================================= */
+/* Members Subscription */
 function subscribeMembers(){
   unsubUsers = db.collection('users').onSnapshot(snap => {
     allUsersMap = {};
@@ -1188,9 +1161,7 @@ async function deleteMember(username){
   try { await db.collection('users').doc(username).delete(); } catch(e){}
 }
 
-/* =========================================================
-   6. REAL-TIME MESSAGING WITH E2EE & CODE FORMATTING
-========================================================= */
+/* Messages Chronological Pipeline */
 let isInitialLoad = true;
 function subscribeMessages(){
   if(unsubMsg) unsubMsg();
@@ -1230,7 +1201,6 @@ function subscribeMessages(){
       const avatar = sender.avatarUrl || m.avatarUrl || DEFAULT_AVATAR;
       const timeStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '';
 
-      // Auto-burner timer execution
       if(m.burner && m.createdAt) {
         const remaining = 30 - Math.floor((Date.now() - m.createdAt) / 1000);
         if(remaining <= 0) {
@@ -1239,11 +1209,9 @@ function subscribeMessages(){
         }
       }
 
-      // Decrypt message payload
       const decryptedText = await decryptPayload(m.text);
       let contentHtml = formatMessageContent(decryptedText);
 
-      // Voice note player handling
       if(m.audioData) {
         contentHtml = `
           <div class="voice-msg-player">
@@ -1276,7 +1244,6 @@ function subscribeMessages(){
 
 function formatMessageContent(str) {
   if (!str) return '';
-  // Syntax code block check ```code```
   if (str.includes('```')) {
     const parts = str.split('```');
     return parts.map((chunk, i) => {
@@ -1284,4 +1251,173 @@ function formatMessageContent(str) {
         return `<pre class="code-block"><code>${escapeHtml(chunk.trim())}</code></pre>`;
       }
       return escapeHtml(chunk);
-    }).joi
+    }).join('');
+  }
+  return escapeHtml(str);
+}
+
+window.deleteMessage = async function(msgId){
+  try { await db.collection('messages').doc(msgId).delete(); } catch(e){}
+};
+
+window.playVoiceNote = function(base64Audio){
+  const audio = new Audio(base64Audio);
+  audio.play();
+};
+
+/* Send Message */
+document.getElementById('sendForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const input = document.getElementById('msgInput');
+  const text = input.value.trim();
+  if(!text) return;
+
+  input.value = '';
+  playTactileSound('send');
+  
+  try {
+    const encrypted = await encryptPayload(text);
+    await db.collection('messages').add({
+      username: currentUser.username,
+      displayName: currentUser.displayName || currentUser.username,
+      avatarUrl: currentUser.avatarUrl || DEFAULT_AVATAR,
+      channel: currentChannel,
+      text: encrypted,
+      burner: isBurnerEnabled,
+      createdAt: Date.now()
+    });
+  } catch(err){}
+});
+
+/* Voice Note Recording */
+let mediaRecorder = null;
+let audioChunks = [];
+const recordVoiceBtn = document.getElementById('recordVoiceBtn');
+
+recordVoiceBtn.addEventListener('click', async () => {
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
+    mediaRecorder.stop();
+    recordVoiceBtn.classList.remove('recording');
+    return;
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+    
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+    mediaRecorder.onstop = async () => {
+      const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64Audio = reader.result;
+        playTactileSound('send');
+        await db.collection('messages').add({
+          username: currentUser.username,
+          displayName: currentUser.displayName || currentUser.username,
+          avatarUrl: currentUser.avatarUrl || DEFAULT_AVATAR,
+          channel: currentChannel,
+          text: '[Voice Transmission]',
+          audioData: base64Audio,
+          burner: isBurnerEnabled,
+          createdAt: Date.now()
+        });
+      };
+      reader.readAsDataURL(audioBlob);
+    };
+
+    mediaRecorder.start();
+    recordVoiceBtn.classList.add('recording');
+    showToast("Recording operational voice comm… Click again to transmit.");
+  } catch(err) {
+    alert("Microphone access unavailable or denied.");
+  }
+});
+
+/* Dead Drop / Vault Upload */
+document.getElementById('vaultFileInput').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 2 * 1024 * 1024) return alert("File exceeds 2MB limit for direct sync.");
+
+  const reader = new FileReader();
+  reader.onload = async (evt) => {
+    try {
+      await db.collection('vault').add({
+        fileName: file.name,
+        fileData: evt.target.result,
+        uploader: currentUser.username,
+        uploadedAt: Date.now()
+      });
+      showToast(`Asset "${file.name}" uploaded to Dead Drop!`);
+    } catch(err){ alert("Upload failed."); }
+  };
+  reader.readAsDataURL(file);
+});
+
+function subscribeVault(){
+  unsubVault = db.collection('vault').orderBy('uploadedAt', 'desc').limit(10).onSnapshot(snap => {
+    const list = document.getElementById('vaultList');
+    if(snap.empty) { list.innerHTML = '<span style="color:var(--sub); font-style:italic;">No files uploaded.</span>'; return; }
+    list.innerHTML = snap.docs.map(doc => {
+      const item = doc.data();
+      return `
+        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--card); padding:3px 6px; border-radius:4px;">
+          <a href="${item.fileData}" download="${escapeHtml(item.fileName)}" style="color:var(--gold); text-decoration:none; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:170px;">🗎 ${escapeHtml(item.fileName)}</a>
+          <button style="border:none; background:transparent; color:var(--danger); cursor:pointer;" onclick="deleteVaultFile('${doc.id}')">✕</button>
+        </div>`;
+    }).join('');
+  });
+}
+
+window.deleteVaultFile = async function(id) {
+  try { await db.collection('vault').doc(id).delete(); } catch(e){}
+};
+
+/* Tasks */
+document.getElementById('addTaskBtn').addEventListener('click', async () => {
+  const inp = document.getElementById('taskInput');
+  const task = inp.value.trim();
+  if(!task) return;
+  inp.value = '';
+  try {
+    await db.collection('tasks').add({
+      title: task,
+      done: false,
+      creator: currentUser.username,
+      createdAt: Date.now()
+    });
+  } catch(e){}
+});
+
+function subscribeTasks(){
+  unsubTasks = db.collection('tasks').orderBy('createdAt', 'desc').limit(15).onSnapshot(snap => {
+    const list = document.getElementById('taskList');
+    if(snap.empty) { list.innerHTML = '<span style="color:var(--sub); font-style:italic; font-size:12px;">No active objectives.</span>'; return; }
+    list.innerHTML = snap.docs.map(doc => {
+      const t = doc.data();
+      return `
+        <div class="task-item">
+          <span style="${t.done ? 'text-decoration:line-through; opacity:0.6;' : ''}">${escapeHtml(t.title)}</span>
+          <div style="display:flex; gap:6px;">
+            <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask('${doc.id}', ${!t.done})">
+            <span style="color:var(--danger); cursor:pointer;" onclick="deleteTask('${doc.id}')">✕</span>
+          </div>
+        </div>`;
+    }).join('');
+  });
+}
+
+window.toggleTask = async function(id, status){
+  try { await db.collection('tasks').doc(id).update({ done: status }); } catch(e){}
+};
+
+window.deleteTask = async function(id){
+  try { await db.collection('tasks').doc(id).delete(); } catch(e){}
+};
+
+function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+</script>
+</body>
+</html>
