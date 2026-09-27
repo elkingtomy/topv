@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="TOP V">
-<title>TOP V — Executive Enclave</title>
+<title>TOP V</title>
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,7 +48,6 @@
     --sub: #6b615a;
     --border: #e3dccf;
     --danger: #a51c30;
-    --danger-surface: rgba(165, 28, 48, 0.1);
     --bubble-me: #A51C30;
     --bubble-other: #ece5d8;
     --header-bg: #A51C30;
@@ -59,7 +58,6 @@
   [data-theme="dark"] {
     --crimson: #c6233d; --crimson-dark: #8c1426; --gold: #e5c378; --gold-glow: rgba(229,195,120,0.2);
     --bg: #0d0f12; --card: #15181f; --ink: #f0ede6; --sub: #9ca3af; --border: #232834; --danger: #ff4d6d;
-    --danger-surface: rgba(255, 77, 109, 0.12);
     --bubble-me: #A51C30; --bubble-other: #1b202a; --header-bg: #12151b; --header-text: #f0ede6;
     --sidebar-bg: #13161e; --panel-bg: #191e27;
   }
@@ -67,23 +65,32 @@
   html, body { height: 100%; width: 100%; }
   body { background: var(--bg); color: var(--ink); font-family: 'EB Garamond', Georgia, serif; display: flex; flex-direction: column; overflow: hidden; transition: background .2s ease, color .2s ease; }
 
-  #splashScreen { position: fixed; inset: 0; background: #090a0d; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; cursor: pointer; transition: opacity .5s ease; }
+  #splashScreen { position: fixed; inset: 0; background: #090a0d; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; cursor: pointer; transition: opacity .5s ease; padding: 20px; }
   .splash-content { text-align: center; }
   .splash-sub { font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-  .splash-title { font-family: 'Playfair Display', serif; font-size: 34px; letter-spacing: 2px; font-weight: 700; margin-bottom: 24px; }
+  .splash-title { font-family: 'Playfair Display', serif; font-size: 28px; letter-spacing: 2px; font-weight: 700; margin-bottom: 24px; white-space: nowrap; }
   .splash-title span { color: #A51C30; text-shadow: 0 0 25px rgba(165,28,48,.6); }
   .car-brands { display: flex; gap: 26px; align-items: center; justify-content: center; padding-top: 18px; border-top: 1px solid rgba(201,168,92,.25); }
-  .brand-icon { width: 32px; height: 32px; fill: #cbd5e1; opacity: .85; }
+  .brand-icon { width: 30px; height: 30px; fill: #cbd5e1; opacity: .85; }
 
-  header { background: var(--header-bg); color: var(--header-text); min-height: 54px; padding: 8px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.15); flex-shrink: 0; border-bottom: 1px solid var(--border); z-index: 40; }
-  .header-left { display: flex; align-items: center; gap: 10px; }
-  .header-center { display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .header-right { display: flex; align-items: center; gap: 8px; }
-  .crest { width: 32px; height: 32px; flex-shrink: 0; }
-  header h1 { font-family: 'Playfair Display', serif; font-size: 21px; letter-spacing: 1px; color: #fff; line-height: 1; }
-  header .tag { font-size: 10.5px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; text-align: center; }
+  header { background: var(--header-bg); color: var(--header-text); min-height: 52px; padding: 6px 14px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,.15); flex-shrink: 0; border-bottom: 1px solid var(--border); z-index: 40; position: relative; }
+  .header-left { display: flex; align-items: center; gap: 8px; z-index: 2; }
+  .header-right { display: flex; align-items: center; gap: 6px; z-index: 2; }
+  
+  /* الشعار في المنتصف بالضبط وبدون أي نصوص */
+  .header-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .crest { width: 34px; height: 34px; flex-shrink: 0; }
 
-  .btn { cursor: pointer; border: 1px solid transparent; border-radius: 6px; padding: 6px 12px; font-family: inherit; font-size: 14px; transition: .15s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; }
+  .btn { cursor: pointer; border: 1px solid transparent; border-radius: 6px; padding: 6px 12px; font-family: inherit; font-size: 13.5px; transition: .15s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; }
   .btn-outline { background: transparent; border-color: rgba(255,255,255,.3); color: #fff; }
   .btn-outline:hover { background: rgba(255,255,255,.15); border-color: #fff; }
   .btn-primary { background: var(--crimson); color: #fff; }
@@ -94,10 +101,18 @@
   .btn-icon-labeled.danger { border-color: rgba(255, 77, 109, 0.4); color: #ffb4c0; }
   .btn-icon-labeled.danger:hover { background: var(--crimson-dark); color: #fff; border-color: var(--danger); }
 
-  .svg-icon { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .svg-icon { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
   .theme-toggle-btn { background: transparent; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; }
   .theme-toggle-btn:hover { background: rgba(255,255,255,.15); border-color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .btn-text { display: none !important; }
+    header { padding: 4px 10px; }
+    .header-left, .header-right { gap: 5px; }
+    .btn-icon-labeled, #teamToggle { padding: 6px 8px !important; }
+    .splash-title { font-size: 22px !important; }
+  }
 
   main { flex: 1; display: flex; overflow: hidden; min-height: 0; position: relative; }
   #auth { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
@@ -118,7 +133,6 @@
   #chat { display: none; flex: 1; overflow: hidden; width: 100%; position: relative; }
   #chat.show { display: flex; }
   
-  /* Collapsible Channel Sidebar */
   .channel-bar { width: 72px; background: var(--header-bg); display: flex; flex-direction: column; align-items: center; padding: 12px 0; gap: 8px; border-right: 1px solid rgba(255,255,255,.1); flex-shrink: 0; z-index: 30; overflow-y: auto; transition: width .22s ease, padding .22s ease; }
   .channel-bar.collapsed { width: 0; padding: 0; border-right: none; }
   .ch-btn { width: 50px; height: 44px; border-radius: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; transition: .15s; text-transform: uppercase; letter-spacing: 0.5px; overflow: hidden; text-overflow: ellipsis; padding: 0 4px; }
@@ -219,29 +233,29 @@
 
 <header>
   <div class="header-left">
-    <button class="btn btn-outline" id="teamToggle" style="display:none; padding:5px 11px;">
+    <button class="btn btn-outline" id="teamToggle" style="display:none;" title="Workspace">
       <svg class="svg-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-      <span>Workspace</span>
+      <span class="btn-text">Workspace</span>
     </button>
   </div>
+
+  <!-- الشعار فقط في المنتصف بدون أي نصوص -->
   <div class="header-center">
-    <svg class="crest" viewBox="0 0 48 48"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#7a1524" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Playfair Display', serif" font-size="18" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
-    <div><h1>TOP V</h1><div class="tag">Private Team</div></div>
+    <svg class="crest" viewBox="0 0 48 48"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#7a1524" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Playfair Display', serif" font-size="20" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
   </div>
+
   <div class="header-right">
     <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme">
       <svg id="themeIconSun" class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
       <svg id="themeIconMoon" class="svg-icon" viewBox="0 0 24 24" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
     </button>
-    <!-- Professional Purge/Panic Button -->
-    <button class="btn btn-icon-labeled danger" id="panicBtn" style="display:none;" title="Purge Current Channel Data">
+    <button class="btn btn-icon-labeled danger" id="panicBtn" style="display:none;" title="Purge Current Feed">
       <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-      <span>Purge Feed</span>
+      <span class="btn-text">Purge</span>
     </button>
-    <!-- Professional Sign Out Button -->
-    <button class="btn btn-icon-labeled" id="logoutBtn" style="display:none;" title="Secure Sign Out">
+    <button class="btn btn-icon-labeled" id="logoutBtn" style="display:none;" title="Disconnect">
       <svg class="svg-icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-      <span>Disconnect</span>
+      <span class="btn-text">Exit</span>
     </button>
   </div>
 </header>
@@ -282,7 +296,6 @@
   </div>
 
   <div id="chat">
-    <!-- Channel Bar with dynamic management -->
     <div class="channel-bar collapsed" id="channelBar">
       <div id="channelButtonsList" style="display:flex; flex-direction:column; gap:8px; align-items:center; width:100%;"></div>
       <button class="btn-add-ch" id="addChannelBtn" title="Create New Channel">+</button>
@@ -646,7 +659,6 @@ function enterChat(){
 function subscribeChannels(){
   if(unsubChannels) unsubChannels();
   unsubChannels = db.collection('channels').orderBy('createdAt', 'asc').onSnapshot(async snap => {
-    // Bootstrap defaults if clean installation
     if(snap.empty){
       const defaults = [
         { id: 'general', name: 'GEN', title: '#GENERAL' },
