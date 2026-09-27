@@ -65,7 +65,7 @@
   html, body { height: 100%; width: 100%; }
   body { background: var(--bg); color: var(--ink); font-family: 'EB Garamond', Georgia, serif; display: flex; flex-direction: column; overflow: hidden; transition: background .2s ease, color .2s ease; }
 
-  #splashScreen { position: fixed; inset: 0; background: #090a0d; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; cursor: pointer; transition: opacity .4s ease; padding: 20px; }
+  #splashScreen { position: fixed; inset: 0; background: #090a0d; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; cursor: pointer; transition: opacity .4s ease; padding: 20px; user-select: none; }
   .splash-content { text-align: center; }
   .splash-sub { font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
   .splash-title { font-family: 'Playfair Display', serif; font-size: 28px; letter-spacing: 2px; font-weight: 700; margin-bottom: 24px; white-space: nowrap; }
@@ -442,78 +442,106 @@ function toggleAccordion(panelId, headElem) {
   ind.textContent = isOpen ? '+' : '−';
 }
 
-/* ---------- Audio Engine: BMW Engine Roar & Sound FX ---------- */
+/* ---------- High-Impact BMW Twin-Turbo Audio Engine (Mobile & Desktop) ---------- */
 let audioCtx = null;
 function getAudioContext() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === 'suspended') audioCtx.resume();
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContextClass();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
   return audioCtx;
 }
 
-// محرك اصطناعي يحاكي صوت تشغيل وهدير محرك BMW الرياضي
+// محرك صوتي عالي النقاء وقوي جداً لمحاكاة إقلاع وهدير محرك BMW M-Power Twin-Turbo
 function playBMWRoar() {
   try {
     const ctx = getAudioContext();
     const now = ctx.currentTime;
 
-    // 1. صوت بادئ الحركة (Starter Crank)
+    // الماستر لرفع وتضخيم الصوت بشكل حماسي
+    const masterGain = ctx.createGain();
+    masterGain.gain.setValueAtTime(0.7, now);
+    masterGain.connect(ctx.destination);
+
+    // 1. بادئ التشغيل الرياضي عالي العزم (Aggressive Starter)
     const starterOsc = ctx.createOscillator();
     const starterGain = ctx.createGain();
     starterOsc.type = 'sawtooth';
-    starterOsc.frequency.setValueAtTime(22, now);
-    starterOsc.frequency.linearRampToValueAtTime(38, now + 0.35);
-    starterGain.gain.setValueAtTime(0.08, now);
-    starterGain.gain.exponentialRampToValueAtTime(0.01, now + 0.38);
+    starterOsc.frequency.setValueAtTime(32, now);
+    starterOsc.frequency.linearRampToValueAtTime(54, now + 0.32);
+    starterGain.gain.setValueAtTime(0.35, now);
+    starterGain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
     starterOsc.connect(starterGain);
-    starterGain.connect(ctx.destination);
+    starterGain.connect(masterGain);
     starterOsc.start(now);
-    starterOsc.stop(now + 0.4);
+    starterOsc.stop(now + 0.36);
 
-    // 2. هدير المحرك الرئيسي (Engine Roar & Rev)
+    // 2. المحرك الرئيسي V8 Roar (هدير متصاعد وقوي)
     const engineOsc = ctx.createOscillator();
     const engineGain = ctx.createGain();
-    engineOsc.type = 'triangle';
-    engineOsc.frequency.setValueAtTime(55, now + 0.25);
-    engineOsc.frequency.exponentialRampToValueAtTime(240, now + 0.7); // دوران عالي (Rev up)
-    engineOsc.frequency.exponentialRampToValueAtTime(75, now + 1.6);  // عودة للسلانسيه الخشن (Idle)
+    engineOsc.type = 'sawtooth';
+    engineOsc.frequency.setValueAtTime(60, now + 0.22);
+    engineOsc.frequency.exponentialRampToValueAtTime(290, now + 0.65); // دوسة بنزين حماسية (High RPM Rev)
+    engineOsc.frequency.exponentialRampToValueAtTime(70, now + 1.8);  // صوت السلانسيه الوحشي
 
-    engineGain.gain.setValueAtTime(0.001, now);
-    engineGain.gain.linearRampToValueAtTime(0.25, now + 0.45);
-    engineGain.gain.exponentialRampToValueAtTime(0.001, now + 1.8);
+    engineGain.gain.setValueAtTime(0.01, now);
+    engineGain.gain.linearRampToValueAtTime(0.65, now + 0.45);
+    engineGain.gain.exponentialRampToValueAtTime(0.001, now + 2.0);
 
-    // 3. تيربو وصوت العادم الرياضي (Turbo Spool / Filtered Noise)
-    const bufferSize = ctx.sampleRate * 1.5;
+    // 3. تضخيم البيز الأرضي (Sub-Bass Thump) لاهتزاز السماعات
+    const subOsc = ctx.createOscillator();
+    const subGain = ctx.createGain();
+    subOsc.type = 'sine';
+    subOsc.frequency.setValueAtTime(45, now + 0.25);
+    subOsc.frequency.exponentialRampToValueAtTime(110, now + 0.65);
+    subOsc.frequency.exponentialRampToValueAtTime(38, now + 1.8);
+    subGain.gain.setValueAtTime(0.5, now + 0.3);
+    subGain.gain.exponentialRampToValueAtTime(0.01, now + 1.9);
+
+    // 4. تيربو وصوت تفريغ الهواء والعادم (Turbo Spool & Boost)
+    const bufferSize = ctx.sampleRate * 1.8;
     const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const output = noiseBuffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) {
       output[i] = Math.random() * 2 - 1;
     }
-    const whiteNoise = ctx.createBufferSource();
-    whiteNoise.buffer = noiseBuffer;
+    const turboNoise = ctx.createBufferSource();
+    turboNoise.buffer = noiseBuffer;
 
-    const filter = ctx.createBiquadFilter();
-    filter.type = 'bandpass';
-    filter.frequency.setValueAtTime(320, now + 0.3);
-    filter.frequency.exponentialRampToValueAtTime(1400, now + 0.8);
-    filter.Q.value = 3.5;
+    const turboFilter = ctx.createBiquadFilter();
+    turboFilter.type = 'bandpass';
+    turboFilter.frequency.setValueAtTime(400, now + 0.25);
+    turboFilter.frequency.exponentialRampToValueAtTime(1800, now + 0.7);
+    turboFilter.Q.value = 4.0;
 
-    const noiseGain = ctx.createGain();
-    noiseGain.gain.setValueAtTime(0.01, now + 0.3);
-    noiseGain.gain.linearRampToValueAtTime(0.12, now + 0.7);
-    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
+    const turboGain = ctx.createGain();
+    turboGain.gain.setValueAtTime(0.02, now + 0.25);
+    turboGain.gain.linearRampToValueAtTime(0.35, now + 0.65);
+    turboGain.gain.exponentialRampToValueAtTime(0.001, now + 1.7);
 
-    whiteNoise.connect(filter);
-    filter.connect(noiseGain);
-    noiseGain.connect(ctx.destination);
+    turboNoise.connect(turboFilter);
+    turboFilter.connect(turboGain);
+    turboGain.connect(masterGain);
 
     engineOsc.connect(engineGain);
-    engineGain.connect(ctx.destination);
+    engineGain.connect(masterGain);
 
-    engineOsc.start(now + 0.25);
-    whiteNoise.start(now + 0.3);
-    engineOsc.stop(now + 1.85);
-    whiteNoise.stop(now + 1.85);
-  } catch(e) {}
+    subOsc.connect(subGain);
+    subGain.connect(masterGain);
+
+    engineOsc.start(now + 0.22);
+    subOsc.start(now + 0.25);
+    turboNoise.start(now + 0.25);
+
+    engineOsc.stop(now + 2.1);
+    subOsc.stop(now + 2.0);
+    turboNoise.stop(now + 1.9);
+  } catch(e) {
+    console.warn("Audio Context setup on touch/gesture:", e);
+  }
 }
 
 function playTactileSound(type) {
@@ -536,7 +564,7 @@ function playTactileSound(type) {
   } catch(e) {}
 }
 
-/* ---------- Splash Screen & BMW Launch Trigger ---------- */
+/* ---------- Splash Screen & Mobile Gesture Interaction Engine ---------- */
 let soundTriggered = false;
 function triggerLaunchSound() {
   if (!soundTriggered) {
@@ -550,10 +578,16 @@ function dismissSplash() {
   const splash = document.getElementById('splashScreen');
   if (splash) { splash.style.opacity = '0'; splash.style.pointerEvents = 'none'; setTimeout(() => splash.remove(), 400); }
 }
-setTimeout(dismissSplash, 1400);
-document.getElementById('splashScreen')?.addEventListener('click', dismissSplash);
+
+// تشغيل فوري بمجرد النقر أو لمس الشاشة (Touch/Click) للتوافق مع قيود الموبايل الصارمة
+const splashElem = document.getElementById('splashScreen');
+if (splashElem) {
+  splashElem.addEventListener('touchstart', () => { triggerLaunchSound(); dismissSplash(); }, { passive: true, once: true });
+  splashElem.addEventListener('click', () => { triggerLaunchSound(); dismissSplash(); }, { once: true });
+}
+setTimeout(dismissSplash, 1600);
+window.addEventListener('touchstart', triggerLaunchSound, { passive: true, once: true });
 window.addEventListener('click', triggerLaunchSound, { once: true });
-window.addEventListener('keydown', triggerLaunchSound, { once: true });
 
 /* ---------- Notification Toast ---------- */
 function showToast(msg) {
@@ -610,7 +644,6 @@ function sanitize(s){ return (s||'').trim().toLowerCase().replace(/[^a-z0-9_\-]/
 function setErr(t){ document.getElementById('authErr').textContent = t || ''; }
 function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-// دالة موحدة لقراءة التوقيت بدقة ومنع لخبطة الترتيب الزمني بين المتصفحات
 function getTimestampMs(data) {
   if (data.serverTime && typeof data.serverTime.toMillis === 'function') {
     return data.serverTime.toMillis();
@@ -1257,7 +1290,7 @@ document.getElementById('sendForm').addEventListener('submit', async (e) => {
       reactions: {},
       burner: isBurnerEnabled,
       createdAt: Date.now(),
-      serverTime: FieldValue.serverTimestamp() // توقيت الخادم الموحد
+      serverTime: FieldValue.serverTimestamp()
     });
   } catch(err){
     console.error("Transmission error:", err);
