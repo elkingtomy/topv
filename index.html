@@ -170,8 +170,6 @@
   .task-item { font-size: 12.5px; background: var(--card); padding: 5px 8px; border-radius: 4px; border-left: 3px solid var(--gold); display: flex; align-items: center; justify-content: space-between; }
 
   .chatarea { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; position: relative; background-size: cover; background-position: center; background-repeat: no-repeat; }
-  
-  /* تم إزالة النص ليصبح الشريط أنيقاً ومقتصراً على الزر واسم القناة */
   .channel-header { background: var(--card); border-bottom: 1px solid var(--border); padding: 8px 18px; font-size: 15px; font-weight: 600; color: var(--gold); display: flex; align-items: center; justify-content: flex-start; letter-spacing: .5px; }
   
   .btn-channel-toggle {
@@ -402,7 +400,6 @@
     <div id="asideBackdrop"></div>
 
     <div class="chatarea" id="chatArea">
-      <!-- شريط القناة بدون نص ENCRYPTED WORKSPACE -->
       <div class="channel-header">
         <span style="display:flex;align-items:center;gap:10px;">
           <button type="button" id="channelBarToggle" class="btn-channel-toggle" title="Browse Channels">
@@ -445,35 +442,118 @@ function toggleAccordion(panelId, headElem) {
   ind.textContent = isOpen ? '+' : '−';
 }
 
-/* ---------- Splash Screen Auto-Dismiss ---------- */
+/* ---------- Audio Engine: BMW Engine Roar & Sound FX ---------- */
+let audioCtx = null;
+function getAudioContext() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+
+// محرك اصطناعي يحاكي صوت تشغيل وهدير محرك BMW الرياضي
+function playBMWRoar() {
+  try {
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+
+    // 1. صوت بادئ الحركة (Starter Crank)
+    const starterOsc = ctx.createOscillator();
+    const starterGain = ctx.createGain();
+    starterOsc.type = 'sawtooth';
+    starterOsc.frequency.setValueAtTime(22, now);
+    starterOsc.frequency.linearRampToValueAtTime(38, now + 0.35);
+    starterGain.gain.setValueAtTime(0.08, now);
+    starterGain.gain.exponentialRampToValueAtTime(0.01, now + 0.38);
+    starterOsc.connect(starterGain);
+    starterGain.connect(ctx.destination);
+    starterOsc.start(now);
+    starterOsc.stop(now + 0.4);
+
+    // 2. هدير المحرك الرئيسي (Engine Roar & Rev)
+    const engineOsc = ctx.createOscillator();
+    const engineGain = ctx.createGain();
+    engineOsc.type = 'triangle';
+    engineOsc.frequency.setValueAtTime(55, now + 0.25);
+    engineOsc.frequency.exponentialRampToValueAtTime(240, now + 0.7); // دوران عالي (Rev up)
+    engineOsc.frequency.exponentialRampToValueAtTime(75, now + 1.6);  // عودة للسلانسيه الخشن (Idle)
+
+    engineGain.gain.setValueAtTime(0.001, now);
+    engineGain.gain.linearRampToValueAtTime(0.25, now + 0.45);
+    engineGain.gain.exponentialRampToValueAtTime(0.001, now + 1.8);
+
+    // 3. تيربو وصوت العادم الرياضي (Turbo Spool / Filtered Noise)
+    const bufferSize = ctx.sampleRate * 1.5;
+    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      output[i] = Math.random() * 2 - 1;
+    }
+    const whiteNoise = ctx.createBufferSource();
+    whiteNoise.buffer = noiseBuffer;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(320, now + 0.3);
+    filter.frequency.exponentialRampToValueAtTime(1400, now + 0.8);
+    filter.Q.value = 3.5;
+
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.01, now + 0.3);
+    noiseGain.gain.linearRampToValueAtTime(0.12, now + 0.7);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
+
+    whiteNoise.connect(filter);
+    filter.connect(noiseGain);
+    noiseGain.connect(ctx.destination);
+
+    engineOsc.connect(engineGain);
+    engineGain.connect(ctx.destination);
+
+    engineOsc.start(now + 0.25);
+    whiteNoise.start(now + 0.3);
+    engineOsc.stop(now + 1.85);
+    whiteNoise.stop(now + 1.85);
+  } catch(e) {}
+}
+
+function playTactileSound(type) {
+  try {
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    if (type === 'send') {
+      osc.type = 'sine'; osc.frequency.setValueAtTime(640, now);
+      osc.frequency.exponentialRampToValueAtTime(880, now + .07);
+      gain.gain.setValueAtTime(.06, now); gain.gain.exponentialRampToValueAtTime(.001, now + .07);
+      osc.start(); osc.stop(now + .07);
+    } else if (type === 'receive') {
+      osc.type = 'triangle'; osc.frequency.setValueAtTime(520, now);
+      osc.frequency.exponentialRampToValueAtTime(740, now + .1);
+      gain.gain.setValueAtTime(.07, now); gain.gain.exponentialRampToValueAtTime(.001, now + .1);
+      osc.start(); osc.stop(now + .1);
+    }
+  } catch(e) {}
+}
+
+/* ---------- Splash Screen & BMW Launch Trigger ---------- */
+let soundTriggered = false;
+function triggerLaunchSound() {
+  if (!soundTriggered) {
+    playBMWRoar();
+    soundTriggered = true;
+  }
+}
+
 function dismissSplash() {
+  triggerLaunchSound();
   const splash = document.getElementById('splashScreen');
   if (splash) { splash.style.opacity = '0'; splash.style.pointerEvents = 'none'; setTimeout(() => splash.remove(), 400); }
 }
 setTimeout(dismissSplash, 1400);
 document.getElementById('splashScreen')?.addEventListener('click', dismissSplash);
-
-/* ---------- Sound Engine ---------- */
-let audioCtx = null;
-function playTactileSound(type) {
-  try {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
-    osc.connect(gain); gain.connect(audioCtx.destination);
-    if (type === 'send') {
-      osc.type = 'sine'; osc.frequency.setValueAtTime(640, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + .07);
-      gain.gain.setValueAtTime(.06, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + .07);
-      osc.start(); osc.stop(audioCtx.currentTime + .07);
-    } else if (type === 'receive') {
-      osc.type = 'triangle'; osc.frequency.setValueAtTime(520, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(740, audioCtx.currentTime + .1);
-      gain.gain.setValueAtTime(.07, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + .1);
-      osc.start(); osc.stop(audioCtx.currentTime + .1);
-    }
-  } catch(e) {}
-}
+window.addEventListener('click', triggerLaunchSound, { once: true });
+window.addEventListener('keydown', triggerLaunchSound, { once: true });
 
 /* ---------- Notification Toast ---------- */
 function showToast(msg) {
@@ -529,6 +609,14 @@ const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/20
 function sanitize(s){ return (s||'').trim().toLowerCase().replace(/[^a-z0-9_\-]/g,'').slice(0,25); }
 function setErr(t){ document.getElementById('authErr').textContent = t || ''; }
 function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+// دالة موحدة لقراءة التوقيت بدقة ومنع لخبطة الترتيب الزمني بين المتصفحات
+function getTimestampMs(data) {
+  if (data.serverTime && typeof data.serverTime.toMillis === 'function') {
+    return data.serverTime.toMillis();
+  }
+  return typeof data.createdAt === 'number' ? data.createdAt : 0;
+}
 
 async function hashPassword(pw){
   const enc = new TextEncoder().encode(pw);
@@ -701,8 +789,9 @@ function enterChat(){
   burnerTimer = setInterval(() => {
     latestChannelDocs.forEach(d => {
       const m = d.data();
-      if(m.burner && m.createdAt){
-        const remaining = 30 - Math.floor((Date.now() - m.createdAt) / 1000);
+      const timeMs = getTimestampMs(m);
+      if(m.burner && timeMs){
+        const remaining = 30 - Math.floor((Date.now() - timeMs) / 1000);
         if(remaining <= 0){
           d.ref.delete().catch(()=>{});
         }
@@ -950,7 +1039,7 @@ async function deleteMember(username){
   } catch(e){}
 }
 
-/* ---------- Communication Stream & Realtime Engine ---------- */
+/* ---------- Communication Stream (Strict Clock Alignment) ---------- */
 function subscribeMessages(){
   if(unsubMsg) unsubMsg();
   let isInitialLoad = true;
@@ -974,7 +1063,14 @@ function subscribeMessages(){
       });
     }
     isInitialLoad = false;
-    latestChannelDocs = snap.docs;
+    
+    // فرز إضافي دقيق على مستوى الكلاينت لحل أي اختلاف في التوقيت بين الأجهزة
+    latestChannelDocs = snap.docs.slice().sort((a, b) => {
+      const timeA = getTimestampMs(a.data());
+      const timeB = getTimestampMs(b.data());
+      return timeA - timeB;
+    });
+
     renderMessages();
   }, (err) => {
     console.error("Firestore message listener error:", err);
@@ -989,8 +1085,9 @@ function renderMessages(){
   const stillVisible = [];
   latestChannelDocs.forEach(d => {
     const m = d.data();
-    if(m.burner && m.createdAt){
-      const remaining = 30 - Math.floor((Date.now() - m.createdAt) / 1000);
+    const timeMs = getTimestampMs(m);
+    if(m.burner && timeMs){
+      const remaining = 30 - Math.floor((Date.now() - timeMs) / 1000);
       if(remaining <= 0){ return; }
     }
     stillVisible.push(d);
@@ -1009,7 +1106,8 @@ function renderMessages(){
     const sender = allUsersMap[m.username] || {};
     const display = sender.displayName || m.displayName || m.username;
     const avatar = sender.avatarUrl || m.avatarUrl || DEFAULT_AVATAR;
-    const timeStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
+    const timeMs = getTimestampMs(m);
+    const timeStr = timeMs ? new Date(timeMs).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
 
     let contentHtml = formatMessageContent(m.text);
     if(m.audioData){
@@ -1158,7 +1256,8 @@ document.getElementById('sendForm').addEventListener('submit', async (e) => {
       text,
       reactions: {},
       burner: isBurnerEnabled,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      serverTime: FieldValue.serverTimestamp() // توقيت الخادم الموحد
     });
   } catch(err){
     console.error("Transmission error:", err);
@@ -1205,7 +1304,8 @@ recordVoiceBtn.addEventListener('click', async () => {
             audioData: base64Audio,
             reactions: {},
             burner: isBurnerEnabled,
-            createdAt: Date.now()
+            createdAt: Date.now(),
+            serverTime: FieldValue.serverTimestamp()
           });
         } catch(err){ showToast('Voice packet rejected.'); }
       };
