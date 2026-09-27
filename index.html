@@ -59,7 +59,7 @@
   html, body { height: 100%; height: 100dvh; width: 100%; }
   body { background: var(--bg); color: var(--ink); font-family: 'EB Garamond', Georgia, serif; display: flex; flex-direction: column; overflow: hidden; transition: background .2s ease, color .2s ease; }
 
-  #splashScreen { position: fixed; inset: 0; background: #090a0d; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; cursor: pointer; transition: opacity .4s ease; padding: 20px; user-select: none; }
+  #splashScreen { position: fixed; inset: 0; background: #090a0d; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; cursor: pointer; transition: opacity .4s ease, visibility .4s; padding: 20px; user-select: none; }
   .splash-content { text-align: center; }
   .splash-sub { font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
   .splash-title { font-family: 'Playfair Display', serif; font-size: 28px; letter-spacing: 2px; font-weight: 700; margin-bottom: 24px; white-space: nowrap; }
@@ -161,12 +161,6 @@
   .role-badge.admin { background: var(--gold); color: #111; }
   .role-badge.core { background: #3b82f6; color: #fff; }
   .role-badge.guest { background: #64748b; color: #fff; }
-  
-  .member-controls { display: flex; align-items: center; gap: 5px; margin-left: auto; }
-  .action-btn-small { border: 1px solid var(--border); background: var(--card); color: var(--ink); border-radius: 4px; font-size: 11px; padding: 3px 6px; cursor: pointer; font-family: inherit; }
-  .action-btn-small:hover { border-color: var(--gold); }
-  .action-btn-small.danger { color: var(--danger); }
-  .action-btn-small.danger:hover { background: var(--danger); color: #fff; }
 
   .task-item { font-size: 12.5px; background: var(--card); padding: 6px 8px; border-radius: 4px; border-left: 3px solid var(--gold); display: flex; align-items: center; justify-content: space-between; }
 
@@ -483,6 +477,22 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
+/* ---------- Immediate Splash Screen Dismissal ---------- */
+function dismissSplash() {
+  const splash = document.getElementById('splashScreen');
+  if (splash) {
+    splash.style.pointerEvents = 'none';
+    splash.style.opacity = '0';
+    setTimeout(() => {
+      splash.style.display = 'none';
+      if (splash.parentNode) splash.remove();
+    }, 300);
+  }
+}
+document.addEventListener('DOMContentLoaded', () => { setTimeout(dismissSplash, 900); });
+setTimeout(dismissSplash, 1200);
+document.getElementById('splashScreen')?.addEventListener('click', dismissSplash);
+
 /* ---------- Accordion ---------- */
 function toggleAccordion(panelId, headElem) {
   const panel = document.getElementById(panelId);
@@ -519,14 +529,6 @@ function playTactileSound(type) {
     }
   } catch(e) {}
 }
-
-/* ---------- Splash Screen Auto-Dismiss ---------- */
-function dismissSplash() {
-  const splash = document.getElementById('splashScreen');
-  if (splash) { splash.style.opacity = '0'; splash.style.pointerEvents = 'none'; setTimeout(() => splash.remove(), 400); }
-}
-setTimeout(dismissSplash, 1200);
-document.getElementById('splashScreen')?.addEventListener('click', dismissSplash);
 
 /* ---------- Notification Toast ---------- */
 function showToast(msg) {
@@ -776,4 +778,664 @@ async function initDefaultChannels() {
     }
     const teamDoc = await db.collection('channels').doc('team-core').get();
     if (!teamDoc.exists) {
-      await db.collection('chann
+      await db.collection('channels').doc('team-core').set({
+        name: 'team-core',
+        isPrivate: true,
+        createdAt: Date.now() + 1
+      });
+    }
+  } catch(e) {}
+}
+
+document.getElementById('addChannelBtn').addEventListener('click', async () => {
+  if (!currentUser || (!currentUser.isOwner && !currentUser.isAdmin)) {
+    return showToast('Restricted: Only Owner/Admin can build rooms.');
+  }
+
+  const roomNameRaw = prompt('Enter Room / Channel Identifier:');
+  if (!roomNameRaw) return;
+  const channelId = sanitize(roomNameRaw);
+  if (!channelId || channelId.length < 2) return showToast('Invalid room name.');
+
+  const isLocked = confirm('Make this room Private (Core/Owner only)?\n[OK = Private 🔒, Cancel = Public]');
+
+  try {
+    await db.collection('channels').doc(channelId).set({
+      name: channelId,
+      isPrivate: isLocked,
+      createdBy: currentUser.username,
+      createdAt: Date.now()
+    });
+    showToast(`Room #${channelId} created successfully.`);
+    switchChannel(channelId);
+  } catch(e) {
+    showToast('Failed to create channel.');
+  }
+});
+
+function listenChannels() {
+  if (unsubChannels) unsubChannels();
+  unsubChannels = db.collection('channels').orderBy('createdAt', 'asc').onSnapshot(snap => {
+    const listEl = document.getElementById('channelButtonsList');
+    if (!listEl) return;
+    listEl.innerHTML = '';
+    channelMetaMap = {};
+
+    snap.forEach(doc => {
+      const data = doc.data();
+      const id = doc.id;
+      channelMetaMap[id] = data;
+
+      const wrap = document.createElement('div');
+      wrap.className = 'ch-wrapper';
+
+      const btn = document.createElement('button');
+      btn.className = `ch-btn ${data.isPrivate ? 'locked' : ''} ${id === currentChannelId ? 'active' : ''}`;
+      btn.textContent = id.slice(0, 4);
+      btn.title = `#${id}` + (data.isPrivate ? ' (Private)' : ' (Public)');
+      btn.onclick = () => switchChannel(id);
+      wrap.appendChild(btn);
+
+      if ((currentUser.isOwner || currentUser.isAdmin) && id !== 'general' && id !== 'team-core') {
+        const del = document.createElement('button');
+        del.className = 'ch-del-btn';
+        del.innerHTML = '×';
+        del.title = 'Delete room';
+        del.onclick = async (e) => {
+          e.stopPropagation();
+          if (confirm(`Delete channel #${id}?`)) {
+            await db.collection('channels').doc(id).delete();
+            if (currentChannelId === id) switchChannel('general');
+            showToast(`Room #${id} purged.`);
+          }
+        };
+        wrap.appendChild(del);
+      }
+
+      listEl.appendChild(wrap);
+    });
+  });
+}
+
+function switchChannel(channelId) {
+  const meta = channelMetaMap[channelId];
+  const isPriv = meta ? meta.isPrivate : (channelId === 'team-core');
+
+  if (isPriv && !currentUser.isCore && !currentUser.isAdmin && !currentUser.isOwner) {
+    showToast('🔒 Access Denied: Core Team clearance required.');
+    if (currentChannelId !== 'general') switchChannel('general');
+    return;
+  }
+
+  currentChannelId = channelId;
+  document.getElementById('channelNameDisplay').textContent = '#' + channelId.toUpperCase();
+  document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+  listenMessages();
+}
+
+/* ---------- Main Session Dispatcher ---------- */
+async function enterChat(){
+  dismissSplash();
+  document.getElementById('auth').style.display = 'none';
+  document.getElementById('chat').classList.add('show');
+  document.getElementById('teamToggle').style.display = 'inline-flex';
+  document.getElementById('openCmdPaletteBtn').style.display = 'inline-flex';
+  document.getElementById('logoutBtn').style.display = 'inline-flex';
+  
+  const canManage = (currentUser.isOwner || currentUser.isAdmin);
+  if (canManage) {
+    document.getElementById('panicBtn').style.display = 'inline-flex';
+    document.getElementById('addChannelBtn').style.display = 'flex';
+    document.getElementById('toggleWarRoomBtn').style.display = 'inline-block';
+  } else {
+    document.getElementById('panicBtn').style.display = 'none';
+    document.getElementById('addChannelBtn').style.display = 'none';
+    document.getElementById('toggleWarRoomBtn').style.display = 'none';
+  }
+
+  const isCoreOrAdmin = (currentUser.isCore || currentUser.isAdmin || currentUser.isOwner);
+  document.getElementById('vaultPanelBox').style.display = isCoreOrAdmin ? 'block' : 'none';
+  document.getElementById('taskPanelBox').style.display = isCoreOrAdmin ? 'block' : 'none';
+  document.getElementById('scratchpadPanelBox').style.display = isCoreOrAdmin ? 'block' : 'none';
+  document.getElementById('inviteCodePanelBox').style.display = currentUser.isAdmin ? 'block' : 'none';
+
+  document.getElementById('displayNameInput').value = currentUser.displayName || currentUser.username;
+  document.getElementById('myAvatarImg').src = currentUser.avatarUrl || DEFAULT_AVATAR;
+
+  await setLivePresence(true);
+  await initDefaultChannels();
+  listenChannels();
+  listenUsers();
+  
+  if (isCoreOrAdmin) {
+    currentChannelId = 'team-core';
+    switchChannel('team-core');
+  } else {
+    currentChannelId = 'general';
+    switchChannel('general');
+  }
+
+  if(isCoreOrAdmin){
+    listenTasks();
+    listenVault();
+    listenScratchpad();
+  }
+}
+
+/* ---------- Messaging Stream & Interaction ---------- */
+function listenMessages(){
+  if(unsubMsg) unsubMsg();
+  renderedDocIds.clear();
+  const box = document.getElementById('messages');
+  box.innerHTML = '<div class="empty">Scanning frequency...</div>';
+
+  unsubMsg = db.collection('messages')
+    .where('channel', '==', currentChannelId)
+    .orderBy('createdAt', 'asc')
+    .limitToLast(120)
+    .onSnapshot(snap => {
+      latestChannelDocs = [];
+      if(snap.empty){
+        box.innerHTML = '<div class="empty">No communications registered in this sector.</div>';
+        return;
+      }
+      if(box.querySelector('.empty')) box.innerHTML = '';
+
+      snap.docChanges().forEach(change => {
+        const doc = change.doc;
+        const data = doc.data();
+        if(change.type === 'added'){
+          renderSingleMessage(doc.id, data, true);
+          if(data.user !== currentUser.username) playTactileSound('receive');
+        } else if(change.type === 'modified'){
+          updateMessageElement(doc.id, data);
+        } else if(change.type === 'removed'){
+          const el = document.getElementById(`msg-${doc.id}`);
+          if(el) el.remove();
+        }
+      });
+
+      snap.forEach(d => latestChannelDocs.push({ id: d.id, ...d.data() }));
+      box.scrollTop = box.scrollHeight;
+    });
+}
+
+function renderSingleMessage(id, data, isNewEntry = false){
+  const box = document.getElementById('messages');
+  if(document.getElementById(`msg-${id}`)) return;
+  
+  const isMe = currentUser && (data.user === currentUser.username);
+  const row = document.createElement('div');
+  row.className = `msg-row ${isMe ? 'me' : ''} ${isNewEntry ? 'msg-new-entry' : ''}`;
+  row.id = `msg-${id}`;
+
+  const uData = allUsersMap[data.user] || {};
+  const avatar = uData.avatarUrl || DEFAULT_AVATAR;
+  const timeStr = new Date(getTimestampMs(data)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  let quoteHtml = '';
+  if (data.replyTo) {
+    quoteHtml = `<div class="quote-preview"><strong>${escapeHtml(data.replyTo.user)}:</strong> ${escapeHtml(data.replyTo.txt.slice(0, 45))}</div>`;
+  }
+
+  let bodyContent = '';
+  if (data.type === 'voice') {
+    bodyContent = `
+      <div class="voice-msg-player">
+        <button type="button" class="voice-play-btn" onclick="playVoiceData('${data.audio}')">▶</button>
+        <span style="font-size:12px;opacity:.85;">Voice Dispatch</span>
+      </div>`;
+  } else {
+    bodyContent = `<div class="txt">${formatMessageText(data.text || '')}</div>`;
+  }
+
+  const deleteBtn = (isMe || currentUser.isAdmin) ? `<button class="delete-msg-btn" onclick="deleteMessage('${id}')" title="Erase Record">×</button>` : '';
+
+  row.innerHTML = `
+    <img class="msg-avatar" src="${escapeHtml(avatar)}" alt="">
+    <div class="bubble">
+      <div class="bubble-header">
+        <span class="name">${escapeHtml(uData.displayName || data.user)}</span>
+        ${data.isBurner ? '<span class="burner-badge">🔥 BURNER</span>' : ''}
+        ${deleteBtn}
+      </div>
+      ${quoteHtml}
+      ${bodyContent}
+      <div class="reactions-container" id="reactions-${id}"></div>
+      <div class="time">${timeStr}</div>
+      <div class="react-picker" id="picker-${id}">
+        <span onclick="addReaction('${id}', '👍')">👍</span>
+        <span onclick="addReaction('${id}', '🔥')">🔥</span>
+        <span onclick="addReaction('${id}', '⚡')">⚡</span>
+        <span onclick="addReaction('${id}', '🎯')">🎯</span>
+      </div>
+    </div>
+    <div class="msg-actions">
+      <button class="react-btn-trigger" onclick="toggleReactionPicker('${id}')">☺</button>
+      <button class="react-btn-trigger" onclick="setReplyTarget('${id}', '${escapeHtml(uData.displayName || data.user)}', '${escapeHtml(data.text || 'Voice Dispatch')}')">↩</button>
+    </div>
+  `;
+
+  box.appendChild(row);
+  renderReactions(id, data.reactions || {});
+  
+  if (data.isBurner && !isMe) {
+    setTimeout(() => { deleteMessage(id); }, 15000);
+  }
+}
+
+function updateMessageElement(id, data) {
+  renderReactions(id, data.reactions || {});
+}
+
+function formatMessageText(text) {
+  let s = escapeHtml(text);
+  if (s.startsWith('```') && s.endsWith('```')) {
+    return `<pre class="code-block">${s.slice(3, -3)}</pre>`;
+  }
+  return s;
+}
+
+function toggleReactionPicker(id) {
+  const picker = document.getElementById(`picker-${id}`);
+  if(picker) picker.classList.toggle('open');
+}
+
+async function addReaction(msgId, emoji) {
+  toggleReactionPicker(msgId);
+  try {
+    const ref = db.collection('messages').doc(msgId);
+    await db.runTransaction(async tx => {
+      const snap = await tx.get(ref);
+      if(!snap.exists) return;
+      const reactions = snap.data().reactions || {};
+      const users = reactions[emoji] || [];
+      const userIndex = users.indexOf(currentUser.username);
+      if(userIndex > -1) {
+        users.splice(userIndex, 1);
+        if(users.length === 0) delete reactions[emoji];
+        else reactions[emoji] = users;
+      } else {
+        users.push(currentUser.username);
+        reactions[emoji] = users;
+      }
+      tx.update(ref, { reactions });
+    });
+  } catch(e) {}
+}
+
+function renderReactions(msgId, reactions) {
+  const container = document.getElementById(`reactions-${msgId}`);
+  if(!container) return;
+  container.innerHTML = '';
+  for(const [emoji, users] of Object.entries(reactions)) {
+    if(!users || users.length === 0) continue;
+    const pill = document.createElement('div');
+    pill.className = `reaction-pill ${users.includes(currentUser.username) ? 'user-reacted' : ''}`;
+    pill.innerHTML = `<span>${emoji}</span> <span>${users.length}</span>`;
+    pill.onclick = () => addReaction(msgId, emoji);
+    container.appendChild(pill);
+  }
+}
+
+function setReplyTarget(msgId, user, txt) {
+  activeReplyTarget = { id: msgId, user, txt };
+  document.getElementById('replyBannerText').textContent = `Replying to @${user}: "${txt.slice(0, 30)}..."`;
+  document.getElementById('replyBanner').style.display = 'flex';
+  document.getElementById('msgInput').focus();
+}
+
+document.getElementById('replyCancelBtn').addEventListener('click', () => {
+  activeReplyTarget = null;
+  document.getElementById('replyBanner').style.display = 'none';
+});
+
+async function deleteMessage(id){
+  try { await db.collection('messages').doc(id).delete(); } catch(e){}
+}
+
+/* ---------- Dispatch Messages ---------- */
+document.getElementById('sendForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const input = document.getElementById('msgInput');
+  const text = input.value.trim();
+  if(!text || !currentUser) return;
+  input.value = '';
+
+  const payload = {
+    channel: currentChannelId,
+    user: currentUser.username,
+    text: text,
+    createdAt: Date.now(),
+    serverTime: FieldValue.serverTimestamp(),
+    isBurner: isBurnerEnabled,
+    reactions: {}
+  };
+
+  if (activeReplyTarget) {
+    payload.replyTo = activeReplyTarget;
+    activeReplyTarget = null;
+    document.getElementById('replyBanner').style.display = 'none';
+  }
+
+  playTactileSound('send');
+  try {
+    await db.collection('messages').add(payload);
+  } catch(e) {
+    showToast('Failed to transmit message.');
+  }
+});
+
+/* ---------- Burner Toggle ---------- */
+document.getElementById('burnerToggleBtn').addEventListener('click', () => {
+  isBurnerEnabled = !isBurnerEnabled;
+  const btn = document.getElementById('burnerToggleBtn');
+  btn.classList.toggle('active', isBurnerEnabled);
+  btn.innerHTML = `<span>🔥 Burner Message: ${isBurnerEnabled ? 'ON' : 'OFF'}</span>`;
+});
+
+/* ---------- Voice Notes Engine ---------- */
+let mediaRecorder = null;
+let audioChunks = [];
+const recordVoiceBtn = document.getElementById('recordVoiceBtn');
+
+recordVoiceBtn.addEventListener('click', async () => {
+  if (mediaRecorder && mediaRecorder.state === "recording") {
+    mediaRecorder.stop();
+    recordVoiceBtn.classList.remove('recording');
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+    mediaRecorder.onstop = async () => {
+      const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+      const reader = new FileReader();
+      reader.readAsDataURL(audioBlob);
+      reader.onloadend = async () => {
+        const base64Audio = reader.result;
+        if(base64Audio.length > 400000) return showToast('Audio payload too large.');
+        await db.collection('messages').add({
+          channel: currentChannelId,
+          user: currentUser.username,
+          type: 'voice',
+          audio: base64Audio,
+          createdAt: Date.now(),
+          serverTime: FieldValue.serverTimestamp(),
+          isBurner: isBurnerEnabled
+        });
+        playTactileSound('send');
+      };
+      stream.getTracks().forEach(track => track.stop());
+    };
+    mediaRecorder.start();
+    recordVoiceBtn.classList.add('recording');
+    setTimeout(() => { if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop(); }, 45000);
+  } catch(err) {
+    showToast('Mic access denied or unavailable.');
+  }
+});
+
+function playVoiceData(base64) {
+  const snd = new Audio(base64);
+  snd.play();
+}
+
+/* ---------- Workspace Directory ---------- */
+function listenUsers(){
+  if(unsubUsers) unsubUsers();
+  unsubUsers = db.collection('users').onSnapshot(snap => {
+    const list = document.getElementById('memberList');
+    if (!list) return;
+    list.innerHTML = '';
+    allUsersMap = {};
+    snap.forEach(d => {
+      const u = d.data();
+      const uname = d.id;
+      allUsersMap[uname] = u;
+
+      const row = document.createElement('div');
+      row.className = 'member';
+      const roleBadgeClass = u.role || (u.isAdmin ? 'admin' : 'guest');
+      const isOnline = u.isOnline && (Date.now() - (u.lastSeen || 0) < 180000);
+
+      row.innerHTML = `
+        <img src="${escapeHtml(u.avatarUrl || DEFAULT_AVATAR)}" alt="">
+        <div class="info-wrap">
+          <div class="user-title">
+            <span>${escapeHtml(u.displayName || uname)}</span>
+            <span class="role-badge ${roleBadgeClass}">${roleBadgeClass.toUpperCase()}</span>
+          </div>
+          <div class="status-txt">
+            <span class="status-pulse ${isOnline ? 'status-online' : 'status-offline'}"></span>
+            <span>${isOnline ? 'Active' : 'Offline'}</span>
+          </div>
+        </div>
+      `;
+      list.appendChild(row);
+    });
+  });
+}
+
+/* ---------- Ops Kanban ---------- */
+function listenTasks(){
+  if(unsubTasks) unsubTasks();
+  unsubTasks = db.collection('tasks').orderBy('createdAt','desc').limit(25).onSnapshot(snap=>{
+    const box = document.getElementById('taskList');
+    if(!box) return;
+    box.innerHTML = '';
+    snap.forEach(d=>{
+      const t = d.data();
+      const div = document.createElement('div');
+      div.className = 'task-item';
+      div.innerHTML = `<span>${escapeHtml(t.text)}</span> <button class="action-btn-small danger" onclick="deleteTask('${d.id}')">✕</button>`;
+      box.appendChild(div);
+    });
+  });
+}
+
+document.getElementById('addTaskBtn').addEventListener('click', async()=>{
+  const input = document.getElementById('taskInput');
+  const txt = input.value.trim();
+  if(!txt) return;
+  input.value = '';
+  await db.collection('tasks').add({ text: txt, author: currentUser.username, createdAt: Date.now() });
+});
+async function deleteTask(id){ await db.collection('tasks').doc(id).delete(); }
+
+/* ---------- Scratchpad Sync ---------- */
+function listenScratchpad(){
+  if(unsubScratchpad) unsubScratchpad();
+  unsubScratchpad = db.collection('meta').doc('scratchpad').onSnapshot(doc => {
+    if(doc.exists && document.activeElement !== document.getElementById('liveScratchpadText')) {
+      document.getElementById('liveScratchpadText').value = doc.data().content || '';
+    }
+  });
+}
+
+document.getElementById('saveScratchpadBtn').addEventListener('click', async () => {
+  const content = document.getElementById('liveScratchpadText').value;
+  await db.collection('meta').doc('scratchpad').set({ content, updatedBy: currentUser.username, updatedAt: Date.now() }, { merge: true });
+  showToast('Operational scratchpad synchronized.');
+});
+
+/* ---------- File Vault ---------- */
+function listenVault(){
+  if(unsubVault) unsubVault();
+  unsubVault = db.collection('vault').orderBy('createdAt','desc').limit(15).onSnapshot(snap=>{
+    const list = document.getElementById('vaultList');
+    if(!list) return;
+    list.innerHTML = '';
+    const now = Date.now();
+    snap.forEach(doc=>{
+      const f = doc.data();
+      if(f.expiresAt && now > f.expiresAt) {
+        db.collection('vault').doc(doc.id).delete();
+        return;
+      }
+      const item = document.createElement('div');
+      item.style.cssText = "display:flex;align-items:center;justify-content:space-between;background:var(--card);padding:4px 6px;border-radius:4px;font-size:11px;border:1px solid var(--border);";
+      item.innerHTML = `
+        <a href="${f.dataUrl}" download="${escapeHtml(f.name)}" style="color:var(--ink);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:180px;">📂 ${escapeHtml(f.name)}</a>
+        <button class="action-btn-small danger" onclick="deleteVaultFile('${doc.id}')">✕</button>
+      `;
+      list.appendChild(item);
+    });
+  });
+}
+
+document.getElementById('vaultFileInput').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 650000) return showToast('Exceeds 650KB limit.');
+  const isExpiring = document.getElementById('vaultExpiringCheck').checked;
+
+  const reader = new FileReader();
+  reader.onload = async () => {
+    await db.collection('vault').add({
+      name: file.name,
+      dataUrl: reader.result,
+      uploader: currentUser.username,
+      createdAt: Date.now(),
+      expiresAt: isExpiring ? Date.now() + 600000 : null
+    });
+    showToast('File stored in enclave vault.');
+  };
+  reader.readAsDataURL(file);
+});
+async function deleteVaultFile(id){ await db.collection('vault').doc(id).delete(); }
+
+/* ---------- Profile Updates ---------- */
+document.getElementById('saveProfileBtn').addEventListener('click', async () => {
+  const newName = document.getElementById('displayNameInput').value.trim();
+  if(!newName) return;
+  await db.collection('users').doc(currentUser.username).update({ displayName: newName });
+  currentUser.displayName = newName;
+  showToast('Profile updated.');
+});
+
+document.getElementById('avatarFileInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 250000) return showToast('Avatar image too large (max 250KB).');
+  const reader = new FileReader();
+  reader.onload = async () => {
+    await db.collection('users').doc(currentUser.username).update({ avatarUrl: reader.result });
+    currentUser.avatarUrl = reader.result;
+    document.getElementById('myAvatarImg').src = reader.result;
+    showToast('Avatar updated.');
+  };
+  reader.readAsDataURL(file);
+});
+
+/* ---------- Core Invite Code Update ---------- */
+document.getElementById('saveInviteCodeBtn').addEventListener('click', async () => {
+  const code = document.getElementById('coreInviteInput').value.trim();
+  if(!code) return;
+  await db.collection('meta').doc('team').set({ inviteCode: code }, { merge: true });
+  showToast('Enclave invite code updated.');
+});
+
+/* ---------- Sidebar Toggle ---------- */
+const aside = document.getElementById('teamAside');
+const asideBackdrop = document.getElementById('asideBackdrop');
+const channelBar = document.getElementById('channelBar');
+
+document.getElementById('teamToggle').addEventListener('click', () => {
+  aside.classList.add('open');
+  asideBackdrop.classList.add('show');
+});
+document.getElementById('asideClose').addEventListener('click', closeSidebar);
+asideBackdrop.addEventListener('click', closeSidebar);
+
+function closeSidebar() {
+  aside.classList.remove('open');
+  asideBackdrop.classList.remove('show');
+}
+
+document.getElementById('channelBarToggle').addEventListener('click', () => {
+  channelBar.classList.toggle('collapsed');
+});
+
+/* ---------- Panic & Logout ---------- */
+document.getElementById('panicBtn').addEventListener('click', async () => {
+  if(!confirm(`PURGE RECORD: Erase all communications in #${currentChannelId.toUpperCase()}?`)) return;
+  const snap = await db.collection('messages').where('channel', '==', currentChannelId).get();
+  const batch = db.batch();
+  snap.forEach(d => batch.delete(d.ref));
+  await batch.commit();
+  showToast('Channel feed purged.');
+});
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  await setLivePresence(false);
+  localStorage.removeItem('topv_user');
+  location.reload();
+});
+
+/* ---------- Command Palette (Ctrl+K) ---------- */
+const cmdPaletteModal = document.getElementById('cmdPaletteModal');
+const cmdPaletteInput = document.getElementById('cmdPaletteInput');
+const cmdPaletteResults = document.getElementById('cmdPaletteResults');
+
+const COMMANDS = [
+  { name: 'Switch to #GENERAL', action: () => switchChannel('general') },
+  { name: 'Switch to #TEAM-CORE', action: () => switchChannel('team-core') },
+  { name: 'Toggle Dark / Light Mode', action: () => themeToggleBtn.click() },
+  { name: 'Purge Current Room (Admin)', action: () => document.getElementById('panicBtn').click() },
+  { name: 'Disconnect Session', action: () => document.getElementById('logoutBtn').click() }
+];
+
+document.getElementById('openCmdPaletteBtn').addEventListener('click', openCmdPalette);
+window.addEventListener('keydown', (e) => {
+  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    openCmdPalette();
+  }
+  if(e.key === 'Escape' && cmdPaletteModal.classList.contains('show')) {
+    closeCmdPalette();
+  }
+});
+
+function openCmdPalette() {
+  cmdPaletteModal.classList.add('show');
+  cmdPaletteInput.value = '';
+  cmdPaletteInput.focus();
+  renderCmdResults('');
+}
+
+function closeCmdPalette() {
+  cmdPaletteModal.classList.remove('show');
+}
+
+cmdPaletteModal.addEventListener('click', (e) => {
+  if(e.target === cmdPaletteModal) closeCmdPalette();
+});
+
+cmdPaletteInput.addEventListener('input', (e) => {
+  renderCmdResults(e.target.value.toLowerCase().trim());
+});
+
+function renderCmdResults(q) {
+  cmdPaletteResults.innerHTML = '';
+  const filtered = COMMANDS.filter(c => c.name.toLowerCase().includes(q));
+  if(filtered.length === 0) {
+    cmdPaletteResults.innerHTML = '<div style="padding:12px 18px;font-size:13px;color:var(--sub);">No matching executive directives.</div>';
+    return;
+  }
+  filtered.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'cmd-item';
+    el.innerHTML = `<span>${c.name}</span> <span style="font-size:10px;opacity:.6;">RUN</span>`;
+    el.onclick = () => {
+      closeCmdPalette();
+      c.action();
+    };
+    cmdPaletteResults.appendChild(el);
+  });
+}
+</script>
+</body>
+</html>
