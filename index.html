@@ -299,10 +299,9 @@
         <div class="field"><label>Email Address</label><input id="regEmail" type="email"></div>
         <div class="field"><label>Phone Number</label><input id="regPhone" type="tel"></div>
         <div class="field"><label>Choose a password</label><input id="regPass" type="password" autocomplete="new-password"></div>
-        <!-- كود الدعوة للفريق الأساسي -->
         <div class="field">
           <label>Invite Code <span style="font-size:10px;text-transform:none;opacity:.7;">(Optional for Core Team)</span></label>
-          <input id="regInviteCode" placeholder="Leave empty if you're a guest">
+          <input id="regInviteCode" placeholder="Leave blank if guest">
         </div>
         <button class="btn btn-primary full" id="regBtn">Create Account</button>
         <p style="font-size:12px;margin-top:10px;color:var(--sub);">Without a valid invite code, you will join as a guest with public channel access only.</p>
@@ -342,7 +341,6 @@
         </div>
       </div>
 
-      <!-- إعدادات كود الدعوة للمالك فقط -->
       <div class="panel-box" id="inviteCodePanelBox" style="display:none;">
         <div class="panel-toggle-head" onclick="toggleAccordion('invitePanel', this)"><span>Core Invite Code</span><span class="panel-icon-indicator">+</span></div>
         <div class="panel-body" id="invitePanel">
@@ -431,7 +429,7 @@ function toggleAccordion(panelId, headElem) {
   ind.textContent = isOpen ? '+' : '−';
 }
 
-/* ---------- Original Tactile Audio Engine ---------- */
+/* ---------- Audio Engine (Original Tactile) ---------- */
 let audioCtx = null;
 function getAudioContext() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -511,6 +509,7 @@ let currentUser = null;
 let unsubMsg = null, unsubUsers = null, unsubTasks = null, unsubVault = null, unsubChannels = null;
 let allUsersMap = {};
 let currentChannelId = 'general';
+let channelMetaMap = {};
 let isBurnerEnabled = false;
 let burnerTimer = null;
 let latestChannelDocs = [];
@@ -526,7 +525,7 @@ function getTimestampMs(data) {
   if (data.serverTime && typeof data.serverTime.toMillis === 'function') {
     return data.serverTime.toMillis();
   }
-  return typeof data.createdAt === 'number' ? data.createdAt : 0;
+  return typeof data.createdAt === 'number' ? data.createdAt : Date.now();
 }
 
 async function hashPassword(pw){
@@ -573,7 +572,7 @@ document.getElementById('backToLoginLink').addEventListener('click', () => {
   }
 })();
 
-/* ---------- Registration: Core Invite Code & Guest Role ---------- */
+/* ---------- Registration: Core Invite Code & Race-Condition Safe ---------- */
 document.getElementById('regBtn').addEventListener('click', async () => {
   setErr('');
   const username = sanitize(document.getElementById('regUser').value);
@@ -598,10 +597,9 @@ document.getElementById('regBtn').addEventListener('click', async () => {
       const coreCount = metaData.count || 0;
       const actualInviteCode = metaData.inviteCode || 'TOPV-CORE';
 
-      const isFirstUser = coreCount === 0;
+      const isFirstUser = (coreCount === 0 && !metaSnap.exists);
       const isCodeValid = (inviteCodeEntered === actualInviteCode);
 
-      // أول مستخدم دائماً هو المالك وأول فرد في الـ Core
       let isOwner = false, isCore = false, isAdmin = false;
 
       if (isFirstUser) {
@@ -613,7 +611,6 @@ document.getElementById('regBtn').addEventListener('click', async () => {
         isCore = true;
         isAdmin = false;
       } else {
-        // ضيف عادي (Guest) بدون صلاحيات الكور
         isCore = false;
         isAdmin = false;
       }
@@ -626,7 +623,6 @@ document.getElementById('regBtn').addEventListener('click', async () => {
         lastSeen: Date.now(), createdAt: Date.now()
       });
 
-      // نزيد عداد الفريق فقط إذا كان عضواً أساسياً
       if (isCore) {
         tx.set(metaRef, { count: FieldValue.increment(1), inviteCode: actualInviteCode }, { merge: true });
       }
@@ -716,12 +712,10 @@ async function enterChat(){
     document.getElementById('addChannelBtn').style.display = 'none';
   }
 
-  // عزل أدوات الفريق الأساسي عن الضيوف
-  const isCoreOrAdmin = currentUser.isCore || currentUser.isAdmin || currentUser.isOwner;
+  const isCoreOrAdmin = (currentUser.isCore || currentUser.isAdmin || currentUser.isOwner);
   document.getElementById('vaultPanelBox').style.display = isCoreOrAdmin ? 'block' : 'none';
   document.getElementById('taskPanelBox').style.display = isCoreOrAdmin ? 'block' : 'none';
   
-  // لوحة إدارة كود الدعوة للمالك فقط
   if (currentUser.isOwner) {
     document.getElementById('inviteCodePanelBox').style.display = 'block';
     try {
@@ -761,7 +755,6 @@ async function enterChat(){
   }, 4000);
 }
 
-/* ---------- Save Invite Code (Owner Only) ---------- */
 document.getElementById('saveInviteCodeBtn').addEventListener('click', async () => {
   if (!currentUser || !currentUser.isOwner) return;
   const newCode = document.getElementById('coreInviteInput').value.trim();
@@ -772,12 +765,11 @@ document.getElementById('saveInviteCodeBtn').addEventListener('click', async () 
   } catch(e) { alert('Failed to update code.'); }
 });
 
-/* ---------- Collection Reference Helpers ---------- */
 function getChannelMessagesRef(chId) {
   return db.collection('messages_' + chId);
 }
 
-/* ---------- Dynamic Channels & Privacy Isolation ---------- */
+/* ---------- Channels & Permissions Validation ---------- */
 function subscribeChannels(){
   if(unsubChannels) unsubChannels();
   unsubChannels = db.collection('channels').orderBy('createdAt', 'asc').onSnapshot(async snap => {
@@ -795,21 +787,17 @@ function subscribeChannels(){
       return;
     }
 
+    channelMetaMap = {};
     const container = document.getElementById('channelButtonsList');
     container.innerHTML = '';
-    let activeChannelExists = false;
     const isUserCore = (currentUser.isCore || currentUser.isAdmin || currentUser.isOwner);
 
     snap.docs.forEach(doc => {
       const ch = doc.data();
       const chId = doc.id;
+      channelMetaMap[chId] = ch;
 
-      // إخفاء قنوات التيم الخاصة عن الضيوف تماماً
-      if (ch.coreOnly && !isUserCore) {
-        return;
-      }
-
-      if (chId === currentChannelId) activeChannelExists = true;
+      if (ch.coreOnly && !isUserCore) return;
 
       const btn = document.createElement('div');
       btn.className = `ch-btn ${chId === currentChannelId ? 'active' : ''} ${ch.coreOnly ? 'locked' : ''}`;
@@ -831,8 +819,8 @@ function subscribeChannels(){
       container.appendChild(btn);
     });
 
-    if(!activeChannelExists){
-      // الضيف يرجع تلقائياً لـ general
+    const currentMeta = channelMetaMap[currentChannelId];
+    if (!currentMeta || (currentMeta.coreOnly && !isUserCore)) {
       currentChannelId = 'general';
       document.getElementById('channelNameDisplay').textContent = '#GENERAL';
     }
@@ -1068,9 +1056,7 @@ window.demoteAdmin = async function(username) {
 
 async function deleteMember(username){
   const target = allUsersMap[username];
-  if (target && target.isOwner) {
-    return alert("Protected account: The Founder cannot be removed.");
-  }
+  if (target && target.isOwner) return alert("Protected account: The Founder cannot be removed.");
   if (!confirm('Kick ' + username + ' from the workspace?')) return;
   try {
     await db.runTransaction(async (tx) => {
@@ -1084,7 +1070,6 @@ async function deleteMember(username){
       const wasCore = userSnap.data().isCore === true;
       tx.delete(userRef);
       
-      // تقليص عداد الـ Core فقط إذا كان المحذوف من الـ Core
       if (wasCore) {
         const count = metaSnap.exists ? (metaSnap.data().count || 0) : 1;
         tx.set(metaRef, { count: Math.max(0, count - 1) }, { merge: true });
@@ -1094,12 +1079,20 @@ async function deleteMember(username){
   } catch(e){ showToast("Kick action rejected."); }
 }
 
-/* ---------- Communication Stream (Strict Sequential Alignment) ---------- */
+/* ---------- Communication Stream (Security Gated & Sequenced) ---------- */
 function subscribeMessages(){
   if(unsubMsg) unsubMsg();
   let isInitialLoad = true;
   renderedDocIds.clear();
   
+  // فحص أمني لمنع الضيف من الاستماع لقنوات الكور
+  const isUserCore = (currentUser.isCore || currentUser.isAdmin || currentUser.isOwner);
+  const currentMeta = channelMetaMap[currentChannelId];
+  if (currentMeta && currentMeta.coreOnly && !isUserCore) {
+    currentChannelId = 'general';
+    document.getElementById('channelNameDisplay').textContent = '#GENERAL';
+  }
+
   const q = getChannelMessagesRef(currentChannelId)
               .orderBy('createdAt', 'asc')
               .limitToLast(120);
@@ -1300,6 +1293,13 @@ document.getElementById('sendForm').addEventListener('submit', async (e) => {
   const input = document.getElementById('msgInput');
   const text = input.value.trim();
   if(!text) return;
+
+  const isUserCore = (currentUser.isCore || currentUser.isAdmin || currentUser.isOwner);
+  const currentMeta = channelMetaMap[currentChannelId];
+  if (currentMeta && currentMeta.coreOnly && !isUserCore) {
+    return showToast("Restricted: Public transmission denied in Core sector.");
+  }
+
   input.value = '';
   playTactileSound('send');
   try {
