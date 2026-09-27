@@ -3,50 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TOP V — Elite Operations</title>
+<title>TOP V</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@600;700&display=swap">
 <style>
   :root {
-    --crimson: #9e182c; 
-    --crimson-dark: #6e101e; 
-    --gold: #c59b46;
-    --gold-glow: rgba(197, 155, 70, 0.25);
-    --bg: #f8f6f0; 
+    --crimson: #A51C30; 
+    --crimson-dark: #7a1524; 
+    --gold: #C9A85C;
+    --gold-glow: rgba(201, 168, 92, 0.3);
+    --bg: #f6f2ea; 
     --card: #ffffff; 
-    --ink: #191614; 
-    --sub: #6b645c;
-    --border: #e0d8ca; 
-    --danger: #b91c1c;
-    --bubble-me: #9e182c;
-    --bubble-other: #eae4d8;
-    --header-bg: #801323;
+    --ink: #1f1a17; 
+    --sub: #6b615a;
+    --border: #e3dccf; 
+    --danger: #a51c30;
+    --bubble-me: #A51C30;
+    --bubble-other: #eae3d5;
+    --header-bg: #A51C30;
     --header-text: #ffffff;
-    --chat-input-bg: rgba(255, 255, 255, 0.95);
-    --code-bg: #14161d;
-    --code-text: #e2e8f0;
-    --sidebar-w: 290px;
-    --channel-w: 64px;
+    --sidebar-bg: #fcfbf9;
+    --panel-box-bg: #f3efe6;
   }
 
   [data-theme="dark"] {
-    --crimson: #b91c1c;
-    --crimson-dark: #7f1d1d;
-    --gold: #dfb564;
-    --gold-glow: rgba(223, 181, 100, 0.2);
-    --bg: #0b0d12; 
-    --card: #131720; 
-    --ink: #f1f3f7; 
-    --sub: #94a3b8;
-    --border: #202736; 
-    --danger: #ef4444;
-    --bubble-me: #9e182c;
-    --bubble-other: #1b212d;
-    --header-bg: #0f1218;
-    --header-text: #f1f3f7;
-    --chat-input-bg: rgba(19, 23, 32, 0.95);
-    --code-bg: #080a0f;
-    --code-text: #f8fafc;
+    --crimson: #c6233d;
+    --crimson-dark: #8c1426;
+    --gold: #e5c378;
+    --gold-glow: rgba(229, 195, 120, 0.25);
+    --bg: #0d0f12; 
+    --card: #15181f; 
+    --ink: #f0ede6; 
+    --sub: #9ca3af;
+    --border: #232834; 
+    --danger: #ff4d6d;
+    --bubble-me: #A51C30;
+    --bubble-other: #1c212b;
+    --header-bg: #12151b;
+    --header-text: #f0ede6;
+    --sidebar-bg: #12151c;
+    --panel-box-bg: #1a1e28;
   }
 
   * { box-sizing: border-box; outline: none; margin: 0; padding: 0; }
@@ -73,27 +69,22 @@
     justify-content: center;
     color: #fff;
     cursor: pointer;
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s ease;
+    transition: opacity 0.5s ease;
   }
-  .splash-content { text-align: center; animation: splashAnim 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-  .splash-sub { font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; font-family:'JetBrains Mono',monospace; }
+  .splash-content { text-align: center; }
+  .splash-sub { font-size: 13px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
   .splash-title { font-family: 'Cinzel', serif; font-size: 34px; letter-spacing: 3px; font-weight: 700; margin-bottom: 24px; }
-  .splash-title span { color: var(--crimson); text-shadow: 0 0 30px rgba(158, 24, 44, 0.7); }
-  .car-brands { display: flex; gap: 26px; align-items: center; justify-content: center; padding-top: 18px; border-top: 1px solid rgba(197, 155, 70, 0.25); }
-  .brand-icon { width: 32px; height: 32px; fill: #cbd5e1; opacity: 0.8; transition: 0.2s; }
-  .brand-icon:hover { opacity: 1; fill: var(--gold); transform: translateY(-2px); }
-
-  @keyframes splashAnim {
-    from { opacity: 0; transform: scale(0.96); }
-    to { opacity: 1; transform: scale(1); }
-  }
+  .splash-title span { color: #A51C30; text-shadow: 0 0 25px rgba(165, 28, 48, 0.6); }
+  .car-brands { display: flex; gap: 26px; align-items: center; justify-content: center; padding-top: 18px; border-top: 1px solid rgba(201, 168, 92, 0.25); }
+  .brand-icon { width: 32px; height: 32px; fill: #cbd5e1; opacity: 0.85; transition: 0.2s; }
+  .brand-icon:hover { opacity: 1; fill: var(--gold); }
 
   /* HEADER */
   header {
     background: var(--header-bg);
     color: var(--header-text);
     height: 52px;
-    padding: 0 16px;
+    padding: 0 18px;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
@@ -104,38 +95,38 @@
   }
   .header-left { display: flex; align-items: center; gap: 8px; }
   .header-center { display: flex; align-items: center; justify-content: center; gap: 10px; cursor: default; }
-  .header-right { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+  .header-right { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
   
-  .crest { width: 30px; height: 30px; flex-shrink: 0; }
-  header h1 { font-family: 'Cinzel', serif; font-size: 20px; letter-spacing: 2px; color: #fff; margin: 0; line-height: 1; }
-  header .tag { font-size: 9px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; text-align: center; }
+  .crest { width: 32px; height: 32px; flex-shrink: 0; }
+  header h1 { font-family: 'Cinzel', 'Playfair Display', serif; font-size: 22px; letter-spacing: 2px; color: #fff; line-height: 1; }
+  header .tag { font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; text-align: center; }
 
   .btn {
     cursor: pointer;
     border: 1px solid transparent;
     border-radius: 6px;
-    padding: 5px 12px;
+    padding: 6px 14px;
     font-family: inherit;
-    font-size: 13.5px;
+    font-size: 14.5px;
     transition: 0.15s;
     display: inline-flex;
     align-items: center;
     gap: 6px;
     white-space: nowrap;
   }
-  .btn-outline { background: transparent; border-color: rgba(255,255,255,0.4); color: #fff; }
+  .btn-outline { background: transparent; border-color: rgba(255,255,255,0.45); color: #fff; }
   .btn-outline:hover { background: rgba(255,255,255,0.15); border-color: #fff; }
   .btn-primary { background: var(--crimson); color: #fff; }
   .btn-primary:hover { background: var(--crimson-dark); }
-  .btn-danger { background: #881337; color: #fff; border-color: #4c0519; }
-  .btn-danger:hover { background: #9f1239; }
+  .btn-danger { background: #8b0000; color: #fff; border-color: #550000; }
+  .btn-danger:hover { background: #a51c30; }
 
-  .icon-btn {
+  .theme-toggle-btn {
     background: transparent;
-    border: 1px solid rgba(255,255,255,0.35);
+    border: 1px solid rgba(255,255,255,0.4);
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -144,8 +135,8 @@
     transition: 0.15s;
     padding: 0;
   }
-  .icon-btn:hover { background: rgba(255,255,255,0.15); border-color: var(--gold); }
-  .icon-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .theme-toggle-btn:hover { background: rgba(255,255,255,0.15); border-color: var(--gold); }
+  .theme-toggle-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
   main { flex: 1; display: flex; overflow: hidden; min-height: 0; position: relative; }
   
@@ -155,109 +146,123 @@
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 12px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.1);
     max-width: 380px;
     width: 100%;
-    padding: 26px 22px;
+    padding: 28px 24px;
     text-align: center;
-    transition: 0.2s ease;
   }
-  .card h2 { font-family: 'Cinzel', serif; font-size: 22px; margin: 4px 0; letter-spacing: 1px; }
-  .card p.sub { color: var(--sub); font-size: 13.5px; margin-bottom: 16px; }
-  .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
-  .tab { flex: 1; padding: 8px; cursor: pointer; color: var(--sub); border-bottom: 2px solid transparent; font-size: 14px; }
+  .card h2 { font-family: 'Cinzel', serif; font-size: 24px; margin: 4px 0; }
+  .card p.sub { color: var(--sub); font-size: 14px; margin-bottom: 18px; }
+  .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 18px; }
+  .tab { flex: 1; padding: 8px; cursor: pointer; color: var(--sub); border-bottom: 2px solid transparent; font-size: 15px; }
   .tab.active { color: var(--crimson); border-color: var(--crimson); font-weight: 600; }
   
-  .field { margin-bottom: 10px; text-align: left; }
-  .field label { display: block; font-size: 10.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--sub); margin-bottom: 3px; font-family:'JetBrains Mono',monospace; }
+  .field { margin-bottom: 12px; text-align: left; }
+  .field label { display: block; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--sub); margin-bottom: 4px; }
   .field input {
     width: 100%;
-    padding: 8px 10px;
+    padding: 9px 12px;
     border: 1px solid var(--border);
     border-radius: 6px;
     background: var(--bg);
     color: var(--ink);
     font-family: inherit;
-    font-size: 14.5px;
-    transition: border-color 0.15s;
+    font-size: 15px;
   }
   .field input:focus { border-color: var(--crimson); }
   .full { width: 100%; margin-top: 6px; justify-content: center; }
-  .msg-err { color: var(--danger); font-size: 12.5px; margin-top: 8px; min-height: 16px; }
-  .forgot-link { display: inline-block; margin-top: 10px; font-size: 12px; color: var(--crimson); text-decoration: none; cursor: pointer; }
+  .msg-err { color: var(--danger); font-size: 13px; margin-top: 8px; min-height: 16px; }
+  .forgot-link { display: inline-block; margin-top: 12px; font-size: 13px; color: var(--crimson); text-decoration: none; cursor: pointer; }
 
   /* CHAT APPLICATION */
   #chat { display: none; flex: 1; overflow: hidden; width: 100%; }
   #chat.show { display: flex; }
   
-  /* CHANNEL BAR */
+  /* CHANNELS STRIP */
   .channel-bar {
-    width: var(--channel-w);
+    width: 64px;
     background: var(--header-bg);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 12px 0;
-    gap: 12px;
-    border-right: 1px solid rgba(255,255,255,0.08);
+    gap: 10px;
+    border-right: 1px solid rgba(255,255,255,0.1);
     flex-shrink: 0;
-    z-index: 30;
   }
   .ch-btn {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     border-radius: 10px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
     color: #fff;
     cursor: pointer;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 600;
     transition: 0.15s;
   }
   .ch-btn:hover, .ch-btn.active {
     background: var(--gold);
     color: #111;
     border-color: #fff;
-    transform: scale(1.04);
   }
 
   /* OPS SIDEBAR */
   aside {
-    width: var(--sidebar-w);
+    width: 280px;
     flex-shrink: 0;
-    background: var(--card);
+    background: var(--sidebar-bg);
     border-right: 1px solid var(--border);
     padding: 14px;
     overflow-y: auto;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.25s ease;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     z-index: 35;
   }
-  .aside-head { display: flex; align-items: center; justify-content: space-between; }
+  .aside-head { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 4px; }
   #asideClose { display: none; cursor: pointer; font-size: 22px; color: var(--sub); line-height: 1; }
   
+  /* COLLAPSIBLE ACCORDION PANELS */
   .panel-box {
-    background: var(--bg);
+    background: var(--panel-box-bg);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 9px 11px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
+    overflow: hidden;
+    transition: all 0.2s;
   }
-  .panel-box h4 { margin: 0; font-size: 10.5px; text-transform: uppercase; letter-spacing: 1px; color: var(--sub); font-family: 'JetBrains Mono', monospace; }
-  .panel-box input[type="text"], .panel-box select {
-    width: 100%;
-    padding: 5px 8px;
+  .panel-toggle-head {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
     font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .panel-toggle-head:hover { background: rgba(0,0,0,0.03); }
+  .panel-icon-indicator { font-size: 14px; color: var(--gold); font-weight: bold; }
+  .panel-body {
+    padding: 10px 12px;
+    border-top: 1px solid var(--border);
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .panel-body.open { display: flex; }
+
+  .panel-body input[type="text"], .panel-body select {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 14px;
     border-radius: 5px;
     border: 1px solid var(--border);
     background: var(--card);
@@ -265,8 +270,8 @@
     font-family: inherit;
   }
   
-  .profile-avatar-wrap { display: flex; align-items: center; gap: 8px; }
-  .profile-avatar-wrap img { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--gold); object-fit: cover; }
+  .profile-avatar-wrap { display: flex; align-items: center; gap: 10px; }
+  .profile-avatar-wrap img { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--gold); object-fit: cover; }
   
   .status-pulse {
     display: inline-block;
@@ -281,11 +286,11 @@
   .status-stealth { color: #64748b; background: #64748b; }
 
   .action-file-label {
-    font-size: 11px;
+    font-size: 12px;
     cursor: pointer;
     background: var(--card);
     border: 1px solid var(--border);
-    padding: 4px 8px;
+    padding: 5px 9px;
     border-radius: 4px;
     color: var(--ink);
     display: inline-block;
@@ -293,16 +298,16 @@
   }
   .action-file-label:hover { border-color: var(--crimson); }
 
-  .member { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; border-bottom: 1px solid var(--border); }
-  .member img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); }
-  .member .status-txt { font-size: 9.5px; color: var(--sub); font-family: 'JetBrains Mono', monospace; }
-  .member .del { margin-left: auto; color: var(--danger); cursor: pointer; font-size: 11px; opacity: 0.7; }
+  .member { display: flex; align-items: center; gap: 8px; padding: 7px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
+  .member img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); }
+  .member .status-txt { font-size: 11px; color: var(--sub); }
+  .member .del { margin-left: auto; color: var(--danger); cursor: pointer; font-size: 12px; opacity: 0.7; }
   .member .del:hover { opacity: 1; }
 
   .task-item {
-    font-size: 11.5px;
+    font-size: 12.5px;
     background: var(--card);
-    padding: 5px 7px;
+    padding: 5px 8px;
     border-radius: 4px;
     border-left: 3px solid var(--gold);
     display: flex;
@@ -326,8 +331,8 @@
   .channel-header {
     background: var(--card);
     border-bottom: 1px solid var(--border);
-    padding: 7px 16px;
-    font-size: 13.5px;
+    padding: 8px 18px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--gold);
     display: flex;
@@ -339,21 +344,21 @@
   #messages {
     flex: 1;
     overflow-y: auto;
-    padding: 14px 16px;
+    padding: 16px 20px;
     min-height: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
   
   .msg-row { display: flex; gap: 8px; max-width: 78%; align-items: flex-end; }
   .msg-row.me { align-self: flex-end; flex-direction: row-reverse; }
-  .msg-avatar { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--gold); object-fit: cover; flex-shrink: 0; }
+  .msg-avatar { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--gold); object-fit: cover; flex-shrink: 0; }
   
   .bubble {
     background: var(--bubble-other);
     border: 1px solid var(--border);
-    padding: 8px 12px;
+    padding: 8px 13px;
     border-radius: 12px;
     position: relative;
     color: var(--ink);
@@ -362,22 +367,22 @@
   .msg-row.me .bubble { background: var(--bubble-me); color: #fff; border-color: var(--bubble-me); }
   
   .bubble-header { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
-  .bubble .name { font-size: 11.5px; font-weight: 600; letter-spacing: 0.5px; font-family: 'JetBrains Mono', monospace; }
+  .bubble .name { font-size: 12.5px; font-weight: 600; }
   .msg-row.me .bubble .name { color: #fecdd3; }
   
-  .delete-msg-btn { cursor: pointer; font-size: 10px; opacity: 0.6; margin-left: auto; color: inherit; border: none; background: transparent; padding: 0 4px; }
+  .delete-msg-btn { cursor: pointer; font-size: 11px; opacity: 0.6; margin-left: auto; color: inherit; border: none; background: transparent; padding: 0 4px; }
   .delete-msg-btn:hover { opacity: 1; color: var(--gold); }
   
-  .bubble .txt { font-size: 15px; line-height: 1.4; word-wrap: break-word; }
-  .bubble .time { font-size: 9.5px; opacity: 0.65; margin-top: 3px; text-align: right; font-family: 'JetBrains Mono', monospace; }
+  .bubble .txt { font-size: 15.5px; line-height: 1.45; word-wrap: break-word; }
+  .bubble .time { font-size: 10px; opacity: 0.65; margin-top: 3px; text-align: right; }
 
   pre.code-block {
-    background: var(--code-bg);
-    color: var(--code-text);
-    padding: 7px 10px;
+    background: #181b22;
+    color: #e2e8f0;
+    padding: 8px 12px;
     border-radius: 6px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-family: monospace;
+    font-size: 13px;
     overflow-x: auto;
     border: 1px solid rgba(255,255,255,0.08);
     margin: 4px 0;
@@ -386,17 +391,16 @@
   .burner-badge {
     display: inline-flex;
     align-items: center;
-    font-size: 9.5px;
+    font-size: 10px;
     background: rgba(220, 38, 38, 0.2);
     color: #f87171;
     border: 1px solid #f87171;
     border-radius: 3px;
     padding: 0 4px;
-    font-family: 'JetBrains Mono', monospace;
   }
   .msg-row.me .burner-badge { color: #fff; border-color: #fff; }
 
-  .voice-msg-player { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
+  .voice-msg-player { display: flex; align-items: center; gap: 8px; padding: 3px 0; }
   .voice-play-btn {
     background: var(--gold);
     color: #111;
@@ -408,29 +412,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: bold;
   }
 
   /* INPUT BAR */
   .input-bar-container {
-    padding: 8px 14px;
-    background: var(--chat-input-bg);
-    backdrop-filter: blur(8px);
+    padding: 10px 16px;
+    background: var(--card);
     border-top: 1px solid var(--border);
     flex-shrink: 0;
   }
-  .input-controls { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .input-controls { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
   .toggle-btn-small {
-    background: var(--card);
+    background: var(--bg);
     border: 1px solid var(--border);
     color: var(--ink);
     border-radius: 12px;
-    padding: 2px 8px;
-    font-size: 10.5px;
+    padding: 3px 10px;
+    font-size: 11.5px;
     cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
     transition: 0.15s;
+    font-family: inherit;
   }
   .toggle-btn-small.active { background: var(--danger); color: #fff; border-color: var(--danger); }
 
@@ -438,11 +441,10 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: var(--card);
+    background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 24px;
-    padding: 3px 5px 3px 14px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 3px 6px 3px 16px;
   }
   form#sendForm input {
     flex: 1;
@@ -451,13 +453,13 @@
     background: transparent;
     color: var(--ink);
     font-family: inherit;
-    font-size: 14.5px;
-    padding: 6px 0;
+    font-size: 15px;
+    padding: 8px 0;
   }
   .circle-btn {
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     padding: 0;
     display: flex;
     align-items: center;
@@ -472,7 +474,7 @@
   @keyframes recordPulse { from { transform: scale(1); } to { transform: scale(1.1); } }
   .send-submit-btn { background: var(--crimson); color: #fff; }
 
-  .empty { color: var(--sub); text-align: center; margin: auto; font-style: italic; font-size: 15px; }
+  .empty { color: var(--sub); text-align: center; margin: auto; font-style: italic; font-size: 15.5px; }
 
   #toastBox { position: fixed; top: 16px; right: 16px; z-index: 100000; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
   .toast {
@@ -484,12 +486,12 @@
     border-radius: 5px;
     padding: 8px 14px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.18);
-    font-size: 13px;
+    font-size: 13.5px;
     animation: toastIn 0.25s ease forwards;
   }
   @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 
-  #poweredBy { flex-shrink: 0; text-align: center; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--sub); padding: 5px 0; background: var(--card); border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+  #poweredBy { flex-shrink: 0; text-align: center; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--sub); padding: 6px 0; background: var(--card); border-top: 1px solid var(--border); }
   #poweredBy span { color: var(--crimson); font-weight: 700; }
 
   @media (max-width: 768px) {
@@ -498,9 +500,9 @@
     aside {
       position: fixed;
       top: 0;
-      left: var(--channel-w);
+      left: 64px;
       height: 100%;
-      width: calc(100vw - var(--channel-w));
+      width: calc(100vw - 64px);
       max-width: 300px;
       transform: translateX(-150%);
       box-shadow: 4px 0 25px rgba(0,0,0,0.4);
@@ -523,13 +525,9 @@
     <div class="splash-sub">Private Syndicate Platform</div>
     <h2 class="splash-title">WELCOME TO <span>TOP V</span></h2>
     <div class="car-brands">
-      <!-- Mercedes -->
       <svg class="brand-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 1.6c4.64 0 8.4 3.76 8.4 8.4 0 4.64-3.76 8.4-8.4 8.4-4.64 0-8.4-3.76-8.4-8.4 0-4.64 3.76-8.4 8.4-8.4zm-.02 2.21l-3.32 8.5 7.74-4.52-4.42-3.98zm-4.7 9.87l8.48-.12-4.14-7.51-4.34 7.63zm9.39-.7l-7.68 4.47 8.35-1.57-.67-2.9z"/></svg>
-      <!-- BMW -->
       <svg class="brand-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1"/><path d="M12 4 A8 8 0 0 1 20 12 L12 12 Z" fill="currentColor"/><path d="M12 12 L4 12 A8 8 0 0 1 12 4 Z" fill="none"/><path d="M12 12 L12 20 A8 8 0 0 1 4 12 Z" fill="currentColor"/></svg>
-      <!-- Ferrari -->
       <svg class="brand-icon" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 5.5l1.5 3h3.5l-2.8 2 1 3.5-3.2-2.2-3.2 2.2 1-3.5-2.8-2h3.5z" fill="currentColor"/><line x1="5" y1="18" x2="19" y2="18" stroke="currentColor" stroke-width="1.4"/></svg>
-      <!-- Bugatti -->
       <svg class="brand-icon" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 8h4a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-4v-4zm0 4h4.5a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H9v-4z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15 8h-6v8" stroke="currentColor" stroke-width="1.6"/></svg>
     </div>
   </div>
@@ -537,24 +535,24 @@
 
 <header>
   <div class="header-left">
-    <button class="btn btn-outline" id="teamToggle" style="display:none; padding:4px 8px; font-size:12px;">☰ Hub</button>
+    <button class="btn btn-outline" id="teamToggle" style="display:none; padding:4px 10px; font-size:13px;">☰ Team</button>
   </div>
 
   <div class="header-center">
-    <svg class="crest" viewBox="0 0 48 48"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#6e101e" stroke="#c59b46" stroke-width="2"/><text x="24" y="30" font-family="'Cinzel', serif" font-size="18" fill="#c59b46" text-anchor="middle" font-weight="700">V</text></svg>
+    <svg class="crest" viewBox="0 0 48 48"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#7a1524" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Cinzel', serif" font-size="18" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
     <div>
       <h1>TOP V</h1>
-      <div class="tag">Private Syndicate</div>
+      <div class="tag">Private Team</div>
     </div>
   </div>
 
   <div class="header-right">
-    <button class="icon-btn" id="themeToggle" title="Toggle Theme">
+    <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme">
       <svg id="themeIconSun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
       <svg id="themeIconMoon" viewBox="0 0 24 24" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
     </button>
-    <button class="btn btn-danger" id="panicBtn" style="display:none; font-size:11px; padding:4px 8px;" title="Purge Current Channel">Panic Wipe</button>
-    <button class="btn btn-outline" id="logoutBtn" style="display:none; font-size:12px; padding:4px 8px;">Exit</button>
+    <button class="btn btn-danger" id="panicBtn" style="display:none; font-size:12px; padding:4px 8px;" title="Purge Current Channel">Panic Wipe</button>
+    <button class="btn btn-outline" id="logoutBtn" style="display:none; font-size:13px; padding:4px 10px;">Sign Out</button>
   </div>
 </header>
 
@@ -562,9 +560,9 @@
   <!-- AUTH SCREEN -->
   <div id="auth">
     <div class="card">
-      <svg class="crest" viewBox="0 0 48 48" style="width:44px; height:44px; margin:0 auto 8px; display:block;"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#9e182c" stroke="#c59b46" stroke-width="2"/><text x="24" y="30" font-family="'Cinzel', serif" font-size="18" fill="#c59b46" text-anchor="middle" font-weight="700">V</text></svg>
+      <svg class="crest" viewBox="0 0 48 48" style="width:46px; height:46px; margin:0 auto 8px; display:block;"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#A51C30" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Cinzel', serif" font-size="18" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
       <h2>TOP V</h2>
-      <p class="sub">Closed enclave for designated operators</p>
+      <p class="sub">A private space for your team of five</p>
       
       <div class="tabs" id="authTabs">
         <div class="tab active" data-tab="login">Sign In</div>
@@ -572,27 +570,27 @@
       </div>
 
       <div id="loginPane">
-        <div class="field"><label>Operator Identifier / Email / Phone</label><input id="loginIdentifier" placeholder="e.g. vex" autocomplete="username"></div>
+        <div class="field"><label>Username / Email / Phone</label><input id="loginIdentifier" placeholder="" autocomplete="username"></div>
         <div class="field"><label>Password</label><input id="loginPass" type="password" autocomplete="current-password"></div>
-        <button class="btn btn-primary full" id="loginBtn">Authenticate</button>
+        <button class="btn btn-primary full" id="loginBtn">Sign In</button>
         <a class="forgot-link" id="forgotPwdLink">Forgot password?</a>
       </div>
 
       <div id="registerPane" style="display:none;">
-        <div class="field"><label>Callsign / Username</label><input id="regUser" autocomplete="username"></div>
-        <div class="field"><label>Email Address</label><input id="regEmail" type="email" placeholder="contact@example.com"></div>
-        <div class="field"><label>Secure Phone</label><input id="regPhone" type="tel" placeholder="+20 100 000 0000"></div>
-        <div class="field"><label>Passphrase</label><input id="regPass" type="password" autocomplete="new-password"></div>
-        <button class="btn btn-primary full" id="regBtn">Create Identity</button>
-        <p class="msg-info" style="font-size:11px; margin-top:10px; color:var(--sub);">Max quota: 5 operators. First user assigned Administrator.</p>
+        <div class="field"><label>Username</label><input id="regUser" autocomplete="username"></div>
+        <div class="field"><label>Email Address</label><input id="regEmail" type="email"></div>
+        <div class="field"><label>Phone Number</label><input id="regPhone" type="tel"></div>
+        <div class="field"><label>Password</label><input id="regPass" type="password" autocomplete="new-password"></div>
+        <button class="btn btn-primary full" id="regBtn">Create Account</button>
+        <p class="msg-info" style="font-size:12px; margin-top:10px; color:var(--sub);">Limited to 5 teammates. First user becomes team admin.</p>
       </div>
 
       <div id="resetPane" style="display:none;">
-        <div class="field"><label>Target Username</label><input id="resetUser"></div>
-        <div class="field"><label>Registered Verification Contact</label><input id="resetContact"></div>
-        <div class="field"><label>New Passphrase</label><input id="resetNewPass" type="password"></div>
-        <button class="btn btn-primary full" id="resetSubmitBtn">Update Credentials</button>
-        <a class="forgot-link" id="backToLoginLink">Return to Authentication</a>
+        <div class="field"><label>Username</label><input id="resetUser"></div>
+        <div class="field"><label>Verification Email or Phone</label><input id="resetContact"></div>
+        <div class="field"><label>New Password</label><input id="resetNewPass" type="password"></div>
+        <button class="btn btn-primary full" id="resetSubmitBtn">Update Password</button>
+        <a class="forgot-link" id="backToLoginLink">Back to Sign In</a>
       </div>
 
       <div class="msg-err" id="authErr"></div>
@@ -603,72 +601,92 @@
   <div id="chat">
     <!-- SUB-CHANNELS STRIP -->
     <div class="channel-bar">
-      <div class="ch-btn active" data-ch="general" title="General Comms">GEN</div>
-      <div class="ch-btn" data-ch="intelligence" title="Intelligence & Payloads">INT</div>
-      <div class="ch-btn" data-ch="war-room" title="War Room (Urgent)">WAR</div>
+      <div class="ch-btn active" data-ch="general" title="General Comms">#GEN</div>
+      <div class="ch-btn" data-ch="intelligence" title="Intelligence & Tools">#INT</div>
+      <div class="ch-btn" data-ch="war-room" title="War Room">#WAR</div>
     </div>
 
     <!-- OPS SIDEBAR -->
     <aside id="teamAside">
       <div class="aside-head">
-        <h3 style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--gold); font-family:'JetBrains Mono',monospace;">Operations Control</h3>
+        <h3 style="font-size:13px; text-transform:uppercase; letter-spacing:1px; color:var(--gold);">Team Settings</h3>
         <span id="asideClose">&times;</span>
       </div>
 
-      <!-- Identity & Status -->
+      <!-- Identity & Status Accordion -->
       <div class="panel-box">
-        <h4>Operator Identity</h4>
-        <div class="profile-avatar-wrap">
-          <img id="myAvatarImg" src="" alt="Avatar">
+        <div class="panel-toggle-head" onclick="toggleAccordion('profilePanel', this)">
+          <span>My Profile & Status</span>
+          <span class="panel-icon-indicator">+</span>
+        </div>
+        <div class="panel-body" id="profilePanel">
+          <div class="profile-avatar-wrap">
+            <img id="myAvatarImg" src="" alt="Avatar">
+            <label class="action-file-label">
+              Change Photo
+              <input type="file" id="avatarFileInput" accept="image/*" style="display:none;">
+            </label>
+          </div>
+          <input type="text" id="displayNameInput" placeholder="Display Name">
+          <select id="statusSelect">
+            <option value="ONLINE">ONLINE</option>
+            <option value="IN THE LAB">IN THE LAB</option>
+            <option value="STEALTH MODE">STEALTH MODE</option>
+          </select>
+          <button class="btn btn-primary" id="saveProfileBtn" style="font-size:12px; padding:6px; justify-content:center;">Save Profile</button>
+        </div>
+      </div>
+
+      <!-- Dead Drop / Vault Accordion -->
+      <div class="panel-box">
+        <div class="panel-toggle-head" onclick="toggleAccordion('vaultPanel', this)">
+          <span>File Vault</span>
+          <span class="panel-icon-indicator">+</span>
+        </div>
+        <div class="panel-body" id="vaultPanel">
           <label class="action-file-label">
-            Change Photo
-            <input type="file" id="avatarFileInput" accept="image/*" style="display:none;">
+            Upload File
+            <input type="file" id="vaultFileInput" style="display:none;">
           </label>
-        </div>
-        <input type="text" id="displayNameInput" placeholder="Display Name">
-        <select id="statusSelect">
-          <option value="ONLINE">ONLINE (Active)</option>
-          <option value="IN THE LAB">IN THE LAB (Coding/Analysis)</option>
-          <option value="STEALTH MODE">STEALTH MODE (Covert)</option>
-        </select>
-        <button class="btn btn-primary" id="saveProfileBtn" style="font-size:11.5px; padding:5px; justify-content:center;">Commit Profile</button>
-      </div>
-
-      <!-- Dead Drop / Vault -->
-      <div class="panel-box">
-        <h4>Dead Drop Vault (Assets)</h4>
-        <label class="action-file-label">
-          Upload Payload / File
-          <input type="file" id="vaultFileInput" style="display:none;">
-        </label>
-        <div id="vaultList" style="display:flex; flex-direction:column; gap:4px; max-height:85px; overflow-y:auto;"></div>
-      </div>
-
-      <!-- Tactical Task Board -->
-      <div class="panel-box">
-        <h4>Tactical Directives</h4>
-        <div style="display:flex; gap:4px;">
-          <input type="text" id="taskInput" placeholder="New objective…" style="font-size:12px; padding:4px 6px;">
-          <button class="btn btn-primary" id="addTaskBtn" style="font-size:11px; padding:4px 8px;">Add</button>
-        </div>
-        <div id="taskList" style="display:flex; flex-direction:column; gap:4px; max-height:95px; overflow-y:auto;"></div>
-      </div>
-
-      <!-- Wallpaper & Customization -->
-      <div class="panel-box">
-        <h4>Visual Environment</h4>
-        <div style="display:flex; gap:6px;">
-          <label class="action-file-label" style="flex:1;">
-            Set Wallpaper
-            <input type="file" id="wallpaperFileInput" accept="image/*" style="display:none;">
-          </label>
-          <button class="btn btn-outline" id="clearWallpaperBtn" style="font-size:10.5px; padding:3px 8px; color:var(--danger); border-color:var(--border);">Clear</button>
+          <div id="vaultList" style="display:flex; flex-direction:column; gap:4px; max-height:90px; overflow-y:auto;"></div>
         </div>
       </div>
 
-      <!-- Member Registry -->
-      <div>
-        <h4 style="font-size:10.5px; text-transform:uppercase; letter-spacing:1px; color:var(--sub); margin-bottom:5px; font-family:'JetBrains Mono',monospace;">Active Roster</h4>
+      <!-- Tactical Task Board Accordion -->
+      <div class="panel-box">
+        <div class="panel-toggle-head" onclick="toggleAccordion('taskPanel', this)">
+          <span>Team Tasks</span>
+          <span class="panel-icon-indicator">+</span>
+        </div>
+        <div class="panel-body" id="taskPanel">
+          <div style="display:flex; gap:4px;">
+            <input type="text" id="taskInput" placeholder="New task…" style="font-size:13px; padding:5px 8px;">
+            <button class="btn btn-primary" id="addTaskBtn" style="font-size:12px; padding:4px 8px;">Add</button>
+          </div>
+          <div id="taskList" style="display:flex; flex-direction:column; gap:4px; max-height:100px; overflow-y:auto;"></div>
+        </div>
+      </div>
+
+      <!-- Wallpaper & Customization Accordion -->
+      <div class="panel-box">
+        <div class="panel-toggle-head" onclick="toggleAccordion('wallpaperPanel', this)">
+          <span>Chat Wallpaper</span>
+          <span class="panel-icon-indicator">+</span>
+        </div>
+        <div class="panel-body" id="wallpaperPanel">
+          <div style="display:flex; gap:6px;">
+            <label class="action-file-label" style="flex:1;">
+              Upload Background
+              <input type="file" id="wallpaperFileInput" accept="image/*" style="display:none;">
+            </label>
+            <button class="btn btn-outline" id="clearWallpaperBtn" style="font-size:11px; padding:4px 8px; color:var(--danger); border-color:var(--border);">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Member Registry (Always Visible) -->
+      <div style="margin-top:6px;">
+        <h4 style="font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--sub); margin-bottom:6px;">Team Members</h4>
         <div id="memberList"></div>
       </div>
     </aside>
@@ -678,27 +696,27 @@
     <!-- MAIN CHAT AREA -->
     <div class="chatarea" id="chatArea">
       <div class="channel-header">
-        <span id="channelNameDisplay">#GENERAL — Tactical Comms</span>
-        <span style="font-size:10.5px; opacity:0.8; font-family:'JetBrains Mono', monospace;">AES-STREAM ENCRYPTED</span>
+        <span id="channelNameDisplay">#GENERAL</span>
+        <span style="font-size:11px; opacity:0.8;">ENCRYPTED COMM</span>
       </div>
 
       <div id="messages">
-        <div class="empty">Channel initialized. Ready for operations.</div>
+        <div class="empty">No messages yet — start the conversation.</div>
       </div>
       
       <!-- INPUT BAR -->
       <div class="input-bar-container">
         <div class="input-controls">
           <button type="button" class="toggle-btn-small" id="burnerToggleBtn">
-            <span>🔥 Burner Protocol: OFF</span>
+            <span>🔥 Burner Message: OFF</span>
           </button>
         </div>
         <form id="sendForm">
-          <button type="button" class="circle-btn record-btn" id="recordVoiceBtn" title="Hold/Click to record voice">
+          <button type="button" class="circle-btn record-btn" id="recordVoiceBtn" title="Record Voice">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
           </button>
-          <input id="msgInput" placeholder="Write message or code snippet with ```code``` …" autocomplete="off">
-          <button class="circle-btn send-submit-btn" type="submit" title="Transmit">
+          <input id="msgInput" placeholder="Write a message…" autocomplete="off">
+          <button class="circle-btn send-submit-btn" type="submit" title="Send">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="#fff"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
           </button>
         </form>
@@ -714,9 +732,21 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
-/* =========================================================
-   1. SPLASH SCREEN LIFECYCLE
-========================================================= */
+/* Accordion Controller */
+function toggleAccordion(panelId, headElem) {
+  const panel = document.getElementById(panelId);
+  const ind = headElem.querySelector('.panel-icon-indicator');
+  const isOpen = panel.classList.contains('open');
+  if(isOpen) {
+    panel.classList.remove('open');
+    ind.textContent = '+';
+  } else {
+    panel.classList.add('open');
+    ind.textContent = '−';
+  }
+}
+
+/* Splash Screen */
 function dismissSplash() {
   const splash = document.getElementById('splashScreen');
   if (splash) {
@@ -728,9 +758,7 @@ function dismissSplash() {
 setTimeout(dismissSplash, 1800);
 document.getElementById('splashScreen')?.addEventListener('click', dismissSplash);
 
-/* =========================================================
-   2. AUDITORY FEEDBACK (Web Audio API)
-========================================================= */
+/* Auditory Feedback */
 let audioCtx = null;
 function playTactileSound(type) {
   try {
@@ -760,9 +788,7 @@ function playTactileSound(type) {
   } catch(e) {}
 }
 
-/* =========================================================
-   3. ROBUST ENCRYPTION ENGINE (Zero Crash Fallback)
-========================================================= */
+/* Encryption Engine */
 const SECRET_SALT = "TOP_V_PROTOCOL_KEY_2026";
 function encryptPayload(text) {
   try {
@@ -786,9 +812,7 @@ function decryptPayload(text) {
   } catch(e) { return text; }
 }
 
-/* =========================================================
-   4. UI & THEME TOGGLE
-========================================================= */
+/* Toast */
 function showToast(msg) {
   const box = document.getElementById('toastBox');
   const toast = document.createElement('div');
@@ -803,6 +827,7 @@ function showToast(msg) {
   }, 3500);
 }
 
+/* Theme Toggle */
 const themeToggleBtn = document.getElementById('themeToggle');
 const sunIcon = document.getElementById('themeIconSun');
 const moonIcon = document.getElementById('themeIconMoon');
@@ -823,9 +848,7 @@ themeToggleBtn.addEventListener('click', () => {
   applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
 });
 
-/* =========================================================
-   5. FIREBASE DB & STORE INITIALIZATION
-========================================================= */
+/* Firebase Configuration */
 const firebaseConfig = {
   apiKey: "AIzaSyDqpxJdkGO75kefy1rN8zE34Fsm98iEMcQ",
   authDomain: "top-v-9abfb.firebaseapp.com",
@@ -847,7 +870,7 @@ const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/20
 function sanitize(s){ return (s||'').trim().toLowerCase().replace(/[^a-z0-9_\-]/g,'').slice(0,25); }
 function setErr(t){ document.getElementById('authErr').textContent = t || ''; }
 
-/* Auth Views Switcher */
+/* Tabs */
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
   t.classList.add('active'); setErr('');
@@ -882,7 +905,7 @@ document.getElementById('backToLoginLink').addEventListener('click', () => {
   }
 })();
 
-/* Register Account */
+/* Registration */
 document.getElementById('regBtn').addEventListener('click', async () => {
   setErr('');
   const username = sanitize(document.getElementById('regUser').value);
@@ -895,9 +918,9 @@ document.getElementById('regBtn').addEventListener('click', async () => {
 
   try{
     const usersSnap = await db.collection('users').get();
-    if(usersSnap.size >= 5) return setErr('TOP V member quota reached (5 maximum).');
+    if(usersSnap.size >= 5) return setErr('TOP V limit reached (5 members).');
     const ref = db.collection('users').doc(username);
-    if((await ref.get()).exists) return setErr('Callsign already claimed.');
+    if((await ref.get()).exists) return setErr('Username already taken.');
     
     const isAdmin = usersSnap.size === 0;
     const userData = {
@@ -914,7 +937,7 @@ document.getElementById('regBtn').addEventListener('click', async () => {
     localStorage.setItem('topv_user', username);
     currentUser = { username, ...userData };
     enterChat();
-  }catch(e){ setErr('Database unreachable. Check Firebase permissions.'); }
+  }catch(e){ setErr('Database error. Check Firebase rules.'); }
 });
 
 /* Sign In */
@@ -922,7 +945,7 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
   setErr('');
   const identifier = document.getElementById('loginIdentifier').value.trim();
   const password = document.getElementById('loginPass').value;
-  if(!identifier || !password) return setErr('All credentials required.');
+  if(!identifier || !password) return setErr('Enter your credentials.');
 
   try{
     const snap = await db.collection('users').get();
@@ -936,42 +959,42 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
       }
     });
 
-    if(!foundDoc) return setErr('Identity not recognized.');
-    if(foundDoc.password !== password) return setErr('Invalid passphrase.');
+    if(!foundDoc) return setErr('No such member found.');
+    if(foundDoc.password !== password) return setErr('Incorrect password.');
     
     currentUser = foundDoc;
     localStorage.setItem('topv_user', currentUser.username);
     enterChat();
-  }catch(e){ setErr('Authentication service error.'); }
+  }catch(e){ setErr('Database error.'); }
 });
 
-/* Reset Passphrase */
+/* Reset Password */
 document.getElementById('resetSubmitBtn').addEventListener('click', async () => {
   setErr('');
   const user = sanitize(document.getElementById('resetUser').value);
   const contact = document.getElementById('resetContact').value.trim().toLowerCase();
   const newPass = document.getElementById('resetNewPass').value;
 
-  if(!user || !contact || !newPass) return setErr('All fields are mandatory.');
+  if(!user || !contact || !newPass) return setErr('All fields are required.');
 
   try {
     const docRef = db.collection('users').doc(user);
     const docSnap = await docRef.get();
-    if(!docSnap.exists) return setErr('Operator not found.');
+    if(!docSnap.exists) return setErr('User not found.');
 
     const data = docSnap.data();
     if((data.email && data.email.toLowerCase() === contact) || (data.phone && data.phone === contact)) {
       await docRef.update({ password: newPass });
-      showToast('Passphrase updated. Authenticate to proceed.');
+      showToast('Password updated. Please sign in.');
       document.getElementById('resetPane').style.display = 'none';
       document.getElementById('loginPane').style.display = '';
     } else {
-      setErr('Verification parameters mismatch.');
+      setErr('Verification details do not match.');
     }
-  } catch(e) { setErr('Update execution failed.'); }
+  } catch(e) { setErr('Update failed.'); }
 });
 
-/* Chat Environment Activation */
+/* Enter Chat */
 function enterChat(){
   document.getElementById('auth').style.display = 'none';
   document.getElementById('chat').classList.add('show');
@@ -1019,7 +1042,7 @@ document.getElementById('teamToggle').addEventListener('click', () => {
 document.getElementById('asideClose').addEventListener('click', closeAside);
 document.getElementById('asideBackdrop').addEventListener('click', closeAside);
 
-/* Avatar Upload & Direct Compression */
+/* Avatar Upload */
 document.getElementById('avatarFileInput').addEventListener('change', (e) => {
   const file = e.target.files[0];
   if(!file) return;
@@ -1048,7 +1071,7 @@ document.getElementById('avatarFileInput').addEventListener('change', (e) => {
 document.getElementById('saveProfileBtn').addEventListener('click', async () => {
   const newName = document.getElementById('displayNameInput').value.trim();
   const newStatus = document.getElementById('statusSelect').value;
-  if(!newName) return alert('Display name cannot be empty.');
+  if(!newName) return alert('Name cannot be empty.');
   try {
     await db.collection('users').doc(currentUser.username).update({
       displayName: newName,
@@ -1056,7 +1079,7 @@ document.getElementById('saveProfileBtn').addEventListener('click', async () => 
     });
     currentUser.displayName = newName;
     currentUser.status = newStatus;
-    showToast("Profile & Operational status updated!");
+    showToast("Profile updated successfully!");
   } catch(e) { alert('Update failed.'); }
 });
 
@@ -1078,16 +1101,16 @@ document.getElementById('clearWallpaperBtn').addEventListener('click', () => {
   showToast("Wallpaper reset.");
 });
 
-/* Burner Toggle Protocol */
+/* Burner Toggle */
 const burnerToggleBtn = document.getElementById('burnerToggleBtn');
 burnerToggleBtn.addEventListener('click', () => {
   isBurnerEnabled = !isBurnerEnabled;
   if(isBurnerEnabled) {
     burnerToggleBtn.classList.add('active');
-    burnerToggleBtn.innerHTML = '<span>🔥 Burner Protocol: ON (30s)</span>';
+    burnerToggleBtn.innerHTML = '<span>🔥 Burner Message: ON (30s)</span>';
   } else {
     burnerToggleBtn.classList.remove('active');
-    burnerToggleBtn.innerHTML = '<span>🔥 Burner Protocol: OFF</span>';
+    burnerToggleBtn.innerHTML = '<span>🔥 Burner Message: OFF</span>';
   }
 });
 
@@ -1098,19 +1121,19 @@ document.querySelectorAll('.ch-btn').forEach(btn => {
     btn.classList.add('active');
     currentChannel = btn.dataset.ch;
     const titles = {
-      general: '#GENERAL — Tactical Comms',
-      intelligence: '#INTELLIGENCE — Payloads & Targets',
-      'war-room': '#WAR-ROOM — Critical Ops'
+      general: '#GENERAL',
+      intelligence: '#INTELLIGENCE',
+      'war-room': '#WAR-ROOM'
     };
     document.getElementById('channelNameDisplay').textContent = titles[currentChannel];
     subscribeMessages();
   });
 });
 
-/* Emergency Panic Wipe */
+/* Panic Wipe */
 document.getElementById('panicBtn').addEventListener('click', async () => {
   if(!currentUser.isAdmin) return;
-  if(!confirm(`CONFIRM EMERGENCY PURGE: All records in #${currentChannel} will be liquidated!`)) return;
+  if(!confirm(`Delete all messages in #${currentChannel}?`)) return;
   try {
     const snap = await db.collection('messages').get();
     const batch = db.batch();
@@ -1118,7 +1141,7 @@ document.getElementById('panicBtn').addEventListener('click', async () => {
       if(doc.data().channel === currentChannel) batch.delete(doc.ref);
     });
     await batch.commit();
-    showToast(`Channel #${currentChannel} completely purged.`);
+    showToast(`Channel #${currentChannel} cleared.`);
   } catch(e) { alert('Purge failed.'); }
 });
 
@@ -1141,10 +1164,10 @@ function subscribeMembers(){
         <div class="member">
           <img src="${u.avatarUrl || DEFAULT_AVATAR}" alt="">
           <div>
-            <div>${u.isAdmin ? '<span style="color:var(--gold); font-size:10px;">★ </span>' : ''}<strong>${escapeHtml(u.displayName || u.username)}</strong></div>
+            <div>${u.isAdmin ? '<span style="color:var(--gold); font-size:11px;">★ </span>' : ''}<strong>${escapeHtml(u.displayName || u.username)}</strong></div>
             <div class="status-txt"><span class="status-pulse ${statusClass}"></span>${u.status || 'ONLINE'}</div>
           </div>
-          ${canDelete ? `<span class="del" data-u="${escapeHtml(u.username)}">drop</span>` : ''}
+          ${canDelete ? `<span class="del" data-u="${escapeHtml(u.username)}">remove</span>` : ''}
         </div>`;
     });
     memberListEl.innerHTML = html;
@@ -1155,18 +1178,15 @@ function subscribeMembers(){
 }
 
 async function deleteMember(username){
-  if(!confirm('Expel operative ' + username + ' from syndicate?')) return;
+  if(!confirm('Remove ' + username + ' from the team?')) return;
   try { await db.collection('users').doc(username).delete(); } catch(e){}
 }
 
-/* =========================================================
-   6. REALTIME MESSAGING (Fixed Composite Index Bug)
-========================================================= */
+/* Messages Subscription */
 let isInitialLoad = true;
 function subscribeMessages(){
   if(unsubMsg) unsubMsg();
   
-  // Using direct timestamp order and local channel filtering to prevent Firestore Composite Index crash
   const q = db.collection('messages').orderBy('createdAt', 'asc').limitToLast(150);
 
   unsubMsg = q.onSnapshot(snap => {
@@ -1179,7 +1199,7 @@ function subscribeMessages(){
           if(m.channel === currentChannel && m.username !== currentUser.username) {
             playTactileSound('receive');
             const sender = allUsersMap[m.username] || {};
-            showToast(`${sender.displayName || m.username}: New transmission`);
+            showToast(`${sender.displayName || m.username}: New message`);
           }
         }
       });
@@ -1189,7 +1209,7 @@ function subscribeMessages(){
     const channelDocs = snap.docs.filter(d => (d.data().channel || 'general') === currentChannel);
 
     if(channelDocs.length === 0){
-      el.innerHTML = '<div class="empty">Channel initialized. Ready for operations.</div>';
+      el.innerHTML = '<div class="empty">No messages yet — say hello.</div>';
       return;
     }
 
@@ -1202,7 +1222,6 @@ function subscribeMessages(){
       const avatar = sender.avatarUrl || m.avatarUrl || DEFAULT_AVATAR;
       const timeStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '';
 
-      // Burner auto destruction check
       if(m.burner && m.createdAt) {
         const remaining = 30 - Math.floor((Date.now() - m.createdAt) / 1000);
         if(remaining <= 0) {
@@ -1218,7 +1237,7 @@ function subscribeMessages(){
         contentHtml = `
           <div class="voice-msg-player">
             <button class="voice-play-btn" onclick="playVoiceNote('${m.audioData}')">▶</button>
-            <span style="font-size:11.5px; font-style:italic;">Encrypted Voice Dispatch</span>
+            <span style="font-size:12px; font-style:italic;">Voice Message</span>
           </div>
         `;
       }
@@ -1267,7 +1286,7 @@ window.playVoiceNote = function(base64Audio){
   audio.play();
 };
 
-/* Send Message Pipeline */
+/* Send Message */
 document.getElementById('sendForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const input = document.getElementById('msgInput');
@@ -1291,9 +1310,7 @@ document.getElementById('sendForm').addEventListener('submit', async (e) => {
   } catch(err){}
 });
 
-/* =========================================================
-   7. VOICE RECORDING ENGINE (Universal Browser Audio)
-========================================================= */
+/* Voice Recording */
 let mediaRecorder = null;
 let audioChunks = [];
 const recordVoiceBtn = document.getElementById('recordVoiceBtn');
@@ -1323,7 +1340,7 @@ recordVoiceBtn.addEventListener('click', async () => {
           displayName: currentUser.displayName || currentUser.username,
           avatarUrl: currentUser.avatarUrl || DEFAULT_AVATAR,
           channel: currentChannel,
-          text: '[Voice Transmission]',
+          text: '[Voice Message]',
           audioData: base64Audio,
           burner: isBurnerEnabled,
           createdAt: Date.now()
@@ -1335,19 +1352,17 @@ recordVoiceBtn.addEventListener('click', async () => {
 
     mediaRecorder.start();
     recordVoiceBtn.classList.add('recording');
-    showToast("Voice comm recording… Click button again to transmit.");
+    showToast("Recording… Click again to send.");
   } catch(err) {
-    alert("Microphone access unavailable or denied by security policies.");
+    alert("Microphone access unavailable or denied.");
   }
 });
 
-/* =========================================================
-   8. DEAD DROP / VAULT ASSET SHARING
-========================================================= */
+/* Vault */
 document.getElementById('vaultFileInput').addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if(!file) return;
-  if(file.size > 1.5 * 1024 * 1024) return alert("Payload exceeds 1.5MB direct sync ceiling.");
+  if(file.size > 1.5 * 1024 * 1024) return alert("File exceeds 1.5MB limit.");
 
   const reader = new FileReader();
   reader.onload = async (evt) => {
@@ -1358,8 +1373,8 @@ document.getElementById('vaultFileInput').addEventListener('change', async (e) =
         uploader: currentUser.username,
         uploadedAt: Date.now()
       });
-      showToast(`Asset "${file.name}" staged in Dead Drop.`);
-    } catch(err){ alert("Storage rejection."); }
+      showToast(`File "${file.name}" uploaded successfully.`);
+    } catch(err){ alert("Upload failed."); }
   };
   reader.readAsDataURL(file);
 });
@@ -1367,12 +1382,12 @@ document.getElementById('vaultFileInput').addEventListener('change', async (e) =
 function subscribeVault(){
   unsubVault = db.collection('vault').orderBy('uploadedAt', 'desc').limit(8).onSnapshot(snap => {
     const list = document.getElementById('vaultList');
-    if(snap.empty) { list.innerHTML = '<span style="color:var(--sub); font-style:italic; font-size:11px;">Vault empty.</span>'; return; }
+    if(snap.empty) { list.innerHTML = '<span style="color:var(--sub); font-style:italic; font-size:12px;">No files uploaded.</span>'; return; }
     list.innerHTML = snap.docs.map(doc => {
       const item = doc.data();
       return `
-        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--card); padding:3px 6px; border-radius:4px; font-size:11.5px;">
-          <a href="${item.fileData}" download="${escapeHtml(item.fileName)}" style="color:var(--gold); text-decoration:none; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:160px;">🗎 ${escapeHtml(item.fileName)}</a>
+        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--card); padding:4px 6px; border-radius:4px; font-size:12px;">
+          <a href="${item.fileData}" download="${escapeHtml(item.fileName)}" style="color:var(--gold); text-decoration:none; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:160px;">📄 ${escapeHtml(item.fileName)}</a>
           <button style="border:none; background:transparent; color:var(--danger); cursor:pointer;" onclick="deleteVaultFile('${doc.id}')">✕</button>
         </div>`;
     }).join('');
@@ -1383,9 +1398,7 @@ window.deleteVaultFile = async function(id) {
   try { await db.collection('vault').doc(id).delete(); } catch(e){}
 };
 
-/* =========================================================
-   9. TACTICAL DIRECTIVES BOARD
-========================================================= */
+/* Tasks */
 document.getElementById('addTaskBtn').addEventListener('click', async () => {
   const inp = document.getElementById('taskInput');
   const task = inp.value.trim();
@@ -1404,7 +1417,7 @@ document.getElementById('addTaskBtn').addEventListener('click', async () => {
 function subscribeTasks(){
   unsubTasks = db.collection('tasks').orderBy('createdAt', 'desc').limit(12).onSnapshot(snap => {
     const list = document.getElementById('taskList');
-    if(snap.empty) { list.innerHTML = '<span style="color:var(--sub); font-style:italic; font-size:11px;">No active directives.</span>'; return; }
+    if(snap.empty) { list.innerHTML = '<span style="color:var(--sub); font-style:italic; font-size:12px;">No active tasks.</span>'; return; }
     list.innerHTML = snap.docs.map(doc => {
       const t = doc.data();
       return `
