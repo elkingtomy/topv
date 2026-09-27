@@ -170,9 +170,10 @@
   .task-item { font-size: 12.5px; background: var(--card); padding: 5px 8px; border-radius: 4px; border-left: 3px solid var(--gold); display: flex; align-items: center; justify-content: space-between; }
 
   .chatarea { flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; position: relative; background-size: cover; background-position: center; background-repeat: no-repeat; }
-  .channel-header { background: var(--card); border-bottom: 1px solid var(--border); padding: 8px 18px; font-size: 15px; font-weight: 600; color: var(--gold); display: flex; align-items: center; justify-content: space-between; letter-spacing: .5px; }
   
-  /* إصلاح ظهور أيقونة القنوات في اللايت مود والدارك مود بدقة */
+  /* تم إزالة النص ليصبح الشريط أنيقاً ومقتصراً على الزر واسم القناة */
+  .channel-header { background: var(--card); border-bottom: 1px solid var(--border); padding: 8px 18px; font-size: 15px; font-weight: 600; color: var(--gold); display: flex; align-items: center; justify-content: flex-start; letter-spacing: .5px; }
+  
   .btn-channel-toggle {
     background: var(--bg);
     border: 1px solid var(--border);
@@ -198,7 +199,6 @@
 
   #messages { flex: 1; overflow-y: auto; padding: 16px 18px; min-height: 0; display: flex; flex-direction: column; gap: 10px; }
   
-  /* انيميشن سريع وناعم يطبق فقط عند الإدراج لأول مرة */
   @keyframes msgPopIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
@@ -223,7 +223,6 @@
   .voice-msg-player { display: flex; align-items: center; gap: 8px; padding: 3px 0; }
   .voice-play-btn { background: var(--gold); color: #111; border: none; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; }
 
-  /* ريأكت الرسائل وتثبيته بدون اهتزاز */
   .react-btn-trigger { opacity: 0; transition: opacity .15s ease; background: transparent; border: none; cursor: pointer; font-size: 13px; padding: 2px 4px; margin: 0 2px; color: var(--sub); }
   .msg-row:hover .react-btn-trigger { opacity: 0.85; }
   @media (hover: none) { .react-btn-trigger { opacity: 0.7 !important; } }
@@ -403,15 +402,14 @@
     <div id="asideBackdrop"></div>
 
     <div class="chatarea" id="chatArea">
+      <!-- شريط القناة بدون نص ENCRYPTED WORKSPACE -->
       <div class="channel-header">
         <span style="display:flex;align-items:center;gap:10px;">
-          <!-- زر القنوات المصحح بالكامل للعمل في اللايت والدارك مود -->
           <button type="button" id="channelBarToggle" class="btn-channel-toggle" title="Browse Channels">
             <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
           </button>
           <span id="channelNameDisplay">#GENERAL</span>
         </span>
-        <span style="font-size:11px;letter-spacing:1px;opacity:.8;">ENCRYPTED WORKSPACE</span>
       </div>
       <div id="messages"><div class="empty">No communications registered in this sector.</div></div>
       <div class="input-bar-container">
@@ -524,7 +522,7 @@ let currentChannelId = 'general';
 let isBurnerEnabled = false;
 let burnerTimer = null;
 let latestChannelDocs = [];
-let renderedDocIds = new Set(); // لمنع إعادة تشغيل الأنيميشن وتكرار العناصر
+let renderedDocIds = new Set();
 
 const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%23191614'/><circle cx='32' cy='23' r='11' fill='%23c59b46'/><path d='M14 54 C14 42 22 38 32 38 C42 38 50 42 50 54 Z' fill='%23c59b46'/><path d='M32 38 L30 45 L32 47 L34 45 Z' fill='%239e182c'/></svg>";
 
@@ -699,16 +697,13 @@ function enterChat(){
   subscribeTasks();
   subscribeVault();
 
-  // فحص ذكي للـ Burner messages بدون إعادة بناء الـ DOM بالكامل لمنع الرمش والتكرار
   if(burnerTimer) clearInterval(burnerTimer);
   burnerTimer = setInterval(() => {
-    let hasExpired = false;
     latestChannelDocs.forEach(d => {
       const m = d.data();
       if(m.burner && m.createdAt){
         const remaining = 30 - Math.floor((Date.now() - m.createdAt) / 1000);
         if(remaining <= 0){
-          hasExpired = true;
           d.ref.delete().catch(()=>{});
         }
       }
@@ -760,7 +755,7 @@ function subscribeChannels(){
         btn.classList.add('active');
         currentChannelId = chId;
         document.getElementById('channelNameDisplay').textContent = btn.dataset.title;
-        renderedDocIds.clear(); // مسح الذاكرة عند تغيير القناة
+        renderedDocIds.clear();
         subscribeMessages();
         document.getElementById('channelBar').classList.add('collapsed');
       });
@@ -987,7 +982,6 @@ function subscribeMessages(){
   });
 }
 
-/* حل مشكلة تكرار الفقاعات والرمش عبر التحقق من وجود المعرفات */
 function renderMessages(){
   const el = document.getElementById('messages');
   if(!currentUser) return;
@@ -1037,7 +1031,6 @@ function renderMessages(){
       reactionsHtml += '</div>';
     }
 
-    // إضافة كلاس الأنيميشن فقط للرسائل الجديدة التي لم تكن موجودة سابقاً
     const isNew = !renderedDocIds.has(d.id);
     renderedDocIds.add(d.id);
 
