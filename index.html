@@ -3,9 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TOP V</title>
+<meta name="theme-color" content="#A51C30">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TOP V">
+<title>TOP V — Executive Enclave</title>
+
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<!-- PWA Manifest Injection -->
+<link rel="manifest" id="manifestLink">
+<script>
+  const manifestData = {
+    name: "TOP V Workspace",
+    short_name: "TOP V",
+    start_url: "./",
+    display: "standalone",
+    background_color: "#0d0f12",
+    theme_color: "#A51C30",
+    icons: [
+      {
+        src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%237a1524'/><text y='70' x='50' font-size='60' text-anchor='middle' fill='%23C9A85C' font-family='serif'>V</text></svg>",
+        sizes: "192x192 512x512",
+        type: "image/svg+xml"
+      }
+    ]
+  };
+  const stringManifest = JSON.stringify(manifestData);
+  const blobManifest = new Blob([stringManifest], {type: 'application/json'});
+  document.getElementById('manifestLink').setAttribute('href', URL.createObjectURL(blobManifest));
+</script>
+
 <style>
   :root {
     --crimson: #A51C30;
@@ -18,6 +48,7 @@
     --sub: #6b615a;
     --border: #e3dccf;
     --danger: #a51c30;
+    --danger-surface: rgba(165, 28, 48, 0.1);
     --bubble-me: #A51C30;
     --bubble-other: #ece5d8;
     --header-bg: #A51C30;
@@ -28,6 +59,7 @@
   [data-theme="dark"] {
     --crimson: #c6233d; --crimson-dark: #8c1426; --gold: #e5c378; --gold-glow: rgba(229,195,120,0.2);
     --bg: #0d0f12; --card: #15181f; --ink: #f0ede6; --sub: #9ca3af; --border: #232834; --danger: #ff4d6d;
+    --danger-surface: rgba(255, 77, 109, 0.12);
     --bubble-me: #A51C30; --bubble-other: #1b202a; --header-bg: #12151b; --header-text: #f0ede6;
     --sidebar-bg: #13161e; --panel-bg: #191e27;
   }
@@ -43,33 +75,29 @@
   .car-brands { display: flex; gap: 26px; align-items: center; justify-content: center; padding-top: 18px; border-top: 1px solid rgba(201,168,92,.25); }
   .brand-icon { width: 32px; height: 32px; fill: #cbd5e1; opacity: .85; }
 
-  header { background: var(--header-bg); color: var(--header-text); min-height: 52px; padding: 8px 14px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; box-shadow: 0 2px 10px rgba(0,0,0,.15); flex-shrink: 0; border-bottom: 1px solid var(--border); z-index: 40; }
-  .header-left { display: flex; align-items: center; gap: 8px; order: 1; }
-  .header-center { display: flex; align-items: center; justify-content: center; gap: 6px; order: 2; }
-  .header-right { display: flex; align-items: center; gap: 6px; justify-content: flex-end; order: 3; }
-  .lbl-full { display: inline; }
-  @media (max-width: 480px){
-    .lbl-full { display: none; }
-    header h1 { font-size: 17px; }
-    header .tag { display: none; }
-    .crest { width: 26px; height: 26px; }
-    .btn { padding: 6px 9px; }
-  }
+  header { background: var(--header-bg); color: var(--header-text); min-height: 54px; padding: 8px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; box-shadow: 0 2px 10px rgba(0,0,0,.15); flex-shrink: 0; border-bottom: 1px solid var(--border); z-index: 40; }
+  .header-left { display: flex; align-items: center; gap: 10px; }
+  .header-center { display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .header-right { display: flex; align-items: center; gap: 8px; }
   .crest { width: 32px; height: 32px; flex-shrink: 0; }
-  header h1 { font-family: 'Playfair Display', serif; font-size: 22px; letter-spacing: 1px; color: #fff; line-height: 1; }
-  header .tag { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; text-align: center; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 21px; letter-spacing: 1px; color: #fff; line-height: 1; }
+  header .tag { font-size: 10.5px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; text-align: center; }
 
-  .btn { cursor: pointer; border: 1px solid transparent; border-radius: 6px; padding: 6px 14px; font-family: inherit; font-size: 14.5px; transition: .15s; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
-  .btn-outline { background: transparent; border-color: rgba(255,255,255,.45); color: #fff; }
+  .btn { cursor: pointer; border: 1px solid transparent; border-radius: 6px; padding: 6px 12px; font-family: inherit; font-size: 14px; transition: .15s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; }
+  .btn-outline { background: transparent; border-color: rgba(255,255,255,.3); color: #fff; }
   .btn-outline:hover { background: rgba(255,255,255,.15); border-color: #fff; }
   .btn-primary { background: var(--crimson); color: #fff; }
   .btn-primary:hover { background: var(--crimson-dark); }
-  .btn-danger { background: #8b0000; color: #fff; border-color: #550000; }
-  .btn-danger:hover { background: #a51c30; }
+  
+  .btn-icon-labeled { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-size: 13px; padding: 5px 10px; }
+  .btn-icon-labeled:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.6); }
+  .btn-icon-labeled.danger { border-color: rgba(255, 77, 109, 0.4); color: #ffb4c0; }
+  .btn-icon-labeled.danger:hover { background: var(--crimson-dark); color: #fff; border-color: var(--danger); }
 
-  .theme-toggle-btn { background: transparent; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; padding: 0; }
+  .svg-icon { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .theme-toggle-btn { background: transparent; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; }
   .theme-toggle-btn:hover { background: rgba(255,255,255,.15); border-color: var(--gold); }
-  .theme-toggle-btn svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
   main { flex: 1; display: flex; overflow: hidden; min-height: 0; position: relative; }
   #auth { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
@@ -89,12 +117,16 @@
 
   #chat { display: none; flex: 1; overflow: hidden; width: 100%; position: relative; }
   #chat.show { display: flex; }
-  .channel-bar { width: 64px; background: var(--header-bg); display: flex; flex-direction: column; align-items: center; padding: 12px 0; gap: 10px; border-right: 1px solid rgba(255,255,255,.1); flex-shrink: 0; z-index: 30; overflow: hidden; transition: width .22s ease, padding .22s ease; }
+  
+  /* Collapsible Channel Sidebar */
+  .channel-bar { width: 72px; background: var(--header-bg); display: flex; flex-direction: column; align-items: center; padding: 12px 0; gap: 8px; border-right: 1px solid rgba(255,255,255,.1); flex-shrink: 0; z-index: 30; overflow-y: auto; transition: width .22s ease, padding .22s ease; }
   .channel-bar.collapsed { width: 0; padding: 0; border-right: none; }
-  .ch-btn { width: 44px; height: 44px; border-radius: 10px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; transition: .15s; }
+  .ch-btn { width: 50px; height: 44px; border-radius: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; transition: .15s; text-transform: uppercase; letter-spacing: 0.5px; overflow: hidden; text-overflow: ellipsis; padding: 0 4px; }
   .ch-btn:hover, .ch-btn.active { background: var(--gold); color: #111; border-color: #fff; }
+  .btn-add-ch { width: 50px; height: 32px; border-radius: 6px; background: transparent; border: 1px dashed rgba(255,255,255,.3); color: var(--gold); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-top: 4px; }
+  .btn-add-ch:hover { background: rgba(255,255,255,.1); border-color: var(--gold); }
 
-  aside { position: fixed; top: 0; left: 0; height: 100%; width: 300px; max-width: 85vw; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 16px; overflow-y: auto; transition: transform .28s cubic-bezier(.16,1,.3,1); display: flex; flex-direction: column; gap: 12px; z-index: 55; transform: translateX(-150%); box-shadow: 8px 0 30px rgba(0,0,0,.25); }
+  aside { position: fixed; top: 0; left: 0; height: 100%; width: 310px; max-width: 85vw; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 16px; overflow-y: auto; transition: transform .28s cubic-bezier(.16,1,.3,1); display: flex; flex-direction: column; gap: 12px; z-index: 55; transform: translateX(-150%); box-shadow: 8px 0 30px rgba(0,0,0,.25); }
   aside.open { transform: translateX(0); }
   .aside-head { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 4px; }
   #asideClose { cursor: pointer; font-size: 24px; color: var(--sub); line-height: 1; }
@@ -105,20 +137,19 @@
   .panel-icon-indicator { font-size: 14px; color: var(--gold); font-weight: bold; }
   .panel-body { padding: 10px 12px; border-top: 1px solid var(--border); display: none; flex-direction: column; gap: 8px; }
   .panel-body.open { display: flex; }
-  .panel-body input[type="text"], .panel-body select { width: 100%; padding: 6px 10px; font-size: 14px; border-radius: 5px; border: 1px solid var(--border); background: var(--card); color: var(--ink); font-family: inherit; }
+  .panel-body input[type="text"] { width: 100%; padding: 6px 10px; font-size: 14px; border-radius: 5px; border: 1px solid var(--border); background: var(--card); color: var(--ink); font-family: inherit; }
   .profile-avatar-wrap { display: flex; align-items: center; gap: 10px; }
   .profile-avatar-wrap img { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--gold); object-fit: cover; }
 
   .status-pulse { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; box-shadow: 0 0 6px currentColor; }
-  .status-online { color: #10b981; background: #10b981; animation: liveBlink 1.8s infinite; }
+  .status-online { color: #10b981; background: #10b981; }
   .status-offline { color: #64748b; background: #64748b; }
-  @keyframes liveBlink { 0%,100%{opacity:1;} 50%{opacity:.4;} }
 
   .action-file-label { font-size: 12px; cursor: pointer; background: var(--card); border: 1px solid var(--border); padding: 5px 9px; border-radius: 4px; color: var(--ink); display: inline-block; text-align: center; }
   .action-file-label:hover { border-color: var(--crimson); }
 
   .member { display: flex; align-items: center; gap: 8px; padding: 7px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
-  .member img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); }
+  .member img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); }
   .member .status-txt { font-size: 11px; color: var(--sub); display: flex; align-items: center; margin-top: 2px; }
   .member .del { margin-left: auto; color: var(--danger); cursor: pointer; font-size: 12px; opacity: .7; }
   .member .del:hover { opacity: 1; }
@@ -140,7 +171,7 @@
   .delete-msg-btn:hover { opacity: 1; color: var(--gold); }
   .bubble .txt { font-size: 15.5px; line-height: 1.45; word-wrap: break-word; }
   .bubble .time { font-size: 10px; opacity: .65; margin-top: 3px; text-align: right; }
-  pre.code-block { background: #181b22; color: #e2e8f0; padding: 8px 12px; border-radius: 6px; font-family: monospace; font-size: 13px; overflow-x: auto; border: 1px solid rgba(255,255,255,.08); margin: 4px 0; }
+  pre.code-block { background: #181b22; color: #e2e8f0; padding: 8px 12px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 13px; overflow-x: auto; border: 1px solid rgba(255,255,255,.08); margin: 4px 0; }
   .burner-badge { display: inline-flex; align-items: center; font-size: 10px; background: rgba(220,38,38,.2); color: #f87171; border: 1px solid #f87171; border-radius: 3px; padding: 0 4px; }
   .msg-row.me .burner-badge { color: #fff; border-color: #fff; }
   .voice-msg-player { display: flex; align-items: center; gap: 8px; padding: 3px 0; }
@@ -188,7 +219,10 @@
 
 <header>
   <div class="header-left">
-    <button class="btn btn-outline" id="teamToggle" style="display:none; padding:4px 12px; font-size:13px;">☰<span class="lbl-full"> Team</span></button>
+    <button class="btn btn-outline" id="teamToggle" style="display:none; padding:5px 11px;">
+      <svg class="svg-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      <span>Workspace</span>
+    </button>
   </div>
   <div class="header-center">
     <svg class="crest" viewBox="0 0 48 48"><path d="M24 3 L44 12 V24 C44 36 35 44 24 45 C13 44 4 36 4 24 V12 Z" fill="#7a1524" stroke="#C9A85C" stroke-width="2"/><text x="24" y="30" font-family="'Playfair Display', serif" font-size="18" fill="#C9A85C" text-anchor="middle" font-weight="700">V</text></svg>
@@ -196,11 +230,19 @@
   </div>
   <div class="header-right">
     <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme">
-      <svg id="themeIconSun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-      <svg id="themeIconMoon" viewBox="0 0 24 24" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <svg id="themeIconSun" class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      <svg id="themeIconMoon" class="svg-icon" viewBox="0 0 24 24" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
     </button>
-    <button class="btn btn-danger" id="panicBtn" style="display:none; font-size:12px; padding:4px 8px;" title="Purge Current Channel">🗑<span class="lbl-full"> Panic Wipe</span></button>
-    <button class="btn btn-outline" id="logoutBtn" style="display:none; font-size:13px; padding:4px 10px;">⎋<span class="lbl-full"> Sign Out</span></button>
+    <!-- Professional Purge/Panic Button -->
+    <button class="btn btn-icon-labeled danger" id="panicBtn" style="display:none;" title="Purge Current Channel Data">
+      <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+      <span>Purge Feed</span>
+    </button>
+    <!-- Professional Sign Out Button -->
+    <button class="btn btn-icon-labeled" id="logoutBtn" style="display:none;" title="Secure Sign Out">
+      <svg class="svg-icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+      <span>Disconnect</span>
+    </button>
   </div>
 </header>
 
@@ -240,10 +282,10 @@
   </div>
 
   <div id="chat">
+    <!-- Channel Bar with dynamic management -->
     <div class="channel-bar collapsed" id="channelBar">
-      <div class="ch-btn active" data-ch="general" title="General Comms">#GEN</div>
-      <div class="ch-btn" data-ch="intelligence" title="Intelligence &amp; Tools">#INT</div>
-      <div class="ch-btn" data-ch="war-room" title="War Room">#WAR</div>
+      <div id="channelButtonsList" style="display:flex; flex-direction:column; gap:8px; align-items:center; width:100%;"></div>
+      <button class="btn-add-ch" id="addChannelBtn" title="Create New Channel">+</button>
     </div>
 
     <aside id="teamAside">
@@ -303,22 +345,24 @@
 
     <div class="chatarea" id="chatArea">
       <div class="channel-header">
-        <span style="display:flex;align-items:center;gap:8px;">
-          <button type="button" id="channelBarToggle" class="btn btn-outline" style="padding:3px 8px;font-size:12px;" title="Channels">☰</button>
+        <span style="display:flex;align-items:center;gap:10px;">
+          <button type="button" id="channelBarToggle" class="btn btn-outline" style="padding:4px 9px;" title="Browse Channels">
+            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          </button>
           <span id="channelNameDisplay">#GENERAL</span>
         </span>
-        <span style="font-size:11px;opacity:.8;">PRIVATE ENCLAVE</span>
+        <span style="font-size:11px;letter-spacing:1px;opacity:.8;">ENCRYPTED WORKSPACE</span>
       </div>
-      <div id="messages"><div class="empty">No messages yet — start the conversation.</div></div>
+      <div id="messages"><div class="empty">No communications registered in this sector.</div></div>
       <div class="input-bar-container">
         <div class="input-controls">
           <button type="button" class="toggle-btn-small" id="burnerToggleBtn"><span>🔥 Burner Message: OFF</span></button>
         </div>
         <form id="sendForm">
-          <button type="button" class="circle-btn record-btn" id="recordVoiceBtn" title="Record Voice (max 45s)">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+          <button type="button" class="circle-btn record-btn" id="recordVoiceBtn" title="Voice Message (max 45s)">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
           </button>
-          <input id="msgInput" placeholder="Write a message…" autocomplete="off">
+          <input id="msgInput" placeholder="Dispatch a message to channel…" autocomplete="off">
           <button class="circle-btn send-submit-btn" type="submit" title="Send">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="#fff"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
           </button>
@@ -346,12 +390,12 @@ function toggleAccordion(panelId, headElem) {
 /* ---------- Splash ---------- */
 function dismissSplash() {
   const splash = document.getElementById('splashScreen');
-  if (splash) { splash.style.opacity = '0'; splash.style.pointerEvents = 'none'; setTimeout(() => splash.remove(), 500); }
+  if (splash) { splash.style.opacity = '0'; splash.style.pointerEvents = 'none'; setTimeout(() => splash.remove(), 450); }
 }
-setTimeout(dismissSplash, 1800);
+setTimeout(dismissSplash, 1500);
 document.getElementById('splashScreen')?.addEventListener('click', dismissSplash);
 
-/* ---------- Sound ---------- */
+/* ---------- Sound Engine ---------- */
 let audioCtx = null;
 function playTactileSound(type) {
   try {
@@ -373,7 +417,7 @@ function playTactileSound(type) {
   } catch(e) {}
 }
 
-/* ---------- Toast ---------- */
+/* ---------- Notification Toast ---------- */
 function showToast(msg) {
   const box = document.getElementById('toastBox');
   const toast = document.createElement('div');
@@ -387,7 +431,7 @@ function showToast(msg) {
   }, 3500);
 }
 
-/* ---------- Theme ---------- */
+/* ---------- Theme Switcher ---------- */
 const themeToggleBtn = document.getElementById('themeToggle');
 const sunIcon = document.getElementById('themeIconSun');
 const moonIcon = document.getElementById('themeIconMoon');
@@ -400,7 +444,7 @@ function applyTheme(theme) {
 applyTheme(localStorage.getItem('topv_theme') || 'light');
 themeToggleBtn.addEventListener('click', () => applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
 
-/* ---------- Firebase ---------- */
+/* ---------- Firebase Initialisation ---------- */
 const firebaseConfig = {
   apiKey: "AIzaSyDqpxJdkGO75kefy1rN8zE34Fsm98iEMcQ",
   authDomain: "top-v-9abfb.firebaseapp.com",
@@ -413,9 +457,10 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const FieldValue = firebase.firestore.FieldValue;
 
-let currentUser = null, unsubMsg = null, unsubUsers = null, unsubTasks = null, unsubVault = null;
+let currentUser = null;
+let unsubMsg = null, unsubUsers = null, unsubTasks = null, unsubVault = null, unsubChannels = null;
 let allUsersMap = {};
-let currentChannel = 'general';
+let currentChannelId = 'general';
 let isBurnerEnabled = false;
 let burnerTimer = null;
 let latestChannelDocs = [];
@@ -426,16 +471,13 @@ function sanitize(s){ return (s||'').trim().toLowerCase().replace(/[^a-z0-9_\-]/
 function setErr(t){ document.getElementById('authErr').textContent = t || ''; }
 function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-/* ---------- Password hashing (SHA-256, client-side) ----------
-   Not a substitute for real server-side auth, but avoids storing
-   plain-text passwords readable by anyone with database access. */
 async function hashPassword(pw){
   const enc = new TextEncoder().encode(pw);
   const buf = await crypto.subtle.digest('SHA-256', enc);
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 
-/* ---------- Presence ---------- */
+/* ---------- Presence Engine ---------- */
 async function setLivePresence(isOnline) {
   if (!currentUser) return;
   try { await db.collection('users').doc(currentUser.username).update({ isOnline, lastSeen: Date.now() }); } catch(e){}
@@ -443,7 +485,7 @@ async function setLivePresence(isOnline) {
 document.addEventListener('visibilitychange', () => { if (currentUser) setLivePresence(document.visibilityState === 'visible'); });
 window.addEventListener('beforeunload', () => { if (currentUser) setLivePresence(false); });
 
-/* ---------- Auth tabs ---------- */
+/* ---------- Authentication Switching ---------- */
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
   t.classList.add('active'); setErr('');
@@ -461,7 +503,7 @@ document.getElementById('backToLoginLink').addEventListener('click', () => {
   document.getElementById('loginPane').style.display = '';
 });
 
-/* ---------- Session recovery ---------- */
+/* ---------- Session Auto-Load ---------- */
 (async function init(){
   const saved = localStorage.getItem('topv_user');
   if(saved){
@@ -473,10 +515,7 @@ document.getElementById('backToLoginLink').addEventListener('click', () => {
   }
 })();
 
-/* ---------- Registration (atomic, race-condition safe) ----------
-   Uses a counter document (meta/team) inside a Firestore transaction
-   so two people registering at the same instant cannot both become
-   admin, and the team cannot exceed 5 members. */
+/* ---------- Registration with Atomic Cap ---------- */
 document.getElementById('regBtn').addEventListener('click', async () => {
   setErr('');
   const username = sanitize(document.getElementById('regUser').value);
@@ -508,21 +547,21 @@ document.getElementById('regBtn').addEventListener('click', async () => {
     });
 
     if(result === 'TAKEN') return setErr('That username is already taken.');
-    if(result === 'LIMIT') return setErr('TOP V limit reached (5 members).');
+    if(result === 'LIMIT') return setErr('Limit reached (5 members max).');
 
     localStorage.setItem('topv_user', result.username);
     const finalSnap = await userRef.get();
     currentUser = { username: result.username, ...finalSnap.data() };
     enterChat();
-  }catch(e){ setErr('Database unreachable. Check Firebase permissions.'); }
+  }catch(e){ setErr('Database unreachable. Check connection.'); }
 });
 
-/* ---------- Sign in ---------- */
+/* ---------- Sign In ---------- */
 document.getElementById('loginBtn').addEventListener('click', async () => {
   setErr('');
   const identifier = document.getElementById('loginIdentifier').value.trim();
   const password = document.getElementById('loginPass').value;
-  if(!identifier || !password) return setErr('Enter your credentials and password.');
+  if(!identifier || !password) return setErr('Enter your credentials.');
 
   try{
     const passwordHash = await hashPassword(password);
@@ -535,34 +574,28 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
         foundDoc = { username: doc.id, ...data };
       }
     });
-    if(!foundDoc) return setErr('No such member found.');
+    if(!foundDoc) return setErr('Member record not found.');
     if(foundDoc.passwordHash){
-      if(foundDoc.passwordHash !== passwordHash) return setErr('Incorrect password.');
+      if(foundDoc.passwordHash !== passwordHash) return setErr('Invalid credentials.');
     } else if(foundDoc.password !== undefined){
-      // Legacy account created before password hashing was added — verify
-      // against the old plain-text field, then silently migrate it.
-      if(foundDoc.password !== password) return setErr('Incorrect password.');
-      try{
-        await db.collection('users').doc(foundDoc.username).update({ passwordHash, password: FieldValue.delete() });
-        foundDoc.passwordHash = passwordHash;
-      }catch(e){}
-    } else {
-      return setErr('This account has no password on record. Use "Forgot password?" to set a new one.');
+      if(foundDoc.password !== password) return setErr('Invalid credentials.');
+      await db.collection('users').doc(foundDoc.username).update({ passwordHash, password: FieldValue.delete() });
+      foundDoc.passwordHash = passwordHash;
     }
     currentUser = foundDoc;
     localStorage.setItem('topv_user', currentUser.username);
     enterChat();
-  }catch(e){ setErr('Database error.'); }
+  }catch(e){ setErr('Authentication failure.'); }
 });
 
-/* ---------- Reset password ---------- */
+/* ---------- Password Recovery ---------- */
 document.getElementById('resetSubmitBtn').addEventListener('click', async () => {
   setErr('');
   const user = sanitize(document.getElementById('resetUser').value);
   const contact = document.getElementById('resetContact').value.trim().toLowerCase();
   const newPass = document.getElementById('resetNewPass').value;
   if(!user || !contact || !newPass) return setErr('All fields are required.');
-  if(newPass.length < 4) return setErr('Password must be at least 4 characters.');
+  if(newPass.length < 4) return setErr('Password requires 4+ chars.');
 
   try {
     const docRef = db.collection('users').doc(user);
@@ -572,22 +605,27 @@ document.getElementById('resetSubmitBtn').addEventListener('click', async () => 
     if((data.email && data.email.toLowerCase() === contact) || (data.phone && data.phone === contact)) {
       const passwordHash = await hashPassword(newPass);
       await docRef.update({ passwordHash, password: FieldValue.delete() });
-      showToast('Password updated successfully. Please sign in.');
+      showToast('Credentials updated. Please authenticate.');
       document.getElementById('resetPane').style.display = 'none';
       document.getElementById('loginPane').style.display = '';
     } else {
-      setErr('Verification details do not match.');
+      setErr('Verification identity does not match.');
     }
-  } catch(e) { setErr('Could not reset password.'); }
+  } catch(e) { setErr('Update rejected.'); }
 });
 
-/* ---------- Enter chat ---------- */
+/* ---------- Main Session Dispatcher ---------- */
 function enterChat(){
   document.getElementById('auth').style.display = 'none';
   document.getElementById('chat').classList.add('show');
-  document.getElementById('teamToggle').style.display = 'inline-block';
-  document.getElementById('logoutBtn').style.display = '';
-  if (currentUser.isAdmin) document.getElementById('panicBtn').style.display = 'inline-block';
+  document.getElementById('teamToggle').style.display = 'inline-flex';
+  document.getElementById('logoutBtn').style.display = 'inline-flex';
+  if (currentUser.isAdmin) {
+    document.getElementById('panicBtn').style.display = 'inline-flex';
+    document.getElementById('addChannelBtn').style.display = 'flex';
+  } else {
+    document.getElementById('addChannelBtn').style.display = 'none';
+  }
   document.getElementById('displayNameInput').value = currentUser.displayName || currentUser.username;
   document.getElementById('myAvatarImg').src = currentUser.avatarUrl || DEFAULT_AVATAR;
 
@@ -595,24 +633,107 @@ function enterChat(){
   if(savedBg) document.getElementById('chatArea').style.backgroundImage = `url("${savedBg}")`;
 
   setLivePresence(true);
+  subscribeChannels();
   subscribeMembers();
-  subscribeMessages();
   subscribeTasks();
   subscribeVault();
 
-  // Re-render every few seconds so expired "burner" messages disappear
-  // even if no new message triggers a fresh snapshot.
   if(burnerTimer) clearInterval(burnerTimer);
   burnerTimer = setInterval(renderMessages, 3000);
 }
 
-/* ---------- Logout ---------- */
+/* ---------- Dynamic Channels & Architecture ---------- */
+function subscribeChannels(){
+  if(unsubChannels) unsubChannels();
+  unsubChannels = db.collection('channels').orderBy('createdAt', 'asc').onSnapshot(async snap => {
+    // Bootstrap defaults if clean installation
+    if(snap.empty){
+      const defaults = [
+        { id: 'general', name: 'GEN', title: '#GENERAL' },
+        { id: 'intelligence', name: 'INT', title: '#INTELLIGENCE' },
+        { id: 'war-room', name: 'WAR', title: '#WAR-ROOM' }
+      ];
+      const batch = db.batch();
+      defaults.forEach(d => {
+        batch.set(db.collection('channels').doc(d.id), { ...d, createdAt: Date.now() });
+      });
+      await batch.commit();
+      return;
+    }
+
+    const container = document.getElementById('channelButtonsList');
+    container.innerHTML = '';
+    let activeChannelExists = false;
+
+    snap.docs.forEach(doc => {
+      const ch = doc.data();
+      const chId = doc.id;
+      if (chId === currentChannelId) activeChannelExists = true;
+
+      const btn = document.createElement('div');
+      btn.className = `ch-btn ${chId === currentChannelId ? 'active' : ''}`;
+      btn.textContent = '#' + (ch.name || chId).slice(0, 4).toUpperCase();
+      btn.title = ch.title || `#${chId.toUpperCase()}`;
+      btn.dataset.id = chId;
+      btn.dataset.title = ch.title || `#${chId.toUpperCase()}`;
+
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentChannelId = chId;
+        document.getElementById('channelNameDisplay').textContent = btn.dataset.title;
+        subscribeMessages();
+        document.getElementById('channelBar').classList.add('collapsed');
+      });
+
+      container.appendChild(btn);
+    });
+
+    if(!activeChannelExists && snap.docs.length > 0){
+      currentChannelId = snap.docs[0].id;
+      document.getElementById('channelNameDisplay').textContent = snap.docs[0].data().title || `#${currentChannelId.toUpperCase()}`;
+    }
+    subscribeMessages();
+  });
+}
+
+document.getElementById('addChannelBtn').addEventListener('click', async () => {
+  if(!currentUser.isAdmin) return;
+  const name = prompt("Enter new Channel code (e.g., OPS, DEV, LOGS):");
+  if(!name) return;
+  const clean = sanitize(name);
+  if(!clean) return alert('Invalid channel format.');
+  try {
+    await db.collection('channels').doc(clean).set({
+      name: clean.slice(0, 4).toUpperCase(),
+      title: '#' + clean.toUpperCase(),
+      createdAt: Date.now()
+    });
+    showToast(`Channel #${clean.toUpperCase()} deployed.`);
+  } catch(e){ alert('Failed to create channel.'); }
+});
+
+/* ---------- Channel Panic Wipe ---------- */
+document.getElementById('panicBtn').addEventListener('click', async () => {
+  if(!currentUser.isAdmin) return;
+  if(!confirm(`Purge all records in #${currentChannelId.toUpperCase()}?`)) return;
+  try {
+    const snap = await db.collection('messages').where('channelId', '==', currentChannelId).get();
+    const batch = db.batch();
+    snap.docs.forEach(doc => batch.delete(doc.ref));
+    await batch.commit();
+    showToast(`Channel feed cleared.`);
+  } catch(e) { alert('Purge failed.'); }
+});
+
+/* ---------- Logout Engine ---------- */
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   await setLivePresence(false);
   if(unsubMsg) unsubMsg();
   if(unsubUsers) unsubUsers();
   if(unsubTasks) unsubTasks();
   if(unsubVault) unsubVault();
+  if(unsubChannels) unsubChannels();
   if(burnerTimer) clearInterval(burnerTimer);
   localStorage.removeItem('topv_user');
   currentUser = null;
@@ -624,7 +745,7 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
   closeAside();
 });
 
-/* ---------- Team drawer ---------- */
+/* ---------- Team Drawer Toggle ---------- */
 function closeAside(){
   document.getElementById('teamAside').classList.remove('open');
   document.getElementById('asideBackdrop').classList.remove('show');
@@ -636,7 +757,7 @@ document.getElementById('teamToggle').addEventListener('click', () => {
 document.getElementById('asideClose').addEventListener('click', closeAside);
 document.getElementById('asideBackdrop').addEventListener('click', closeAside);
 
-/* ---------- Image resize helper (keeps documents under Firestore's 1MB limit) ---------- */
+/* ---------- Image Compression Engine ---------- */
 function resizeImageFile(file, maxDim, quality){
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -659,7 +780,6 @@ function resizeImageFile(file, maxDim, quality){
   });
 }
 
-/* ---------- Avatar upload ---------- */
 document.getElementById('avatarFileInput').addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if(!file) return;
@@ -668,22 +788,20 @@ document.getElementById('avatarFileInput').addEventListener('change', async (e) 
     document.getElementById('myAvatarImg').src = dataUrl;
     currentUser.avatarUrl = dataUrl;
     await db.collection('users').doc(currentUser.username).update({ avatarUrl: dataUrl });
-    showToast("Profile photo updated successfully!");
-  }catch(err){ showToast("Failed to upload avatar."); }
+    showToast("Profile identity updated.");
+  }catch(err){ showToast("Image processing failed."); }
 });
 
-/* ---------- Save profile ---------- */
 document.getElementById('saveProfileBtn').addEventListener('click', async () => {
   const newName = document.getElementById('displayNameInput').value.trim();
-  if(!newName) return alert('Name cannot be empty.');
+  if(!newName) return alert('Name parameter missing.');
   try {
     await db.collection('users').doc(currentUser.username).update({ displayName: newName });
     currentUser.displayName = newName;
-    showToast("Profile updated successfully!");
+    showToast("Credentials saved.");
   } catch(e) { alert('Update failed.'); }
 });
 
-/* ---------- Wallpaper (resized before storing in localStorage) ---------- */
 document.getElementById('wallpaperFileInput').addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if(!file) return;
@@ -691,16 +809,16 @@ document.getElementById('wallpaperFileInput').addEventListener('change', async (
     const bgUrl = await resizeImageFile(file, 1000, 0.7);
     document.getElementById('chatArea').style.backgroundImage = `url("${bgUrl}")`;
     localStorage.setItem('topv_chat_bg', bgUrl);
-    showToast("Wallpaper applied.");
-  }catch(err){ showToast("Could not apply wallpaper (file too large)."); }
+    showToast("Environment wallpaper updated.");
+  }catch(err){ showToast("Asset exceeds allocation limits."); }
 });
 document.getElementById('clearWallpaperBtn').addEventListener('click', () => {
   document.getElementById('chatArea').style.backgroundImage = 'none';
   localStorage.removeItem('topv_chat_bg');
-  showToast("Wallpaper reset.");
+  showToast("Wallpaper restored to default.");
 });
 
-/* ---------- Burner toggle ---------- */
+/* ---------- Burner Switch ---------- */
 const burnerToggleBtn = document.getElementById('burnerToggleBtn');
 burnerToggleBtn.addEventListener('click', () => {
   isBurnerEnabled = !isBurnerEnabled;
@@ -708,42 +826,12 @@ burnerToggleBtn.addEventListener('click', () => {
   burnerToggleBtn.innerHTML = isBurnerEnabled ? '<span>🔥 Burner Message: ON (30s)</span>' : '<span>🔥 Burner Message: OFF</span>';
 });
 
-/* ---------- Channels (each channel is its own Firestore collection,
-   so switching channels never starves another channel's message list
-   and no composite index is required) ---------- */
-function messagesCollection(){ return db.collection('messages_' + currentChannel); }
-
-/* ---------- Channel bar toggle (closed by default, opens only on click) ---------- */
+/* ---------- Channel Bar Drawer ---------- */
 document.getElementById('channelBarToggle').addEventListener('click', () => {
   document.getElementById('channelBar').classList.toggle('collapsed');
 });
 
-document.querySelectorAll('.ch-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.ch-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentChannel = btn.dataset.ch;
-    const titles = { general: '#GENERAL', intelligence: '#INTELLIGENCE', 'war-room': '#WAR-ROOM' };
-    document.getElementById('channelNameDisplay').textContent = titles[currentChannel];
-    subscribeMessages();
-    document.getElementById('channelBar').classList.add('collapsed');
-  });
-});
-
-/* ---------- Panic wipe (current channel only) ---------- */
-document.getElementById('panicBtn').addEventListener('click', async () => {
-  if(!currentUser.isAdmin) return;
-  if(!confirm(`Delete all messages in #${currentChannel}?`)) return;
-  try {
-    const snap = await messagesCollection().get();
-    const batch = db.batch();
-    snap.docs.forEach(doc => batch.delete(doc.ref));
-    await batch.commit();
-    showToast(`Channel #${currentChannel} cleared.`);
-  } catch(e) { alert('Purge failed.'); }
-});
-
-/* ---------- Members ---------- */
+/* ---------- Member Registry ---------- */
 function subscribeMembers(){
   if(unsubUsers) unsubUsers();
   unsubUsers = db.collection('users').onSnapshot(snap => {
@@ -762,18 +850,18 @@ function subscribeMembers(){
             <div>${u.isAdmin ? '<span style="color:var(--gold);font-size:11px;">★ </span>' : ''}<strong>${escapeHtml(u.displayName || u.username)}</strong></div>
             <div class="status-txt"><span class="status-pulse ${statusClass}"></span>${isOnline ? 'Online' : 'Offline'}</div>
           </div>
-          ${canDelete ? `<span class="del" data-u="${escapeHtml(u.username)}">remove</span>` : ''}
+          ${canDelete ? `<span class="del" data-u="${escapeHtml(u.username)}">revoke</span>` : ''}
         </div>`;
     });
     const memberListEl = document.getElementById('memberList');
     memberListEl.innerHTML = html;
     memberListEl.querySelectorAll('.del').forEach(btn => btn.addEventListener('click', () => deleteMember(btn.dataset.u)));
-    renderMessages(); // sender names/avatars may have changed
+    renderMessages();
   });
 }
 
 async function deleteMember(username){
-  if(!confirm('Remove ' + username + ' from the team?')) return;
+  if(!confirm('Revoke access for ' + username + '?')) return;
   try {
     await db.runTransaction(async (tx) => {
       const metaRef = db.collection('meta').doc('team');
@@ -788,11 +876,15 @@ async function deleteMember(username){
   } catch(e){}
 }
 
-/* ---------- Messages ---------- */
+/* ---------- Communication Stream (Unified Collection) ---------- */
 function subscribeMessages(){
   if(unsubMsg) unsubMsg();
-  let isInitialLoad = true; // reset every time we switch channels
-  const q = messagesCollection().orderBy('createdAt', 'asc').limitToLast(150);
+  let isInitialLoad = true;
+  const q = db.collection('messages')
+              .where('channelId', '==', currentChannelId)
+              .orderBy('createdAt', 'asc')
+              .limitToLast(120);
+
   unsubMsg = q.onSnapshot(snap => {
     if(!isInitialLoad){
       snap.docChanges().forEach(change => {
@@ -801,7 +893,7 @@ function subscribeMessages(){
           if(m.username !== currentUser.username){
             playTactileSound('receive');
             const sender = allUsersMap[m.username] || {};
-            showToast(`${sender.displayName || m.username}: New message`);
+            showToast(`${sender.displayName || m.username}: New dispatch`);
           }
         }
       });
@@ -810,7 +902,7 @@ function subscribeMessages(){
     latestChannelDocs = snap.docs;
     renderMessages();
   }, () => {
-    document.getElementById('messages').innerHTML = '<div class="empty">Could not load this channel.</div>';
+    document.getElementById('messages').innerHTML = '<div class="empty">Channel index loading or offline.</div>';
   });
 }
 
@@ -818,8 +910,6 @@ function renderMessages(){
   const el = document.getElementById('messages');
   if(!currentUser) return;
 
-  // Expired burner messages get removed once (each client attempts the
-  // delete; Firestore deletes are safe to repeat on an already-gone doc).
   const stillVisible = [];
   latestChannelDocs.forEach(d => {
     const m = d.data();
@@ -831,7 +921,7 @@ function renderMessages(){
   });
 
   if(stillVisible.length === 0){
-    el.innerHTML = '<div class="empty">No messages yet — start the conversation.</div>';
+    el.innerHTML = '<div class="empty">No communications registered in this sector.</div>';
     return;
   }
 
@@ -846,7 +936,7 @@ function renderMessages(){
 
     let contentHtml = formatMessageContent(m.text);
     if(m.audioData){
-      contentHtml = `<div class="voice-msg-player"><button class="voice-play-btn" onclick="playVoiceNote('${d.id}')">▶</button><span style="font-size:12px;font-style:italic;">Voice message</span></div>`;
+      contentHtml = `<div class="voice-msg-player"><button class="voice-play-btn" onclick="playVoiceNote('${d.id}')">▶</button><span style="font-size:12px;font-style:italic;">Encrypted Voice Note</span></div>`;
     }
 
     return `
@@ -856,7 +946,7 @@ function renderMessages(){
           <div class="bubble-header">
             <span class="name">${escapeHtml(display)}</span>
             ${m.burner ? `<span class="burner-badge">🔥 BURNER</span>` : ''}
-            ${canDelete ? `<button class="delete-msg-btn" onclick="deleteMessage('${d.id}')" title="Delete">✕</button>` : ''}
+            ${canDelete ? `<button class="delete-msg-btn" onclick="deleteMessage('${d.id}')" title="Revoke">✕</button>` : ''}
           </div>
           <div class="txt">${contentHtml}</div>
           <div class="time">${timeStr}</div>
@@ -882,16 +972,16 @@ function formatMessageContent(str) {
 }
 
 window.deleteMessage = async function(msgId){
-  try { await messagesCollection().doc(msgId).delete(); } catch(e){}
+  try { await db.collection('messages').doc(msgId).delete(); } catch(e){}
 };
 window.playVoiceNote = function(msgId){
   const doc = latestChannelDocs.find(d => d.id === msgId);
   if(!doc) return;
   const audio = new Audio(doc.data().audioData);
-  audio.play().catch(()=> showToast('Could not play the voice message.'));
+  audio.play().catch(()=> showToast('Playback stream blocked.'));
 };
 
-/* ---------- Send text ---------- */
+/* ---------- Send Text Dispatch ---------- */
 document.getElementById('sendForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const input = document.getElementById('msgInput');
@@ -900,17 +990,17 @@ document.getElementById('sendForm').addEventListener('submit', async (e) => {
   input.value = '';
   playTactileSound('send');
   try {
-    await messagesCollection().add({
+    await db.collection('messages').add({
+      channelId: currentChannelId,
       username: currentUser.username,
       displayName: currentUser.displayName || currentUser.username,
       avatarUrl: currentUser.avatarUrl || DEFAULT_AVATAR,
       text, burner: isBurnerEnabled, createdAt: Date.now()
     });
-  } catch(err){ showToast('Message failed to send.'); }
+  } catch(err){ showToast('Transmission failed.'); }
 });
 
-/* ---------- Voice recording (capped at 45s and ~700KB so it always
-   fits inside a single Firestore document) ---------- */
+/* ---------- Voice Capture Engine ---------- */
 let mediaRecorder = null, audioChunks = [], recordAutoStopTimer = null;
 const MAX_RECORD_MS = 45000;
 const MAX_AUDIO_BASE64_LEN = 700000;
@@ -936,46 +1026,46 @@ recordVoiceBtn.addEventListener('click', async () => {
       reader.onloadend = async () => {
         const base64Audio = reader.result;
         if(base64Audio.length > MAX_AUDIO_BASE64_LEN){
-          showToast('Recording too long — keep it under ~30 seconds.');
+          showToast('Audio exceeds buffer limits (stay under 30s).');
           return;
         }
         playTactileSound('send');
         try {
-          await messagesCollection().add({
+          await db.collection('messages').add({
+            channelId: currentChannelId,
             username: currentUser.username,
             displayName: currentUser.displayName || currentUser.username,
             avatarUrl: currentUser.avatarUrl || DEFAULT_AVATAR,
-            text: '[Voice Message]', audioData: base64Audio,
+            text: '[Voice Note]', audioData: base64Audio,
             burner: isBurnerEnabled, createdAt: Date.now()
           });
-        } catch(err){ showToast('Voice message failed to send.'); }
+        } catch(err){ showToast('Voice packet rejected.'); }
       };
       reader.readAsDataURL(audioBlob);
     };
     mediaRecorder.start();
     recordVoiceBtn.classList.add('recording');
-    showToast("Recording… click again to send (auto-stops at 45s).");
+    showToast("Voice link active… click again to commit.");
     recordAutoStopTimer = setTimeout(() => { if(mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop(); }, MAX_RECORD_MS);
   } catch(err) {
-    alert("Microphone access unavailable or denied.");
+    alert("Audio capture device inaccessible.");
   }
 });
 
-/* ---------- File vault (size capped to stay under Firestore's 1MB
-   per-document limit once the file is base64-encoded, ~+33% size) ---------- */
+/* ---------- Encrypted Vault Storage ---------- */
 const MAX_VAULT_FILE_BYTES = 650 * 1024;
 document.getElementById('vaultFileInput').addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if(!file) return;
-  if(file.size > MAX_VAULT_FILE_BYTES) return alert("File exceeds the 650KB limit (database documents are capped at 1MB).");
+  if(file.size > MAX_VAULT_FILE_BYTES) return alert("Payload exceeds 650KB limit.");
   const reader = new FileReader();
   reader.onload = async (evt) => {
     try {
       await db.collection('vault').add({ fileName: file.name, fileData: evt.target.result, uploader: currentUser.username, uploadedAt: Date.now() });
-      showToast(`File "${file.name}" uploaded successfully.`);
-    } catch(err){ alert("Upload failed."); }
+      showToast(`Asset "${file.name}" synchronized.`);
+    } catch(err){ alert("Storage allocation failed."); }
   };
-  reader.onerror = () => alert('Could not read the file.');
+  reader.onerror = () => alert('Asset read corrupted.');
   reader.readAsDataURL(file);
 });
 
@@ -983,7 +1073,7 @@ function subscribeVault(){
   if(unsubVault) unsubVault();
   unsubVault = db.collection('vault').orderBy('uploadedAt', 'desc').limit(8).onSnapshot(snap => {
     const list = document.getElementById('vaultList');
-    if(snap.empty){ list.innerHTML = '<span style="color:var(--sub);font-style:italic;font-size:12px;">No files uploaded.</span>'; return; }
+    if(snap.empty){ list.innerHTML = '<span style="color:var(--sub);font-style:italic;font-size:12px;">Vault empty.</span>'; return; }
     list.innerHTML = snap.docs.map(doc => {
       const item = doc.data();
       return `<div style="display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:4px 6px;border-radius:4px;font-size:12px;">
@@ -1007,7 +1097,7 @@ function subscribeTasks(){
   if(unsubTasks) unsubTasks();
   unsubTasks = db.collection('tasks').orderBy('createdAt', 'desc').limit(12).onSnapshot(snap => {
     const list = document.getElementById('taskList');
-    if(snap.empty){ list.innerHTML = '<span style="color:var(--sub);font-style:italic;font-size:12px;">No active tasks.</span>'; return; }
+    if(snap.empty){ list.innerHTML = '<span style="color:var(--sub);font-style:italic;font-size:12px;">No active objectives.</span>'; return; }
     list.innerHTML = snap.docs.map(doc => {
       const t = doc.data();
       return `<div class="task-item">
