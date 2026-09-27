@@ -43,10 +43,10 @@
   .car-brands { display: flex; gap: 26px; align-items: center; justify-content: center; padding-top: 18px; border-top: 1px solid rgba(201,168,92,.25); }
   .brand-icon { width: 32px; height: 32px; fill: #cbd5e1; opacity: .85; }
 
-  header { background: var(--header-bg); color: var(--header-text); height: 52px; padding: 0 18px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,.15); flex-shrink: 0; border-bottom: 1px solid var(--border); z-index: 40; }
-  .header-left { display: flex; align-items: center; gap: 8px; }
-  .header-center { display: flex; align-items: center; justify-content: center; gap: 10px; }
-  .header-right { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
+  header { background: var(--header-bg); color: var(--header-text); min-height: 52px; padding: 8px 14px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; box-shadow: 0 2px 10px rgba(0,0,0,.15); flex-shrink: 0; border-bottom: 1px solid var(--border); z-index: 40; }
+  .header-left { display: flex; align-items: center; gap: 8px; order: 1; }
+  .header-center { display: flex; align-items: center; justify-content: center; gap: 8px; order: 3; flex-basis: 100%; }
+  .header-right { display: flex; align-items: center; gap: 8px; justify-content: flex-end; order: 2; }
   .crest { width: 32px; height: 32px; flex-shrink: 0; }
   header h1 { font-family: 'Playfair Display', serif; font-size: 22px; letter-spacing: 1px; color: #fff; line-height: 1; }
   header .tag { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; text-align: center; }
